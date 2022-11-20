@@ -12,18 +12,18 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
     String orderCashId = '';
 
     on<OrderLoadingEvent>((event, emit) async {
-      dev.log('OrderLoadingEvent is makes');
+      // dev.log('OrderLoadingEvent is makes');
 
       emit(OrderLoading());
       final orders = await getAllOrders.orderRepository.getAllOrders();
-      dev.log('getAllOrders.orderRepository.getAllOrders() work');
+      // dev.log('getAllOrders.orderRepository.getAllOrders() work');
 
       emit(OrdersLoaded(orders: orders));
     });
     on<OrderCreateEvent>((event, emit) async {
       final result = await getAllOrders.orderRepository
           .createNewOrder(name: event.name, description: event.description);
-      dev.log(result.toString());
+      // dev.log(result.toString());
 
       //TODO: implement flag
       emit(OrderAdded(flag: result));
@@ -67,7 +67,7 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
 
     on<OrderEditingEvent>(
       (event, emit) async {
-        dev.log(event.id);
+        // dev.log(event.id);
         emit(OrderLoading());
         final order = await getAllOrders.orderRepository
             .getOrderByIdForEdit(id: event.id);
@@ -77,7 +77,7 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
 
     on<OrderUpdateEvent>(
       (event, emit) async {
-        dev.log('u be in on<OrderUpdateEvent>');
+        // dev.log('u be in on<OrderUpdateEvent>');
         emit(OrderLoading());
         final flag = await getAllOrders.orderRepository.updateBodyOrderById(
             id: event.id, name: event.name, description: event.description);

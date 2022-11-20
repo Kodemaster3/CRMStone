@@ -19,7 +19,7 @@ class ViewOrderScreenWithListComponent extends StatelessWidget {
     return BlocBuilder<OrderBloc, OrderState>(
       builder: (context, state) {
         if (state is OrderViewWithComponent) {
-          dev.log('ui layer state is not empty list component');
+          // dev.log('ui layer state is not empty list component');
           return Scaffold(
             appBar: AppBar(
               automaticallyImplyLeading: false,
@@ -33,7 +33,7 @@ class ViewOrderScreenWithListComponent extends StatelessWidget {
         }
 
         if (state is OrderViewWithEmptyListComponent) {
-          dev.log('ui layer state is empty list component');
+          // dev.log('ui layer state is empty list component');
           return Scaffold(
             appBar: AppBar(
               automaticallyImplyLeading: false,
@@ -58,7 +58,7 @@ class ViewOrderScreenWithListComponent extends StatelessWidget {
   }
 
   Widget circularProgressIndicator() {
-    dev.log('CircularProgressIndicator in ViewOrderScreenWithListComponent');
+    // dev.log('CircularProgressIndicator in ViewOrderScreenWithListComponent');
     return const CircularProgressIndicator();
   }
 }

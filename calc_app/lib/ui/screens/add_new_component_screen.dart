@@ -10,7 +10,7 @@ class AddNewComponentScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    log('be in add new component screen');
+    // log('be in add new component screen');
     return TextButton(
         child: const Text('Add Comp'),
         onPressed: () {

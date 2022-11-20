@@ -1,5 +1,4 @@
 import 'dart:developer' as dev;
-import 'dart:developer';
 import 'package:calc_app/data/datasource/order_local_data_source.dart';
 import 'package:calc_app/data/models/component_model.dart';
 import 'package:calc_app/data/models/order_model.dart';
@@ -15,7 +14,6 @@ class OrderRepositoryImpl extends OrderRepository {
 
   @override
   Future<List<OrderEntity>> getAllOrders() async {
-    log('111Future<List<OrderEntity>> getAllOrders() async');
     try {
       final dataOrders = await localDataSource.getLastOrderFromCache();
       //place save local data if data source from api

@@ -18,7 +18,7 @@ class ListViewComponentWidget extends StatelessWidget {
     return BlocBuilder<OrderBloc, OrderState>(
       builder: (context, state) {
         if (state is OrderViewWithComponent) {
-          dev.log('state in OrderViewWithComponent is work');
+          // dev.log('state in OrderViewWithComponent is work');
           return Column(
             children: [
               const Expanded(
@@ -81,7 +81,7 @@ class ListViewComponentWidget extends StatelessWidget {
   }
 
   Widget circularProgressIndicator() {
-    dev.log('circularProgressIndicator in ListViewComponentWidget');
+    // dev.log('circularProgressIndicator in ListViewComponentWidget');
     return const CircularProgressIndicator();
   }
 }

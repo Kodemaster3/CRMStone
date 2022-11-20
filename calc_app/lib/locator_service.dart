@@ -19,10 +19,6 @@ Future<void> init() async {
   sl.registerLazySingleton(
     () => GetAllOrders(sl()),
   );
-  //add one case
-  // sl.registerLazySingleton(
-  //   () => CreateOrder(),
-  // );
 
   /// Repository
   sl.registerLazySingleton<OrderRepository>(

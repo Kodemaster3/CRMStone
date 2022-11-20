@@ -16,7 +16,7 @@ class ListViewOrderWidget extends StatelessWidget {
     return BlocBuilder<OrderBloc, OrderState>(
       builder: (context, state) {
         if (state is OrdersLoaded) {
-          dev.log('state in ListViewWidget is work');
+          // dev.log('state in ListViewWidget is work');
           return ListView.builder(
             itemCount: state.orders.length,
             itemBuilder: ((context, index) {
@@ -26,7 +26,7 @@ class ListViewOrderWidget extends StatelessWidget {
                       '$index id is: ${state.orders[index].id} an name is: ${state.orders[index].name} description is: ${state.orders[index].description}'),
                 ),
                 onTap: () {
-                  dev.log(state.orders[index].id);
+                  // dev.log(state.orders[index].id);
 
                   BlocProvider.of<OrderBloc>(context).add(
                       OrderViewWithComponentEvent(id: state.orders[index].id));
