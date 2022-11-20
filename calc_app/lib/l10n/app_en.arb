@@ -1,0 +1,21 @@
+{
+    "appTitle": "Deliver's",
+    "delivers": "Settings deliver's",
+    "nomenclature_deliver": "Detail deliver",
+    "name_deliver": "Name Deliver",
+    "name_nomenclature": "Detail",
+
+    "name_material": "Material",
+    "width": "Width, cm",
+    "length": "Length, cm",
+    "height": "Height, cm",
+    "weight_per_cub_meter": "Weight Per Cub Meter",
+    "quantity": "Quantity",
+    "price_per_cub_meter": "Price Per Cub Meter",
+
+    "its_old_deliver_you_": "It's old deliver, do you won't edit now nomenclature?",
+    "yes" : "yes",
+
+    "add_new_deliver": "Add new deliver",
+    "have_position": "have position"
+}

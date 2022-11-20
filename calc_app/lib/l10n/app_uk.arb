@@ -1,0 +1,21 @@
+{
+    "appTitle": "Замовлення",
+    "delivers": "Налаштування завлень",
+    "nomenclature_deliver": "Деталі замовлення",
+    "name_deliver": "Ім'я завовлення",
+    "name_nomenclature": "Деталь",
+
+    "name_material": "Матеріал",
+    "width": "Ширина, см",
+    "length": "Довжина, см",
+    "height": "Висота, см",
+    "weight_per_cub_meter": "Розмір в куб/метр",
+    "quantity": "Кількість",
+    "price_per_cub_meter": "Ціна куб/метр",
+
+    "its_old_deliver_you_": "Це старє замовлення, редагувати зараз?",
+    "yes" : "ТАК",
+
+    "add_new_deliver": "Додати нове замовлення",
+    "have_position": "Мае позіций"
+}

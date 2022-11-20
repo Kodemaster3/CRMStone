@@ -1,0 +1,21 @@
+{
+    "appTitle": "Заказы",
+    "delivers": "Параметры заказов",
+    "nomenclature_deliver": "Детали заказа",
+    "name_deliver": "Имя заказа",
+    "name_nomenclature": "Деталь",
+
+    "name_material": "Материал",
+    "width": "Ширина, см",
+    "length": "Длинна, см",
+    "height": "Высота, см",
+    "weight_per_cub_meter": "Вес куб/метра",
+    "quantity": "Количество",
+    "price_per_cub_meter": "Цена куб/метра",
+
+    "its_old_deliver_you_": "Это имеющийся заказ, редактировать его сейчас?",
+    "yes" : "ДА",
+
+    "add_new_deliver": "Добавить новый заказ",
+    "have_position": "Имеет позиций"
+}
