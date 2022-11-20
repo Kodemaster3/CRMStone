@@ -1,7 +1,7 @@
 import 'dart:developer' as dev;
 
 import 'package:calc_app/ui/bloc/orders_bloc/order_event.dart';
-import 'package:calc_app/ui/screens/edit_order_screem.dart';
+import 'package:calc_app/ui/screens/edit_order_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:calc_app/ui/bloc/orders_bloc/order_bloc.dart';
@@ -18,6 +18,7 @@ class ListViewComponentWidget extends StatelessWidget {
     return BlocBuilder<OrderBloc, OrderState>(
       builder: (context, state) {
         if (state is OrderViewWithComponent) {
+          dev.log('state in OrderViewWithComponent is work');
           return Column(
             children: [
               const Expanded(

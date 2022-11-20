@@ -1,5 +1,5 @@
 import 'package:calc_app/ui/screens/add_new_order_screen.dart';
-import 'package:calc_app/ui/screens/edit_order_screem.dart';
+import 'package:calc_app/ui/screens/edit_order_screen.dart';
 import 'package:calc_app/ui/screens/view_order_screen_with_component.dart';
 
 import '../ui/screens/catalog_deliver_screen.dart';

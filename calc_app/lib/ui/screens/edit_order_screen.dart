@@ -15,17 +15,24 @@ class EditOrderScreen extends StatelessWidget {
     return BlocBuilder<OrderBloc, OrderState>(
       builder: (context, state) {
         if (state is OrderLoaded) {
+          name = state.order.name;
+          description = state.order.description;
           return Scaffold(
+            appBar: AppBar(
+              title: Text(state.order.name),
+              // automaticallyImplyLeading: false,
+            ),
             body: Column(
               children: [
                 TextFormField(
-                  controller: TextEditingController(text: state.order.name),
+                  controller: TextEditingController(text: name),
                   onChanged: (value) => name = value,
+                  onFieldSubmitted: (value) => name = value,
                 ),
                 TextFormField(
-                  controller:
-                      TextEditingController(text: state.order.description),
+                  controller: TextEditingController(text: description),
                   onChanged: (value) => description = value,
+                  onFieldSubmitted: (value) => description = value,
                 ),
                 TextButton(
                   child: const Text('Submit'),
@@ -38,12 +45,16 @@ class EditOrderScreen extends StatelessWidget {
                         description: description,
                       ),
                     );
+
+                    Navigator.of(context)
+                        .pushNamedAndRemoveUntil('/', (route) => false);
                   },
                 )
               ],
             ),
           );
         }
+
         return const CircularProgressIndicator();
       },
     );

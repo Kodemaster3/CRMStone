@@ -1,4 +1,5 @@
 import 'dart:developer' as dev;
+import 'dart:developer';
 import 'package:calc_app/data/datasource/order_local_data_source.dart';
 import 'package:calc_app/data/models/component_model.dart';
 import 'package:calc_app/data/models/order_model.dart';
@@ -14,6 +15,7 @@ class OrderRepositoryImpl extends OrderRepository {
 
   @override
   Future<List<OrderEntity>> getAllOrders() async {
+    log('111Future<List<OrderEntity>> getAllOrders() async');
     try {
       final dataOrders = await localDataSource.getLastOrderFromCache();
       //place save local data if data source from api
@@ -41,32 +43,32 @@ class OrderRepositoryImpl extends OrderRepository {
     throw Exception('Exception in repository lvl data');
   }
 
-  @override
-  Future<bool> saveChangedOrderById({required OrderEntity order}) async {
-    try {
-      List<OrderModel> dataOrders =
-          await localDataSource.getLastOrderFromCache();
-      for (var element in dataOrders) {
-        if (element.id == order.id) {
-          dataOrders.remove(element);
-          final unitData = OrderModel(
-              id: order.id,
-              name: order.name,
-              description: order.description,
-              component: order.component);
-          dataOrders.add(unitData);
-          break;
-        }
-      }
-      await localDataSource.ordersToCache(dataOrders);
-      return true;
-    } on Exception {
-      dev.log(
-          'Exc in order,repository method save..() when save id ${order.id}');
-      return false;
-    }
-    // throw Exception('Exception in repository lvl data');
-  }
+  // @override
+  // Future<bool> saveChangedOrderById({required OrderEntity order}) async {
+  //   try {
+  //     List<OrderModel> dataOrders =
+  //         await localDataSource.getLastOrderFromCache();
+  //     for (var element in dataOrders) {
+  //       if (element.id == order.id) {
+  //         dataOrders.remove(element);
+  //         final unitData = OrderModel(
+  //             id: order.id,
+  //             name: order.name,
+  //             description: order.description,
+  //             component: order.component);
+  //         dataOrders.add(unitData);
+  //         break;
+  //       }
+  //     }
+  //     await localDataSource.ordersToCache(dataOrders);
+  //     return true;
+  //   } on Exception {
+  //     dev.log(
+  //         'Exc in order,repository method save..() when save id ${order.id}');
+  //     return false;
+  //   }
+  //   // throw Exception('Exception in repository lvl data');
+  // }
 
   @override
   Future<bool> deleteOrderById({required String id}) async {
@@ -167,9 +169,32 @@ class OrderRepositoryImpl extends OrderRepository {
   }
 
   @override
-  Future<OrderEntity> updateOrderById({required String id}) {
-    // TODO: implement updateOrderById
-    throw UnimplementedError();
+  Future<bool> updateBodyOrderById(
+      {required String id,
+      required String name,
+      required String description}) async {
+    try {
+      List<OrderModel> dataOrders =
+          await localDataSource.getLastOrderFromCache();
+
+      for (var element in dataOrders) {
+        if (element.id == id) {
+          final order = OrderModel(
+              id: id,
+              name: name,
+              description: description,
+              component: element.component);
+
+          dataOrders.remove(element);
+          dataOrders.add(order);
+        }
+      }
+      await localDataSource.ordersToCache(dataOrders);
+      return true;
+    } on Exception {
+      dev.log('Exc in order repository, method updateOrderById()');
+      return false;
+    }
   }
 }
 

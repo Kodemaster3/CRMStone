@@ -46,8 +46,6 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
     );
     on<ComponentOrderCreateEvent>(
       (event, emit) async {
-        dev.log(
-            'getAllOrders.orderRepository.createComponent by $orderCashId !!!!!!!!!!');
         emit(OrderLoading());
         final flag = await getAllOrders.orderRepository.createComponent(
             name: event.name,
@@ -60,10 +58,6 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
             pricePerCubMeter: event.pricePerCubMeter,
             idOrder: orderCashId);
 
-        dev.log(
-            'getAllOrders.orderRepository.createComponent by $orderCashId !!!!!!!!!!!!');
-
-        // OrderViewWithComponentEvent(id: orderCashId);
         final order = await getAllOrders.orderRepository
             .getOrderByIdForEdit(id: orderCashId);
 
@@ -85,10 +79,15 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
       (event, emit) async {
         dev.log('u be in on<OrderUpdateEvent>');
         emit(OrderLoading());
-        final oldOrder =
-            await getAllOrders.orderRepository.deleteOrderById(id: event.id);
+        final flag = await getAllOrders.orderRepository.updateBodyOrderById(
+            id: event.id, name: event.name, description: event.description);
 
-        // asf
+        //TODO: implement message on screen
+        if (flag) {
+          emit(
+            OrderOperationSuccess(message: '${event.name} be changed Success'),
+          );
+        }
       },
     );
   }

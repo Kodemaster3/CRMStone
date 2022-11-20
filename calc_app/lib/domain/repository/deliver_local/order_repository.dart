@@ -1,4 +1,3 @@
-import 'package:calc_app/domain/entities/component.dart';
 import 'package:calc_app/domain/entities/order.dart';
 
 abstract class OrderRepository {
@@ -8,21 +7,26 @@ abstract class OrderRepository {
 
   Future<OrderEntity> getOrderByIdForEdit({required String id});
 
-  Future<bool> saveChangedOrderById({required OrderEntity order});
+  // Future<bool> saveChangedOrderById({required OrderEntity order});
 
-  Future<OrderEntity> updateOrderById({required String id});
+  Future<bool> updateBodyOrderById({
+    required String id,
+    required String name,
+    required String description,
+  });
 
   Future<bool> createNewOrder(
       {required String name, required String description});
 
-  Future<bool> createComponent(
-      {required String name,
-      required String material,
-      required double height,
-      required double length,
-      required int quantity,
-      required double weightPerCubMeter,
-      required double width,
-      required double pricePerCubMeter,
-      required String idOrder});
+  Future<bool> createComponent({
+    required String name,
+    required String material,
+    required double height,
+    required double length,
+    required int quantity,
+    required double weightPerCubMeter,
+    required double width,
+    required double pricePerCubMeter,
+    required String idOrder,
+  });
 }

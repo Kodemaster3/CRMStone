@@ -24,6 +24,11 @@ class OrderAdded extends OrderState {
   OrderAdded({required this.flag});
 }
 
+class OrderOperationSuccess extends OrderState {
+  final String message;
+  OrderOperationSuccess({required this.message});
+}
+
 class OrderViewWithComponent extends OrderState {
   final OrderEntity order;
   OrderViewWithComponent({required this.order});
