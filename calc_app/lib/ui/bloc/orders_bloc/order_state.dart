@@ -1,3 +1,5 @@
+import 'package:calc_app/data/models/component_model.dart';
+import 'package:calc_app/domain/entities/component.dart';
 import 'package:calc_app/domain/entities/order.dart';
 
 abstract class OrderState {
@@ -18,11 +20,14 @@ class OrderLoaded extends OrderState {
   OrderLoaded({required this.order});
 }
 
-class OrderAdded extends OrderState {
-  final bool flag;
-  //TODO: implement flag when can add
-  OrderAdded({required this.flag});
-}
+// class OrderAdded extends OrderState {
+//   final bool flag;
+//   OrderAdded({required this.flag});
+// }
+// class OrderEditing extends OrderState {
+//   final OrderEntity order;
+//   OrderEditing({required this.order});
+// }
 
 class OrderOperationSuccess extends OrderState {
   final String message;
@@ -39,7 +44,15 @@ class OrderViewWithEmptyListComponent extends OrderState {
   OrderViewWithEmptyListComponent({required this.order});
 }
 
-class OrderEditing extends OrderState {
-  final OrderEntity order;
-  OrderEditing({required this.order});
+class ComponentEditingField extends OrderState {
+  final ComponentEntity componentEntity;
+  final String idOrder;
+
+  const ComponentEditingField({
+    required this.componentEntity,
+    required this.idOrder,
+  });
 }
+
+// class ComponentFillingField extends OrderState {}
+

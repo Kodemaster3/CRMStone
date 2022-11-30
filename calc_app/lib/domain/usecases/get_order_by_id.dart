@@ -1,12 +1,12 @@
 import 'package:calc_app/domain/entities/order.dart';
 import 'package:calc_app/domain/repository/deliver_local/order_repository.dart';
 
-class EditOrder {
+class GetOrderById {
   final OrderRepository orderRepository;
 
-  EditOrder(this.orderRepository);
+  GetOrderById(this.orderRepository);
 
   Future<OrderEntity> call({required String id}) async {
-    return await orderRepository.getOrderByIdForEdit(id: id);
+    return await orderRepository.getOrderById(id: id);
   }
 }

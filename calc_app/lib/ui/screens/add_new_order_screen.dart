@@ -8,13 +8,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AddNewOrderScreen extends StatelessWidget {
   static const routeName = '/AddNewOrderScreen';
-  const AddNewOrderScreen({Key? key}) : super(key: key);
+
+  AddNewOrderScreen({Key? key}) : super(key: key);
+
+  final _fl = FieldLink();
 
   @override
   Widget build(BuildContext context) {
-    String name = '';
-    String description = '';
-    final bloc = BlocProvider.of<OrderBloc>(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text(routeName),
@@ -25,13 +25,14 @@ class AddNewOrderScreen extends StatelessWidget {
             children: [
               ///Field name in order
               TextFormField(
-                onChanged: (value) => name = value,
+                onChanged: (value) => _fl.name = value,
                 onFieldSubmitted: (_) {
                   //TODO: need drop addEvent and Navigation or implement
                   //regulations because. If submit without description,
                   //repository saved '' description.
-                  addEvent(bloc, name, description);
-                  scaffoldMessage(context, name);
+                  BlocProvider.of<OrderBloc>(context).add(OrderCreateEvent(
+                      name: _fl.name, description: _fl.description));
+                  scaffoldMessage(context, _fl.name);
                   Navigator.of(context).pop();
                 },
                 decoration: const InputDecoration(
@@ -42,10 +43,11 @@ class AddNewOrderScreen extends StatelessWidget {
               ///Field description in order
               TextFormField(
                 maxLines: 3,
-                onChanged: (value) => description = value,
+                onChanged: (value) => _fl.description = value,
                 onFieldSubmitted: (_) {
-                  addEvent(bloc, name, description);
-                  scaffoldMessage(context, name);
+                  BlocProvider.of<OrderBloc>(context).add(OrderCreateEvent(
+                      name: _fl.name, description: _fl.description));
+                  scaffoldMessage(context, _fl.name);
                   Navigator.of(context).pop();
                 },
                 decoration: const InputDecoration(
@@ -55,8 +57,9 @@ class AddNewOrderScreen extends StatelessWidget {
               IconButton(
                 icon: const Icon(Icons.add_box),
                 onPressed: () {
-                  addEvent(bloc, name, description);
-                  scaffoldMessage(context, name);
+                  BlocProvider.of<OrderBloc>(context).add(OrderCreateEvent(
+                      name: _fl.name, description: _fl.description));
+                  scaffoldMessage(context, _fl.name);
                 },
               ),
             ],
@@ -66,12 +69,13 @@ class AddNewOrderScreen extends StatelessWidget {
     );
   }
 
-  void addEvent(OrderBloc bloc, String name, String description) {
-    bloc.add(OrderCreateEvent(name: name, description: description));
-  }
-
   void scaffoldMessage(BuildContext context, String text) {
     ScaffoldMessenger.of(context)
         .showSnackBar(SnackBar(content: Text("added order $text success")));
   }
+}
+
+class FieldLink {
+  String name = '';
+  String description = '';
 }

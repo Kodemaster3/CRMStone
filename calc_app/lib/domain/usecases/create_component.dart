@@ -1,9 +1,14 @@
 import 'dart:math';
 
 import 'package:calc_app/domain/entities/component.dart';
+import 'package:calc_app/domain/repository/deliver_local/order_repository.dart';
 
 class CreateComponent {
-  ComponentEntity call(
+  final OrderRepository orderRepository;
+
+  CreateComponent(this.orderRepository);
+
+  Future<void> call(
       {required String name,
       required String material,
       required double height,
@@ -11,8 +16,10 @@ class CreateComponent {
       required int quantity,
       required double weightPerCubMeter,
       required double width,
-      required double pricePerCubMeter}) {
-    return ComponentEntity(
+      required double pricePerCubMeter,
+      required String idOrder}) async {
+
+    final component = ComponentEntity(
         name: name,
         id: newId(),
         material: material,
@@ -22,6 +29,8 @@ class CreateComponent {
         weightPerCubMeter: weightPerCubMeter,
         width: width,
         pricePerCubMeter: pricePerCubMeter);
+
+    await orderRepository.createComponent(componentEntity: component, idOrder: idOrder);
   }
 
   String newId() {

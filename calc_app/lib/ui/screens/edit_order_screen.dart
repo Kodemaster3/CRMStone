@@ -6,33 +6,44 @@ import 'package:calc_app/ui/bloc/orders_bloc/order_state.dart';
 
 class EditOrderScreen extends StatelessWidget {
   static const routeName = '/EditOrderScreen';
-  const EditOrderScreen({Key? key}) : super(key: key);
+
+  EditOrderScreen({Key? key}) : super(key: key);
+
+  final _fl = FieldLink();
 
   @override
   Widget build(BuildContext context) {
-    String name = '';
-    String description = '';
     return BlocBuilder<OrderBloc, OrderState>(
       builder: (context, state) {
         if (state is OrderLoaded) {
-          name = state.order.name;
-          description = state.order.description;
+          _fl.name = state.order.name;
+          _fl.description = state.order.description;
           return Scaffold(
             appBar: AppBar(
+              actions: [
+                IconButton(
+                  icon: const Icon(Icons.delete_forever),
+                  onPressed: () {
+                    BlocProvider.of<OrderBloc>(context).add(OrderDeleteEvent(id: state.order.id));
+                    Navigator.of(context)
+                        .pushNamedAndRemoveUntil('/', (route) => false);
+                  },
+                ),
+              ],
               title: Text(state.order.name),
               // automaticallyImplyLeading: false,
             ),
             body: Column(
               children: [
                 TextFormField(
-                  controller: TextEditingController(text: name),
-                  onChanged: (value) => name = value,
-                  onFieldSubmitted: (value) => name = value,
+                  controller: TextEditingController(text: _fl.name),
+                  onChanged: (value) => _fl.name = value,
+                  onFieldSubmitted: (value) => _fl.name = value,
                 ),
                 TextFormField(
-                  controller: TextEditingController(text: description),
-                  onChanged: (value) => description = value,
-                  onFieldSubmitted: (value) => description = value,
+                  controller: TextEditingController(text: _fl.description),
+                  onChanged: (value) => _fl.description = value,
+                  onFieldSubmitted: (value) => _fl.description = value
                 ),
                 TextButton(
                   child: const Text('Submit'),
@@ -41,11 +52,10 @@ class EditOrderScreen extends StatelessWidget {
                     BlocProvider.of<OrderBloc>(context).add(
                       OrderUpdateEvent(
                         id: state.order.id,
-                        name: name,
-                        description: description,
+                        name: _fl.name,
+                        description: _fl.description,
                       ),
                     );
-
                     Navigator.of(context)
                         .pushNamedAndRemoveUntil('/', (route) => false);
                   },
@@ -59,4 +69,9 @@ class EditOrderScreen extends StatelessWidget {
       },
     );
   }
+}
+
+class FieldLink {
+  String name = '';
+  String description = '';
 }

@@ -5,17 +5,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:calc_app/ui/bloc/orders_bloc/order_bloc.dart';
 import 'package:calc_app/ui/bloc/orders_bloc/order_state.dart';
 import 'package:calc_app/ui/widgets/navigate/return_home.dart';
-import 'package:calc_app/ui/screens/add_new_component_screen.dart';
+import 'package:calc_app/ui/screens/component_field_screen.dart';
 import 'package:calc_app/ui/widgets/list_view_component_widget.dart';
 
 class ViewOrderScreenWithListComponent extends StatelessWidget {
   static const routeName = '/ViewOrderScreenWithListComponent';
+
   const ViewOrderScreenWithListComponent({Key? key}) : super(key: key);
 
   ///OrderViewWithComponentEvent
   @override
   Widget build(BuildContext context) {
-    // final bloc = BlocProvider.of<OrderBloc>(context);
     return BlocBuilder<OrderBloc, OrderState>(
       builder: (context, state) {
         if (state is OrderViewWithComponent) {
@@ -24,8 +24,15 @@ class ViewOrderScreenWithListComponent extends StatelessWidget {
             appBar: AppBar(
               automaticallyImplyLeading: false,
               title: Text('Order name: ${state.order.name}'),
-              actions: const [
-                AddNewComponentScreen(),
+              actions: [
+                IconButton(
+                  icon: const Icon(Icons.add),
+                  onPressed: () {
+                    //navigate
+                    Navigator.of(context)
+                        .pushNamed(ComponentFieldScreen.routeName);
+                  },
+                ),
               ],
             ),
             body: const ListViewComponentWidget(),
@@ -43,10 +50,20 @@ class ViewOrderScreenWithListComponent extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
-                children: const [
-                  ReturnHome(),
-                  Text('The list Component is empty'),
-                  AddNewComponentScreen()
+                children: [
+                  const ReturnHome(),
+                  const Text('The list Component is empty'),
+                  IconButton(
+                    icon: const Icon(Icons.add),
+                    onPressed: () {
+
+
+
+                      //navigate
+                      Navigator.of(context)
+                          .pushNamed(ComponentFieldScreen.routeName);
+                    },
+                  ),
                 ],
               ),
             ),

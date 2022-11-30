@@ -8,18 +8,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class CatalogDeliverScreen extends StatelessWidget {
-  const CatalogDeliverScreen({Key? key}) : super(key: key);
+class CatalogOrdersScreen extends StatelessWidget {
+  const CatalogOrdersScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final text = AppLocalizations.of(context);
-
     return Scaffold(
       appBar: AppBar(
         elevation: elevationView,
         centerTitle: true,
-        title: Text(text!.appTitle),
+        title: Text(AppLocalizations.of(context)!.appTitle),
+        // final text = AppLocalizations.of(context);
+        // title: Text(text!.appTitle),
         actions: [
           IconButton(
             onPressed: () {
@@ -36,7 +36,7 @@ class CatalogDeliverScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: const ListViewOrderWidget(), //const ViewCatalog(),
+      body: const ListViewOrderWidget(),
     );
   }
 }

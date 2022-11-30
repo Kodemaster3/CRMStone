@@ -1,13 +1,20 @@
+import 'package:calc_app/domain/entities/component.dart';
 import 'package:calc_app/domain/entities/order.dart';
 
 abstract class OrderRepository {
   Future<List<OrderEntity>> getAllOrders();
 
-  Future<bool> deleteOrderById({required String id});
+  Future<bool> createOrder({
+    required OrderEntity orderEntity,
+  });
 
-  Future<OrderEntity> getOrderByIdForEdit({required String id});
+  Future<bool> deleteOrderById({
+    required String id,
+  });
 
-  // Future<bool> saveChangedOrderById({required OrderEntity order});
+  Future<OrderEntity> getOrderById({
+    required String id,
+  });
 
   Future<bool> updateBodyOrderById({
     required String id,
@@ -15,10 +22,18 @@ abstract class OrderRepository {
     required String description,
   });
 
-  Future<bool> createNewOrder(
-      {required String name, required String description});
-
   Future<bool> createComponent({
+    required ComponentEntity componentEntity,
+    required String idOrder,
+  });
+
+  Future<bool> deleteComponent({
+    required String idOrder,
+    required String idComponent,
+  });
+
+  Future<bool> updateComponentByIdInOrder({
+    required String idComponent,
     required String name,
     required String material,
     required double height,
@@ -27,6 +42,7 @@ abstract class OrderRepository {
     required double weightPerCubMeter,
     required double width,
     required double pricePerCubMeter,
-    required String idOrder,
   });
+
+  Future<ComponentEntity> getComponentById({required String idComponent});
 }

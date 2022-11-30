@@ -1,12 +1,18 @@
 import 'dart:math';
 import 'package:calc_app/domain/entities/order.dart';
+import 'package:calc_app/domain/repository/deliver_local/order_repository.dart';
 
 class CreateOrder {
-  OrderEntity call(String name, String description) {
+  final OrderRepository orderRepository;
+
+  CreateOrder(this.orderRepository);
+
+  Future<void> call(String name, String description) async {
     final OrderEntity orderEntity;
     orderEntity = OrderEntity(
         id: newId(), name: name, description: description, component: []);
-    return orderEntity;
+    await orderRepository.createOrder(orderEntity: orderEntity);
+    // return orderEntity;
   }
 
   String newId() {
