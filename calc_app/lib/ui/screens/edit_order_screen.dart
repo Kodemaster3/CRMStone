@@ -56,6 +56,7 @@ class EditOrderScreen extends StatelessWidget {
                         description: _fl.description,
                       ),
                     );
+                    scaffoldMessage(context, state.order.name);
                     Navigator.of(context)
                         .pushNamedAndRemoveUntil('/', (route) => false);
                   },
@@ -69,6 +70,12 @@ class EditOrderScreen extends StatelessWidget {
       },
     );
   }
+
+  void scaffoldMessage(BuildContext context, String text) {
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text("Updated order $text success")));
+  }
+
 }
 
 class FieldLink {

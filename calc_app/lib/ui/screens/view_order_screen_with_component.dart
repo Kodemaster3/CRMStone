@@ -57,8 +57,6 @@ class ViewOrderScreenWithListComponent extends StatelessWidget {
                     icon: const Icon(Icons.add),
                     onPressed: () {
 
-
-
                       //navigate
                       Navigator.of(context)
                           .pushNamed(ComponentFieldScreen.routeName);

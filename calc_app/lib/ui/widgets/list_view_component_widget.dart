@@ -83,6 +83,7 @@ class ListViewComponentWidget extends StatelessWidget {
                                               idComponent: state
                                                   .order.component[index].id),
                                         );
+                                        scaffoldMessage(context, state.order.component[index].name);
                                       },
                                     ),
                                   ],
@@ -110,13 +111,13 @@ class ListViewComponentWidget extends StatelessWidget {
             ],
           );
         }
-        return circularProgressIndicator();
+        return const CircularProgressIndicator();
       },
     );
   }
 
-  Widget circularProgressIndicator() {
-    // dev.log('circularProgressIndicator in ListViewComponentWidget');
-    return const CircularProgressIndicator();
+  void scaffoldMessage(BuildContext context, String text) {
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text("Deleted component $text success")));
   }
 }

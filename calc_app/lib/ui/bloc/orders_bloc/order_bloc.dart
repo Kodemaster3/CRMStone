@@ -35,7 +35,7 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
     required this.updateComponent,
     required this.getComponentById,
   }) : super(OrderInitial()) {
-    String orderCashId = '';
+    String _orderCashId = '';
 
     ///Emit all orders
     on<OrderLoadingEvent>((event, emit) async {
@@ -46,7 +46,10 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
 
     ///Create new order
     on<OrderCreateEvent>((event, emit) async {
+      emit(OrderLoading());
       await createOrder(event.name, event.description);
+      final orders = await getAllOrders();
+      emit(OrdersLoaded(orders: orders));
     });
 
     ///Emit all orders and given choice variable when component list empty
@@ -54,7 +57,7 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
       (event, emit) async {
         emit(OrderLoading());
         final order = await getOrderById(id: event.id);
-        orderCashId = order.id;
+        _orderCashId = order.id;
         order.component.isNotEmpty
             ? emit(OrderViewWithComponent(order: order))
             : emit(OrderViewWithEmptyListComponent(order: order));
@@ -65,7 +68,6 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
     on<ComponentOrderCreateEvent>(
       (event, emit) async {
         emit(OrderLoading());
-
         await createComponent(
           name: event.name,
           material: event.material,
@@ -75,13 +77,10 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
           weightPerCubMeter: event.weightPerCubMeter,
           width: event.width,
           pricePerCubMeter: event.pricePerCubMeter,
-          idOrder: orderCashId,
+          idOrder: _orderCashId,
         );
 
-        final order = await getOrderById(id: orderCashId);
-        // final order = await getAllOrders.orderRepository
-        //     .getOrderById(id: orderCashId);
-
+        final order = await getOrderById(id: _orderCashId);
         emit(OrderViewWithComponent(order: order));
       },
     );
@@ -124,8 +123,8 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
       (event, emit) async {
         emit(OrderLoading()); // ??
         await deleteComponent(
-            idOrder: orderCashId, idComponent: event.idComponent);
-        final order = await getOrderById(id: orderCashId);
+            idOrder: _orderCashId, idComponent: event.idComponent);
+        final order = await getOrderById(id: _orderCashId);
         emit(OrderViewWithComponent(order: order));
       },
     );
@@ -145,7 +144,7 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
             width: event.width,
             pricePerCubMeter: event.pricePerCubMeter);
 
-        final order = await getOrderById(id: orderCashId);
+        final order = await getOrderById(id: _orderCashId);
         emit(OrderViewWithComponent(order: order));
       },
     );

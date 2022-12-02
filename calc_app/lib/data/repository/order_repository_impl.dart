@@ -79,8 +79,8 @@ class OrderRepositoryImpl extends OrderRepository {
       await localDataSource.ordersToCache(dataOrders);
       return true;
     } on Exception {
-      dev.log(
-          'Exc in repository method createNewOrder() when name is ${orderEntity.name}');
+      dev.log('Exc in repository method createNewOrder()'
+          ' when name is ${orderEntity.name}');
       return false;
     }
   }
@@ -105,8 +105,8 @@ class OrderRepositoryImpl extends OrderRepository {
       await localDataSource.ordersToCache(dataOrders);
       return true;
     } on Exception {
-      dev.log(
-          'Exc in order,repository method createComponent() when id is $idOrder, in added component');
+      dev.log('Exc in order,repository method createComponent()'
+          ' when id is $idOrder, in added component');
       return false;
     }
   }
@@ -203,7 +203,7 @@ class OrderRepositoryImpl extends OrderRepository {
             updateOrder.component.remove(elementComponent);
             updateOrder.component.add(updateComponent);
 
-            for(var oldOrder in dataOrder) {
+            for (var oldOrder in dataOrder) {
               if (oldOrder.id == idOrderToReplace) {
                 dataOrder.remove(oldOrder);
                 dataOrder.add(updateOrder);
@@ -223,8 +223,9 @@ class OrderRepositoryImpl extends OrderRepository {
   }
 
   @override
-  Future<ComponentEntity> getComponentById({required String idComponent}) async {
-    try{
+  Future<ComponentEntity> getComponentById(
+      {required String idComponent}) async {
+    try {
       final dataOrders = await localDataSource.getLastOrderFromCache();
 
       for (var order in dataOrders) {
@@ -234,7 +235,6 @@ class OrderRepositoryImpl extends OrderRepository {
           }
         }
       }
-
     } on Exception {
       dev.log('Exc in order rep, in method getComponentById');
     }
