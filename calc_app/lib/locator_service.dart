@@ -1,15 +1,16 @@
 import 'package:calc_app/data/datasource/order_local_data_source.dart';
 import 'package:calc_app/data/repository/order_repository_impl.dart';
 import 'package:calc_app/domain/repository/deliver_local/order_repository.dart';
-import 'package:calc_app/domain/usecases/create_component.dart';
-import 'package:calc_app/domain/usecases/create_order.dart';
-import 'package:calc_app/domain/usecases/delete_order.dart';
-import 'package:calc_app/domain/usecases/get_component_by_id.dart';
-import 'package:calc_app/domain/usecases/get_order_by_id.dart';
-import 'package:calc_app/domain/usecases/get_all_orders.dart';
-import 'package:calc_app/domain/usecases/update_component.dart';
-import 'package:calc_app/domain/usecases/update_order.dart';
-import 'package:calc_app/domain/usecases/delete_component.dart';
+import 'package:calc_app/domain/use_cases/component/create_component.dart';
+import 'package:calc_app/domain/use_cases/order/create_order.dart';
+import 'package:calc_app/domain/use_cases/order/delete_order.dart';
+import 'package:calc_app/domain/use_cases/component/get_component_by_id.dart';
+import 'package:calc_app/domain/use_cases/component/get_components_by_list_id.dart';
+import 'package:calc_app/domain/use_cases/order/get_order_by_id.dart';
+import 'package:calc_app/domain/use_cases/order/get_all_orders.dart';
+import 'package:calc_app/domain/use_cases/component/update_component.dart';
+import 'package:calc_app/domain/use_cases/order/update_order.dart';
+import 'package:calc_app/domain/use_cases/component/delete_component.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -30,6 +31,7 @@ Future<void> init() async {
       deleteComponent: sl(),
       updateComponent: sl(),
       getComponentById: sl(),
+      getComponentsById: sl(),
     ),
   );
 
@@ -60,6 +62,9 @@ Future<void> init() async {
   );
   sl.registerLazySingleton(
     () => GetComponentById(sl()),
+  );
+  sl.registerLazySingleton(
+    () => GetComponentsByListId(sl()),
   );
 
   /// Repository

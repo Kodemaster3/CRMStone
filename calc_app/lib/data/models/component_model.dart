@@ -36,7 +36,7 @@ class ComponentModel extends ComponentEntity {
     };
   }
 
-  factory ComponentModel.fromMap(Map<String, dynamic> map) {
+  factory ComponentModel.fromJson(Map<String, dynamic> map) {
     return ComponentModel(
       name: map['name'] ?? '',
       id: map['id'],

@@ -44,5 +44,11 @@ abstract class OrderRepository {
     required double pricePerCubMeter,
   });
 
-  Future<ComponentEntity> getComponentById({required String idComponent});
+  Future<ComponentEntity> getComponentById({
+    required String idComponent,
+  });
+
+  Future<List<ComponentEntity>> getComponentsById({
+    required List<String> idComponents,
+  });
 }

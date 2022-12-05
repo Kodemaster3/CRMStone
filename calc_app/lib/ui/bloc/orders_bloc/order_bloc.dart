@@ -1,15 +1,16 @@
 import 'dart:developer' as dev;
 
-import 'package:calc_app/domain/usecases/create_component.dart';
-import 'package:calc_app/domain/usecases/create_order.dart';
-import 'package:calc_app/domain/usecases/delete_component.dart';
-import 'package:calc_app/domain/usecases/delete_order.dart';
-import 'package:calc_app/domain/usecases/get_component_by_id.dart';
-import 'package:calc_app/domain/usecases/get_order_by_id.dart';
-import 'package:calc_app/domain/usecases/update_component.dart';
-import 'package:calc_app/domain/usecases/update_order.dart';
+import 'package:calc_app/domain/use_cases/component/create_component.dart';
+import 'package:calc_app/domain/use_cases/order/create_order.dart';
+import 'package:calc_app/domain/use_cases/component/delete_component.dart';
+import 'package:calc_app/domain/use_cases/order/delete_order.dart';
+import 'package:calc_app/domain/use_cases/component/get_component_by_id.dart';
+import 'package:calc_app/domain/use_cases/component/get_components_by_list_id.dart';
+import 'package:calc_app/domain/use_cases/order/get_order_by_id.dart';
+import 'package:calc_app/domain/use_cases/component/update_component.dart';
+import 'package:calc_app/domain/use_cases/order/update_order.dart';
+import 'package:calc_app/domain/use_cases/order/get_all_orders.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:calc_app/domain/usecases/get_all_orders.dart';
 import 'package:calc_app/ui/bloc/orders_bloc/order_event.dart';
 import 'package:calc_app/ui/bloc/orders_bloc/order_state.dart';
 
@@ -23,6 +24,7 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
   final DeleteComponent deleteComponent;
   final UpdateComponent updateComponent;
   final GetComponentById getComponentById;
+  final GetComponentsByListId getComponentsById;
 
   OrderBloc({
     required this.getAllOrders,
@@ -34,6 +36,7 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
     required this.deleteComponent,
     required this.updateComponent,
     required this.getComponentById,
+    required this.getComponentsById,
   }) : super(OrderInitial()) {
     String _orderCashId = '';
 
@@ -50,6 +53,7 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
       await createOrder(event.name, event.description);
       final orders = await getAllOrders();
       emit(OrdersLoaded(orders: orders));
+      //TODO implement throw exception by each id number
     });
 
     ///Emit all orders and given choice variable when component list empty
@@ -58,8 +62,12 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
         emit(OrderLoading());
         final order = await getOrderById(id: event.id);
         _orderCashId = order.id;
+
         order.component.isNotEmpty
-            ? emit(OrderViewWithComponent(order: order))
+            ? emit(OrderViewWithComponent(
+                order: order,
+                components:
+                    await getComponentsById(listIdComponents: order.component)))
             : emit(OrderViewWithEmptyListComponent(order: order));
       },
     );
@@ -68,7 +76,7 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
     on<ComponentOrderCreateEvent>(
       (event, emit) async {
         emit(OrderLoading());
-        await createComponent(
+         final response = await createComponent(
           name: event.name,
           material: event.material,
           height: event.height,
@@ -81,7 +89,13 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
         );
 
         final order = await getOrderById(id: _orderCashId);
-        emit(OrderViewWithComponent(order: order));
+        if (response) {
+          emit(OrderViewWithComponent(
+            order: order,
+            components: await getComponentsById(listIdComponents: order.component),
+          ));
+        }
+        //TODO implement throw exception by each id number
       },
     );
 
@@ -104,14 +118,14 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
       (event, emit) async {
         // dev.log('u be in on<OrderUpdateEvent>');
         emit(OrderLoading());
-        final flag = await updateOrder(
+        final response = await updateOrder(
           id: event.id,
           name: event.name,
           description: event.description,
         );
 
         //TODO: implement message on screen
-        if (flag) {
+        if (response) {
           emit(
             OrderOperationSuccess(message: '${event.name} be changed Success'),
           );
@@ -121,19 +135,25 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
 
     on<ComponentOrderDeletedEvent>(
       (event, emit) async {
-        emit(OrderLoading()); // ??
-        await deleteComponent(
+        emit(OrderLoading());
+        final response = await deleteComponent(
             idOrder: _orderCashId, idComponent: event.idComponent);
         final order = await getOrderById(id: _orderCashId);
-        emit(OrderViewWithComponent(order: order));
+        // final List<ComponentEntity> components =
+        //     await getComponentsById(listIdComponents: order.component);
+        if (response) {
+          emit(OrderViewWithComponent(
+            order: order,
+            components: await getComponentsById(listIdComponents: order.component),
+          ));
+        }
       },
     );
-
 
     on<ComponentOrderUpdatedEvent>(
       (event, emit) async {
         emit(OrderLoading());
-        await updateComponent(
+        final response = await updateComponent(
             idComponent: event.idComponent,
             name: event.name,
             material: event.material,
@@ -145,16 +165,27 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
             pricePerCubMeter: event.pricePerCubMeter);
 
         final order = await getOrderById(id: _orderCashId);
-        emit(OrderViewWithComponent(order: order));
+        // final List<ComponentEntity> components =
+        //     await getComponentsById(listIdComponents: order.component);
+        if (response) {
+          emit(OrderViewWithComponent(
+            order: order,
+            components: await getComponentsById(listIdComponents: order.component),
+          ));
+        }
       },
     );
 
     on<ComponentOrderUpdatingEvent>(
-          (event, emit) async {
+      (event, emit) async {
         emit(OrderLoading());
-        final component = await getComponentById(idComponent: event.idComponent);
+        final component =
+            await getComponentById(idComponent: event.idComponent);
 
-        emit(ComponentEditingField(componentEntity: component, idOrder: event.idOrder));
+        emit(ComponentEditingField(
+          componentEntity: component,
+          idOrder: _orderCashId,
+        ));
       },
     );
   }

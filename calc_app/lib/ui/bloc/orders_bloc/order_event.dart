@@ -105,11 +105,11 @@ class ComponentOrderUpdatedEvent extends OrderEvent {
 }
 
 class ComponentOrderUpdatingEvent extends OrderEvent {
-  final String idOrder;
+  // final String idOrder;
   final String idComponent;
 
   const ComponentOrderUpdatingEvent({
-    required this.idOrder,
+    // required this.idOrder,
     required this.idComponent,
   });
 }

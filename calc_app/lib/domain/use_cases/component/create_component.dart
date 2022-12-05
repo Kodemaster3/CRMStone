@@ -8,7 +8,7 @@ class CreateComponent {
 
   CreateComponent(this.orderRepository);
 
-  Future<void> call(
+  Future<bool> call(
       {required String name,
       required String material,
       required double height,
@@ -18,7 +18,6 @@ class CreateComponent {
       required double width,
       required double pricePerCubMeter,
       required String idOrder}) async {
-
     final component = ComponentEntity(
         name: name,
         id: newId(),
@@ -30,14 +29,17 @@ class CreateComponent {
         width: width,
         pricePerCubMeter: pricePerCubMeter);
 
-    await orderRepository.createComponent(componentEntity: component, idOrder: idOrder);
+    return await orderRepository.createComponent(
+        componentEntity: component, idOrder: idOrder);
   }
 
   String newId() {
-    String id = Random().nextInt(19999999).toString();
-    while (id.length < 22) {
+    String id = Random().nextInt(999999).toString();
+    final now = DateTime.now().microsecondsSinceEpoch.toString();
+    while (id.length < 12) {
       id = '0$id';
     }
-    return id;
+
+    return '$now$id';
   }
 }

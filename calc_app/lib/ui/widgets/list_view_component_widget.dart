@@ -1,5 +1,3 @@
-import 'dart:developer' as dev;
-
 import 'package:calc_app/ui/bloc/orders_bloc/order_event.dart';
 import 'package:calc_app/ui/screens/component_field_screen.dart';
 import 'package:calc_app/ui/screens/edit_order_screen.dart';
@@ -18,7 +16,6 @@ class ListViewComponentWidget extends StatelessWidget {
     return BlocBuilder<OrderBloc, OrderState>(
       builder: (context, state) {
         if (state is OrderViewWithComponent) {
-          // dev.log('state in OrderViewWithComponent is work');
           return Column(
             children: [
               const Expanded(
@@ -37,7 +34,6 @@ class ListViewComponentWidget extends StatelessWidget {
                     ],
                   ),
                   onTap: () {
-                    dev.log('message');
                     BlocProvider.of<OrderBloc>(context)
                         .add(OrderViewByIdEvent(id: state.order.id));
                     Navigator.of(context).pushNamed(EditOrderScreen.routeName);
@@ -45,7 +41,7 @@ class ListViewComponentWidget extends StatelessWidget {
                 ),
               ),
 
-              /// That part give as list our components in body
+              /// That part give as the list our components in body
 
               Expanded(
                 flex: 10,
@@ -64,16 +60,16 @@ class ListViewComponentWidget extends StatelessWidget {
                                 Row(
                                   children: [
                                     Text(
-                                      'id: ${state.order.component[index].id}',
+                                      'id: ${state.components[index].id}',
                                     ),
                                     Text(
-                                      'Name: ${state.order.component[index].name}',
+                                      'Name: ${state.components[index].name}',
                                     ),
                                     Text(
-                                      'Quantity: ${state.order.component[index].quantity}',
+                                      'Quantity: ${state.components[index].quantity}',
                                     ),
                                     Text(
-                                      'Material: ${state.order.component[index].material}',
+                                      'Material: ${state.components[index].material}',
                                     ),
                                     IconButton(
                                       icon: const Icon(Icons.delete),
@@ -81,9 +77,9 @@ class ListViewComponentWidget extends StatelessWidget {
                                         BlocProvider.of<OrderBloc>(context).add(
                                           ComponentOrderDeletedEvent(
                                               idComponent: state
-                                                  .order.component[index].id),
+                                                  .components[index].id),
                                         );
-                                        scaffoldMessage(context, state.order.component[index].name);
+                                        scaffoldMessage(context, state.components[index].name);
                                       },
                                     ),
                                   ],
@@ -94,9 +90,8 @@ class ListViewComponentWidget extends StatelessWidget {
                               //TODO: implement edit field component
                               BlocProvider.of<OrderBloc>(context).add(
                                 ComponentOrderUpdatingEvent(
-                                    idOrder: state.order.id,
                                     idComponent:
-                                        state.order.component[index].id),
+                                        state.components[index].id),
                               );
                               Navigator.of(context)
                                   .pushNamed(ComponentFieldScreen.routeName);

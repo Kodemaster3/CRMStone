@@ -1,10 +1,9 @@
-import 'component.dart';
 
 class OrderEntity {
   final String id;
   final String name;
   final String description;
-  final List<ComponentEntity> component;
+  final List<String> component;
 
   OrderEntity({
     required this.id,

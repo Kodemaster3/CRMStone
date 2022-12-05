@@ -18,7 +18,6 @@ class OrderRepositoryImpl extends OrderRepository {
   Future<List<OrderEntity>> getAllOrders() async {
     try {
       final dataOrders = await localDataSource.getLastOrderFromCache();
-      //place save local data if data source from api
       return dataOrders;
     } on Exception {
       dev.log('Exc in order repository, method getAllOrders()');
@@ -71,42 +70,19 @@ class OrderRepositoryImpl extends OrderRepository {
   Future<bool> createOrder({
     required OrderEntity orderEntity,
   }) async {
-    // TODO: implement logic scan repo for search old ID
     try {
       List<OrderModel> dataOrders =
           await localDataSource.getLastOrderFromCache();
+      final List<String> oldId = dataOrders.map((e) => e.id).toList();
+      if (oldId.contains(orderEntity.id)) {
+        throw Exception('id is not unique');
+      }
       dataOrders.add(orderMapper.orderEntityToDataModel(orderEntity));
       await localDataSource.ordersToCache(dataOrders);
       return true;
     } on Exception {
       dev.log('Exc in repository method createNewOrder()'
           ' when name is ${orderEntity.name}');
-      return false;
-    }
-  }
-
-  @override
-  Future<bool> createComponent({
-    required ComponentEntity componentEntity,
-    required String idOrder,
-  }) async {
-    try {
-      List<OrderModel> dataOrders =
-          await localDataSource.getLastOrderFromCache();
-
-      for (var element in dataOrders) {
-        if (element.id == idOrder) {
-          element.component
-              .add(orderMapper.componentEntityToDataModel(componentEntity));
-          break;
-        }
-      }
-
-      await localDataSource.ordersToCache(dataOrders);
-      return true;
-    } on Exception {
-      dev.log('Exc in order,repository method createComponent()'
-          ' when id is $idOrder, in added component');
       return false;
     }
   }
@@ -141,6 +117,41 @@ class OrderRepositoryImpl extends OrderRepository {
     }
   }
 
+  /// Load all orders, paired key in list components and push
+  /// that entity component to same repository, where key that component
+  /// must to be unique.
+  @override
+  Future<bool> createComponent({
+    required ComponentEntity componentEntity,
+    required String idOrder,
+  }) async {
+    try {
+      List<OrderModel> dataOrders =
+          await localDataSource.getLastOrderFromCache();
+
+      for (var element in dataOrders) {
+        final result = element.component;
+        if (result.contains(componentEntity.id)) {
+          throw Exception('id is not unique');
+        }
+      }
+      for (var element in dataOrders) {
+        if (element.id == idOrder) {
+          element.component.add(componentEntity.id);
+          break;
+        }
+      }
+      await localDataSource.componentToCache(componentEntity.id,
+          orderMapper.componentEntityToDataModel(componentEntity));
+      await localDataSource.ordersToCache(dataOrders);
+      return true;
+    } on Exception {
+      dev.log('Exc in order,repository method createComponent()'
+          ' when id is $idOrder, in added component');
+      return false;
+    }
+  }
+
   @override
   Future<bool> deleteComponent({
     required String idOrder,
@@ -153,8 +164,9 @@ class OrderRepositoryImpl extends OrderRepository {
       for (var element in dataOrder) {
         if (element.id == idOrder) {
           for (var elementComponent in element.component) {
-            if (elementComponent.id == idComponent) {
+            if (elementComponent == idComponent) {
               element.component.remove(elementComponent);
+              await localDataSource.removeComponentFromCache(idComponent);
               await localDataSource.ordersToCache(dataOrder);
               return true;
             }
@@ -181,43 +193,21 @@ class OrderRepositoryImpl extends OrderRepository {
     required double pricePerCubMeter,
   }) async {
     try {
-      List<OrderModel> dataOrder =
-          await localDataSource.getLastOrderFromCache();
+      final updateComponent = ComponentModel(
+          id: idComponent,
+          name: name,
+          material: material,
+          height: height,
+          length: length,
+          quantity: quantity,
+          weightPerCubMeter: weightPerCubMeter,
+          width: width,
+          pricePerCubMeter: pricePerCubMeter);
 
-      for (var element in dataOrder) {
-        var updateOrder = element;
-        for (var elementComponent in updateOrder.component) {
-          if (elementComponent.id == idComponent) {
-            final updateComponent = ComponentModel(
-                id: idComponent,
-                name: name,
-                material: material,
-                height: height,
-                length: length,
-                quantity: quantity,
-                weightPerCubMeter: weightPerCubMeter,
-                width: width,
-                pricePerCubMeter: pricePerCubMeter);
-
-            final idOrderToReplace = updateOrder.id;
-            updateOrder.component.remove(elementComponent);
-            updateOrder.component.add(updateComponent);
-
-            for (var oldOrder in dataOrder) {
-              if (oldOrder.id == idOrderToReplace) {
-                dataOrder.remove(oldOrder);
-                dataOrder.add(updateOrder);
-                await localDataSource.ordersToCache(dataOrder);
-                return true;
-              }
-            }
-            // break;
-          }
-        }
-      }
-      return false;
+      await localDataSource.componentToCache(idComponent, updateComponent);
+      return true;
     } on Exception {
-      dev.log('Exc in order rep, in method deleteComponent');
+      dev.log('Exc in order rep, in method updateComponentByIdInOrder');
       return false;
     }
   }
@@ -226,17 +216,31 @@ class OrderRepositoryImpl extends OrderRepository {
   Future<ComponentEntity> getComponentById(
       {required String idComponent}) async {
     try {
-      final dataOrders = await localDataSource.getLastOrderFromCache();
-
-      for (var order in dataOrders) {
-        for (var component in order.component) {
-          if (component.id == idComponent) {
-            return component;
-          }
-        }
-      }
+      final component =
+          await localDataSource.getLastComponentFromCacheById(idComponent);
+      // for (var order in dataOrders) {
+      //   for (var component in order.component) {
+      //     if (component.id == idComponent) {
+      //       return component;
+      //     }
+      //   }
+      // }
+      return component;
     } on Exception {
       dev.log('Exc in order rep, in method getComponentById');
+    }
+    throw Exception('Exception in repository lvl data');
+  }
+
+  @override
+  Future<List<ComponentEntity>> getComponentsById(
+      {required List<String> idComponents}) async {
+    try {
+      final components =
+          await localDataSource.getLastListComponentFromCacheById(idComponents);
+      return components;
+    } on Exception {
+      dev.log('Exc in order rep, in method getComponentsById');
     }
     throw Exception('Exception in repository lvl data');
   }
