@@ -20,11 +20,13 @@ abstract class OrderRepository {
     required String id,
     required String name,
     required String description,
+    required DateTime edit,
   });
 
   Future<bool> createComponent({
     required ComponentEntity componentEntity,
     required String idOrder,
+    required DateTime edit,
   });
 
   Future<bool> deleteComponent({
@@ -33,15 +35,7 @@ abstract class OrderRepository {
   });
 
   Future<bool> updateComponentByIdInOrder({
-    required String idComponent,
-    required String name,
-    required String material,
-    required double height,
-    required double length,
-    required int quantity,
-    required double weightPerCubMeter,
-    required double width,
-    required double pricePerCubMeter,
+    required ComponentEntity componentEntity,
   });
 
   Future<ComponentEntity> getComponentById({

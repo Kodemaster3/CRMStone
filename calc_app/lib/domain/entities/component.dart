@@ -1,17 +1,22 @@
+import 'package:calc_app/domain/entities/date.dart';
+import 'package:calc_app/domain/entities/size.dart';
+
 class ComponentEntity {
-  final String name;
   final String id;
+  final String name;
   final String material;
   final double width;
   final double length;
   final double height;
   final double weightPerCubMeter;
-  int quantity;
-  double pricePerCubMeter;
+  final int quantity;
+  final double pricePerCubMeter;
+  final DateEntity dateEntity;
+  final Size size;
 
   ComponentEntity({
-    required this.name,
     required this.id,
+    required this.name,
     required this.material,
     required this.height,
     required this.length,
@@ -19,5 +24,7 @@ class ComponentEntity {
     required this.weightPerCubMeter,
     required this.width,
     required this.pricePerCubMeter,
+    required this.dateEntity,
+    required this.size,
   });
 }

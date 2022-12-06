@@ -1,4 +1,7 @@
+import 'package:calc_app/domain/entities/component.dart';
+import 'package:calc_app/domain/entities/date.dart';
 import 'package:calc_app/domain/repository/deliver_local/order_repository.dart';
+import 'package:calc_app/domain/use_cases/order/create_order.dart';
 
 class UpdateComponent {
   final OrderRepository orderRepository;
@@ -16,9 +19,11 @@ class UpdateComponent {
     required double weightPerCubMeter,
     required double width,
     required double pricePerCubMeter,
+    //TODO: implement size fields!!!
   }) async {
-    return await orderRepository.updateComponentByIdInOrder(
-        idComponent: idComponent,
+    final date = DateEntity(create: DateTime.now(), edit: DateTime.now());
+    final updateComponent = ComponentEntity(
+        id: idComponent,
         name: name,
         material: material,
         height: height,
@@ -26,6 +31,11 @@ class UpdateComponent {
         quantity: quantity,
         weightPerCubMeter: weightPerCubMeter,
         width: width,
-        pricePerCubMeter: pricePerCubMeter);
+        pricePerCubMeter: pricePerCubMeter,
+        dateEntity: date,
+        size: temptSize,
+    );
+    return await orderRepository.updateComponentByIdInOrder(
+        componentEntity: updateComponent);
   }
 }

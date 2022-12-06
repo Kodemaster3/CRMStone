@@ -1,34 +1,42 @@
+import 'package:calc_app/data/models/date_model.dart';
+import 'package:calc_app/data/models/size_model.dart';
+import 'package:calc_app/domain/entities/date.dart';
 import 'package:calc_app/domain/entities/order.dart';
+import 'package:calc_app/domain/entities/size.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class OrderModel extends OrderEntity {
-  OrderModel(
-      {required String id,
-      required String name,
-      required String description,
-      required List<String> component})
-      : super(
-            id: id, name: name, description: description, component: component);
+part 'order_model.freezed.dart';
 
-  factory OrderModel.fromJson(Map<String, dynamic> map) {
-    return OrderModel(
-      id: map['id'] ?? '',
-      name: map['name'] ?? '',
-      description: map['description'] ?? '',
-      component: List<String>.from(map['component']),
-    );
-  }
+part 'order_model.g.dart';
 
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'name': name,
-      'description': description,
-      'component': component,
-    };
-  }
+@Freezed(makeCollectionsUnmodifiable: true)
+class OrderModel with _$OrderModel implements OrderEntity {
+  const OrderModel._();
+
+  // @JsonSerializable(explicitToJson: true)
+  const factory OrderModel({
+    required String id,
+    required String name,
+    required String description,
+    required SizeModel sizeModel,
+    required List<String> component,
+    required DateModel dateModel,
+  }) = _OrderModel;
+
+  factory OrderModel.fromJson(Map<String, dynamic> json) =>
+      _$OrderModelFromJson(json);
+
+  @override
+  DateEntity get dateEntity => DateModel(
+        create: dateModel.create,
+        edit: dateModel.edit,
+      );
+
+  @override
+  Size get size => SizeModel(
+        width: sizeModel.width,
+        length: sizeModel.length,
+        height: sizeModel.height,
+        unitsLinear: sizeModel.unitsLinear,
+      );
 }
-
-
-
-
-

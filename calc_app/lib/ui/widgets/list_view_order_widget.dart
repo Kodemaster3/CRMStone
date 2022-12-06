@@ -21,12 +21,18 @@ class ListViewOrderWidget extends StatelessWidget {
             itemBuilder: ((context, index) {
               return GestureDetector(
                 child: Center(
-                  child: Text(
-                      '$index id is: ${state.orders[index].id} an name is: ${state.orders[index].name} description is: ${state.orders[index].description}'),
+                  child: Column(
+                    children: [
+                      Text(
+                          '$index id is: ${state.orders[index].id} an name is: ${state.orders[index].name} description is: ${state.orders[index].description}'),
+                      Text(
+                          'date created ${state.orders[index].dateEntity.create.toString()}'),
+                      Text(
+                          'date edited ${state.orders[index].dateEntity.edit.toString()}'),
+                    ],
+                  ),
                 ),
                 onTap: () {
-                  // dev.log(state.orders[index].id);
-
                   BlocProvider.of<OrderBloc>(context).add(
                       OrderViewWithComponentEvent(id: state.orders[index].id));
                   Navigator.of(context)

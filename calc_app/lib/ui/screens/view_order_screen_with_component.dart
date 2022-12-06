@@ -71,7 +71,6 @@ class ViewOrderScreenWithListComponent extends StatelessWidget {
   }
 
   Widget circularProgressIndicator() {
-    // dev.log('CircularProgressIndicator in ViewOrderScreenWithListComponent');
     return const CircularProgressIndicator();
   }
 }

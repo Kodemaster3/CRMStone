@@ -1,58 +1,46 @@
+import 'package:calc_app/data/models/date_model.dart';
+import 'package:calc_app/data/models/size_model.dart';
 import 'package:calc_app/domain/entities/component.dart';
+import 'package:calc_app/domain/entities/date.dart';
+import 'package:calc_app/domain/entities/size.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class ComponentModel extends ComponentEntity {
-  ComponentModel(
-      {required String name,
-      required String id,
-      required String material,
-      required double height,
-      required double length,
-      required int quantity,
-      required double weightPerCubMeter,
-      required double width,
-      required double pricePerCubMeter})
-      : super(
-            name: name,
-            id: id,
-            material: material,
-            height: height,
-            length: length,
-            quantity: quantity,
-            weightPerCubMeter: weightPerCubMeter,
-            width: width,
-            pricePerCubMeter: pricePerCubMeter);
+part 'component_model.freezed.dart';
 
-  Map<String, dynamic> toJson() {
-    return {
-      'name': name,
-      'id': id,
-      'material': material,
-      'width': width,
-      'length': length,
-      'height': height,
-      'weightPerCubMeter': weightPerCubMeter,
-      'quantity': quantity,
-      'pricePerCubMeter': pricePerCubMeter,
-    };
-  }
+part 'component_model.g.dart';
 
-  factory ComponentModel.fromJson(Map<String, dynamic> map) {
-    return ComponentModel(
-      name: map['name'] ?? '',
-      id: map['id'],
-      material: map['material'] ?? '',
-      width: map['width']?.toDouble() ?? 0.0,
-      length: map['length']?.toDouble() ?? 0.0,
-      height: map['height']?.toDouble() ?? 0.0,
-      weightPerCubMeter: map['weightPerCubMeter']?.toDouble() ?? 0.0,
-      quantity: map['quantity']?.toInt() ?? 0,
-      pricePerCubMeter: map['pricePerCubMeter']?.toDouble() ?? 0.0,
-    );
-  }
+@freezed
+class ComponentModel with _$ComponentModel implements ComponentEntity {
+  const ComponentModel._();
+
+  const factory ComponentModel({
+    required String name,
+    required String id,
+    required String material,
+    required double height,
+    required double length,
+    required int quantity,
+    required double weightPerCubMeter,
+    required double width,
+    required double pricePerCubMeter,
+    required DateModel dateModel,
+    required SizeModel sizeModel,
+  }) = _ComponentModel;
+
+  factory ComponentModel.fromJson(Map<String, dynamic> json) =>
+      _$ComponentModelFromJson(json);
+
+  @override
+  DateEntity get dateEntity => DateModel(
+        create: dateModel.create,
+        edit: dateModel.edit,
+      );
+
+  @override
+  Size get size => SizeModel(
+        width: sizeModel.width,
+        length: sizeModel.length,
+        height: sizeModel.height,
+        unitsLinear: sizeModel.unitsLinear,
+      );
 }
-
-//   String toJson() => json.encode(toMap());
-
-//   factory NomenclatureModelRepository.fromJson(String source) =>
-//       NomenclatureModelRepository.fromMap(json.decode(source));
-// }

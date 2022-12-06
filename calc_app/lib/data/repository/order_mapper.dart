@@ -1,69 +1,84 @@
+import 'dart:developer' as dev;
 import 'package:calc_app/data/models/component_model.dart';
 import 'package:calc_app/data/models/order_model.dart';
+import 'package:calc_app/data/models/date_model.dart';
+import 'package:calc_app/data/models/size_model.dart';
 import 'package:calc_app/domain/entities/component.dart';
+import 'package:calc_app/domain/entities/date.dart';
 import 'package:calc_app/domain/entities/order.dart';
+import 'package:calc_app/domain/entities/size.dart';
 
 class OrderMapper {
   OrderModel orderEntityToDataModel(OrderEntity orderEntity) {
+    // final date = DateModel(create: orderEntity.dateEntity.create, edit: orderEntity.dateEntity.edit);
+    // dev.log(date.toString());
     return OrderModel(
         id: orderEntity.id,
         name: orderEntity.name,
         description: orderEntity.description,
-        component: orderEntity.component);
+        component: orderEntity.component,
+        dateModel: _dateEntityToModel(orderEntity.dateEntity),
+      // dateModel: date,
+        sizeModel: _sizeEntityToModel(orderEntity.size),
+    );
   }
 
   OrderEntity orderDataModelToEntity(OrderModel orderModel) {
     return OrderEntity(
-        id: orderModel.id,
-        name: orderModel.name,
-        description: orderModel.description,
-        component: orderModel.component);
+      id: orderModel.id,
+      name: orderModel.name,
+      description: orderModel.description,
+      component: orderModel.component,
+      dateEntity: orderModel.dateEntity,
+      size: orderModel.size,
+    );
   }
 
   ComponentModel componentEntityToDataModel(ComponentEntity componentEntity) {
     return ComponentModel(
-        name: componentEntity.name,
-        id: componentEntity.id,
-        material: componentEntity.material,
-        height: componentEntity.height,
-        length: componentEntity.length,
-        quantity: componentEntity.quantity,
-        weightPerCubMeter: componentEntity.weightPerCubMeter,
-        width: componentEntity.width,
-        pricePerCubMeter: componentEntity.pricePerCubMeter);
+      name: componentEntity.name,
+      id: componentEntity.id,
+      material: componentEntity.material,
+      height: componentEntity.height,
+      length: componentEntity.length,
+      quantity: componentEntity.quantity,
+      weightPerCubMeter: componentEntity.weightPerCubMeter,
+      width: componentEntity.width,
+      pricePerCubMeter: componentEntity.pricePerCubMeter,
+      dateModel: _dateEntityToModel(componentEntity.dateEntity),
+      sizeModel: _sizeEntityToModel(componentEntity.size),
+    );
   }
 
   ComponentEntity componentDataModelToEntity(ComponentModel componentModel) {
-    return ComponentModel(
-        name: componentModel.name,
-        id: componentModel.id,
-        material: componentModel.material,
-        height: componentModel.height,
-        length: componentModel.length,
-        quantity: componentModel.quantity,
-        weightPerCubMeter: componentModel.weightPerCubMeter,
-        width: componentModel.width,
-        pricePerCubMeter: componentModel.pricePerCubMeter);
+    return ComponentEntity(
+      name: componentModel.name,
+      id: componentModel.id,
+      material: componentModel.material,
+      height: componentModel.height,
+      length: componentModel.length,
+      quantity: componentModel.quantity,
+      weightPerCubMeter: componentModel.weightPerCubMeter,
+      width: componentModel.width,
+      pricePerCubMeter: componentModel.pricePerCubMeter,
+      dateEntity: componentModel.dateModel,
+      size: componentModel.size,
+    );
+  }
+
+  // DateEntity _dateModelToEntity(DateModel dateModel) {
+  //   return DateEntity(create: dateModel.create, edit: dateModel.edit);
+  // }
+
+  DateModel _dateEntityToModel(DateEntity dateEntity) {
+    return DateModel(create: dateEntity.create, edit: dateEntity.edit);
+  }
+
+  SizeModel _sizeEntityToModel(Size size) {
+    return SizeModel(
+        width: size.width,
+        length: size.length,
+        height: size.height,
+        unitsLinear: size.unitsLinear);
   }
 }
-
-// class ShopListMapper {
-//
-//   fun mapEntityToDbModel(shopItem: ShopItem) = ShopItemDbModel(
-//   id = shopItem.id,
-//   name = shopItem.name,
-//   count = shopItem.count,
-//   enabled = shopItem.enabled
-//   )
-//
-//   fun mapDbModelToEntity(shopItemDbModel: ShopItemDbModel) = ShopItem(
-//   id = shopItemDbModel.id,
-//   name = shopItemDbModel.name,
-//   count = shopItemDbModel.count,
-//   enabled = shopItemDbModel.enabled
-//   )
-//
-//   fun mapListDbModelToListEntity(list: List<ShopItemDbModel>) = list.map {
-//   mapDbModelToEntity(it)
-// }
-// }

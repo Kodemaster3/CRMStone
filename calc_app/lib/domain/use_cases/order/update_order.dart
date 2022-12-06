@@ -5,7 +5,13 @@ class UpdateOrder {
 
   UpdateOrder(this.orderRepository);
 
-  Future<bool> call({required String id, required String name, required String description}) async {
-    return await orderRepository.updateBodyOrderById(id: id, name: name, description: description);
+  Future<bool> call({
+    required String id,
+    required String name,
+    required String description,
+  }) async {
+    final timeEdit = DateTime.now();
+    return await orderRepository.updateBodyOrderById(
+        id: id, name: name, description: description, edit: timeEdit);
   }
 }

@@ -1,6 +1,6 @@
-class DateEntities {
+class DateEntity {
   final DateTime create;
   final DateTime edit;
 
-  DateEntities({required this.create, required this.edit});
+  const DateEntity({required this.create, required this.edit});
 }
