@@ -11,10 +11,10 @@ implement:
 
 
 in entity:  add dateTime/ +
-            add size/
-            add description in component/
-            add unit_linear/
-            add unit_weight/
+            add size/ -+                      need implement use case and ui
+            add description in component/ +   need check it
+            add unit_linear/                  in progress
+            add unit_weight/                  in progress
             weight
 
 

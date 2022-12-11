@@ -4,28 +4,35 @@ import 'package:calc_app/domain/entities/date.dart';
 import 'package:calc_app/domain/entities/order.dart';
 import 'package:calc_app/domain/entities/size.dart';
 import 'package:calc_app/domain/entities/units_linear.dart';
+import 'package:calc_app/domain/entities/units_weight.dart';
 import 'package:calc_app/domain/repository/deliver_local/order_repository.dart';
 
-final Size temptSize = Size(
-    width: 0, length: 0, height: 0, unitsLinear: UnitsLinear.millimeter);
+final Size temptSize =
+    Size(width: 0, length: 0, height: 0, unitsLinear: UnitsLinear.millimeter);
 
 class CreateOrder {
   final OrderRepository orderRepository;
 
   CreateOrder(this.orderRepository);
 
-  Future<void> call(String name, String description,
-      //TODO: implement size fields!!!
-      ) async {
+  Future<void> call({
+    required String name,
+    required String description,
+    required UnitsLinear unitsLinear,
+    required UnitsWeight unitsWeight,
+    //TODO: implement size fields!!!
+  }) async {
     final List<String> componentsId = [];
     final date = DateEntity(create: DateTime.now(), edit: DateTime.now());
     final orderEntity = OrderEntity(
       id: newId(),
       name: name,
       description: description,
+      unitsLinear: unitsLinear,
+      unitsWeight: unitsWeight,
+      size: temptSize,
       component: componentsId,
       dateEntity: date,
-      size: temptSize,
     );
     dev.log(orderEntity.dateEntity.toString());
     await orderRepository.createOrder(orderEntity: orderEntity);

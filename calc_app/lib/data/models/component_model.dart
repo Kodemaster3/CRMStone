@@ -3,6 +3,8 @@ import 'package:calc_app/data/models/size_model.dart';
 import 'package:calc_app/domain/entities/component.dart';
 import 'package:calc_app/domain/entities/date.dart';
 import 'package:calc_app/domain/entities/size.dart';
+import 'package:calc_app/domain/entities/units_linear.dart';
+import 'package:calc_app/domain/entities/units_weight.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'component_model.freezed.dart';
@@ -16,12 +18,12 @@ class ComponentModel with _$ComponentModel implements ComponentEntity {
   const factory ComponentModel({
     required String name,
     required String id,
+    required String description,
     required String material,
-    required double height,
-    required double length,
     required int quantity,
+    required UnitsLinear unitsLinear,
+    required UnitsWeight unitsWeight,
     required double weightPerCubMeter,
-    required double width,
     required double pricePerCubMeter,
     required DateModel dateModel,
     required SizeModel sizeModel,

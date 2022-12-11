@@ -1,3 +1,5 @@
+import 'package:calc_app/domain/entities/units_linear.dart';
+import 'package:calc_app/domain/entities/units_weight.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:calc_app/ui/bloc/orders_bloc/order_bloc.dart';
@@ -24,7 +26,8 @@ class EditOrderScreen extends StatelessWidget {
                 IconButton(
                   icon: const Icon(Icons.delete_forever),
                   onPressed: () {
-                    BlocProvider.of<OrderBloc>(context).add(OrderDeleteEvent(id: state.order.id));
+                    BlocProvider.of<OrderBloc>(context)
+                        .add(OrderDeleteEvent(id: state.order.id));
                     Navigator.of(context)
                         .pushNamedAndRemoveUntil('/', (route) => false);
                   },
@@ -41,10 +44,9 @@ class EditOrderScreen extends StatelessWidget {
                   onFieldSubmitted: (value) => _fl.name = value,
                 ),
                 TextFormField(
-                  controller: TextEditingController(text: _fl.description),
-                  onChanged: (value) => _fl.description = value,
-                  onFieldSubmitted: (value) => _fl.description = value
-                ),
+                    controller: TextEditingController(text: _fl.description),
+                    onChanged: (value) => _fl.description = value,
+                    onFieldSubmitted: (value) => _fl.description = value),
                 TextButton(
                   child: const Text('Submit'),
                   onPressed: () {
@@ -54,6 +56,9 @@ class EditOrderScreen extends StatelessWidget {
                         id: state.order.id,
                         name: _fl.name,
                         description: _fl.description,
+                        //TODO need update field
+                        unitsLinear: UnitsLinear.centimeter,
+                        unitsWeight: UnitsWeight.kilogram,
                       ),
                     );
                     scaffoldMessage(context, state.order.name);
@@ -75,7 +80,6 @@ class EditOrderScreen extends StatelessWidget {
     ScaffoldMessenger.of(context)
         .showSnackBar(SnackBar(content: Text("Updated order $text success")));
   }
-
 }
 
 class FieldLink {

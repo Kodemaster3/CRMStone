@@ -13,13 +13,15 @@ class OrderMapper {
     // final date = DateModel(create: orderEntity.dateEntity.create, edit: orderEntity.dateEntity.edit);
     // dev.log(date.toString());
     return OrderModel(
-        id: orderEntity.id,
-        name: orderEntity.name,
-        description: orderEntity.description,
-        component: orderEntity.component,
-        dateModel: _dateEntityToModel(orderEntity.dateEntity),
+      id: orderEntity.id,
+      name: orderEntity.name,
+      description: orderEntity.description,
+      unitsLinear: orderEntity.unitsLinear,
+      unitsWeight: orderEntity.unitsWeight,
+      component: orderEntity.component,
+      dateModel: _dateEntityToModel(orderEntity.dateEntity),
       // dateModel: date,
-        sizeModel: _sizeEntityToModel(orderEntity.size),
+      sizeModel: sizeEntityToModel(orderEntity.size),
     );
   }
 
@@ -28,6 +30,8 @@ class OrderMapper {
       id: orderModel.id,
       name: orderModel.name,
       description: orderModel.description,
+      unitsLinear: orderModel.unitsLinear,
+      unitsWeight: orderModel.unitsWeight,
       component: orderModel.component,
       dateEntity: orderModel.dateEntity,
       size: orderModel.size,
@@ -38,15 +42,15 @@ class OrderMapper {
     return ComponentModel(
       name: componentEntity.name,
       id: componentEntity.id,
+      description: componentEntity.description,
       material: componentEntity.material,
-      height: componentEntity.height,
-      length: componentEntity.length,
+      unitsLinear: componentEntity.unitsLinear,
+      unitsWeight: componentEntity.unitsWeight,
       quantity: componentEntity.quantity,
       weightPerCubMeter: componentEntity.weightPerCubMeter,
-      width: componentEntity.width,
       pricePerCubMeter: componentEntity.pricePerCubMeter,
       dateModel: _dateEntityToModel(componentEntity.dateEntity),
-      sizeModel: _sizeEntityToModel(componentEntity.size),
+      sizeModel: sizeEntityToModel(componentEntity.size),
     );
   }
 
@@ -54,12 +58,12 @@ class OrderMapper {
     return ComponentEntity(
       name: componentModel.name,
       id: componentModel.id,
+      description: componentModel.description,
       material: componentModel.material,
-      height: componentModel.height,
-      length: componentModel.length,
+      unitsLinear: componentModel.unitsLinear,
+      unitsWeight: componentModel.unitsWeight,
       quantity: componentModel.quantity,
       weightPerCubMeter: componentModel.weightPerCubMeter,
-      width: componentModel.width,
       pricePerCubMeter: componentModel.pricePerCubMeter,
       dateEntity: componentModel.dateModel,
       size: componentModel.size,
@@ -74,11 +78,12 @@ class OrderMapper {
     return DateModel(create: dateEntity.create, edit: dateEntity.edit);
   }
 
-  SizeModel _sizeEntityToModel(Size size) {
+  SizeModel sizeEntityToModel(Size size) {
     return SizeModel(
         width: size.width,
         length: size.length,
         height: size.height,
         unitsLinear: size.unitsLinear);
   }
+
 }

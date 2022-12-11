@@ -1,5 +1,7 @@
 import 'package:calc_app/domain/entities/component.dart';
 import 'package:calc_app/domain/entities/date.dart';
+import 'package:calc_app/domain/entities/units_linear.dart';
+import 'package:calc_app/domain/entities/units_weight.dart';
 import 'package:calc_app/domain/repository/deliver_local/order_repository.dart';
 import 'package:calc_app/domain/use_cases/order/create_order.dart';
 
@@ -12,28 +14,30 @@ class UpdateComponent {
   Future<bool> call({
     required String idComponent,
     required String name,
+    required String description,
     required String material,
-    required double height,
-    required double length,
+    required UnitsLinear unitsLinear,
+    required UnitsWeight unitsWeight,
+    //TODO: implement size fields!!!
     required int quantity,
     required double weightPerCubMeter,
-    required double width,
     required double pricePerCubMeter,
-    //TODO: implement size fields!!!
+
   }) async {
     final date = DateEntity(create: DateTime.now(), edit: DateTime.now());
     final updateComponent = ComponentEntity(
-        id: idComponent,
-        name: name,
-        material: material,
-        height: height,
-        length: length,
-        quantity: quantity,
-        weightPerCubMeter: weightPerCubMeter,
-        width: width,
-        pricePerCubMeter: pricePerCubMeter,
-        dateEntity: date,
-        size: temptSize,
+      id: idComponent,
+      name: name,
+      description: description,
+      material: material,
+      unitsLinear: unitsLinear,
+      unitsWeight: unitsWeight,
+      size: temptSize,
+      quantity: quantity,
+      weightPerCubMeter: weightPerCubMeter,
+      pricePerCubMeter: pricePerCubMeter,
+      dateEntity: date,
+
     );
     return await orderRepository.updateComponentByIdInOrder(
         componentEntity: updateComponent);

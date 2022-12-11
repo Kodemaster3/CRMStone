@@ -1,3 +1,6 @@
+import 'package:calc_app/domain/entities/units_linear.dart';
+import 'package:calc_app/domain/entities/units_weight.dart';
+
 abstract class OrderEvent {
   const OrderEvent();
 }
@@ -7,10 +10,14 @@ class OrderLoadingEvent extends OrderEvent {}
 class OrderCreateEvent extends OrderEvent {
   final String name;
   final String description;
+  final UnitsLinear unitsLinear;
+  final UnitsWeight unitsWeight;
 
   const OrderCreateEvent({
     required this.name,
     required this.description,
+    required this.unitsLinear,
+    required this.unitsWeight,
   });
 }
 
@@ -26,11 +33,15 @@ class OrderUpdateEvent extends OrderEvent {
   final String id;
   final String name;
   final String description;
+  final UnitsLinear unitsLinear;
+  final UnitsWeight unitsWeight;
 
   const OrderUpdateEvent({
     required this.id,
     required this.name,
     required this.description,
+    required this.unitsLinear,
+    required this.unitsWeight,
   });
 }
 
@@ -44,22 +55,22 @@ class OrderViewWithComponentEvent extends OrderEvent {
 
 class ComponentOrderCreateEvent extends OrderEvent {
   final String name;
+  final String description;
   final String material;
-  final double height;
-  final double length;
+  final UnitsLinear unitsLinear;
+  final UnitsWeight unitsWeight;
   final int quantity;
   final double weightPerCubMeter;
-  final double width;
   final double pricePerCubMeter;
 
   const ComponentOrderCreateEvent({
     required this.name,
+    required this.description,
     required this.material,
-    required this.height,
-    required this.length,
+    required this.unitsLinear,
+    required this.unitsWeight,
     required this.quantity,
     required this.weightPerCubMeter,
-    required this.width,
     required this.pricePerCubMeter,
   });
 }
@@ -83,23 +94,24 @@ class ComponentOrderDeletedEvent extends OrderEvent {
 class ComponentOrderUpdatedEvent extends OrderEvent {
   final String idComponent;
   final String name;
+  final String description;
   final String material;
-  final double height;
-  final double length;
+  final UnitsLinear unitsLinear;
+  final UnitsWeight unitsWeight;
   final int quantity;
   final double weightPerCubMeter;
-  final double width;
+
   final double pricePerCubMeter;
 
   const ComponentOrderUpdatedEvent({
     required this.idComponent,
     required this.name,
+    required this.description,
     required this.material,
-    required this.height,
-    required this.length,
+    required this.unitsLinear,
+    required this.unitsWeight,
     required this.quantity,
     required this.weightPerCubMeter,
-    required this.width,
     required this.pricePerCubMeter,
   });
 }

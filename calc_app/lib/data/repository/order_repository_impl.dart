@@ -5,6 +5,8 @@ import 'package:calc_app/data/models/order_model.dart';
 import 'package:calc_app/data/repository/order_mapper.dart';
 import 'package:calc_app/domain/entities/component.dart';
 import 'package:calc_app/domain/entities/order.dart';
+import 'package:calc_app/domain/entities/units_linear.dart';
+import 'package:calc_app/domain/entities/units_weight.dart';
 import 'package:calc_app/domain/repository/deliver_local/order_repository.dart';
 
 const topPosition = 0;
@@ -97,6 +99,8 @@ class OrderRepositoryImpl implements OrderRepository {
     required String name,
     required String description,
     required DateTime edit,
+    required UnitsLinear unitsLinear,
+    required UnitsWeight unitsWeight,
   }) async {
     try {
       final List<OrderModel> dataOrders =
@@ -109,6 +113,8 @@ class OrderRepositoryImpl implements OrderRepository {
             name: name,
             description: description,
             dateModel: updatedTime,
+            unitsLinear: unitsLinear,
+            unitsWeight: unitsWeight,
           );
 
           dataOrders.remove(element);
@@ -219,9 +225,9 @@ class OrderRepositoryImpl implements OrderRepository {
       final updateComponent = oldComponent.copyWith(
         name: componentEntity.name,
         material: componentEntity.material,
-        width: componentEntity.width,
-        length: componentEntity.length,
-        height: componentEntity.height,
+        sizeModel: orderMapper.sizeEntityToModel(componentEntity.size),
+        description: componentEntity.description,
+        unitsLinear: componentEntity.unitsLinear,
         weightPerCubMeter: componentEntity.weightPerCubMeter,
         quantity: componentEntity.quantity,
         pricePerCubMeter: componentEntity.pricePerCubMeter,

@@ -1,3 +1,5 @@
+import 'package:calc_app/domain/entities/units_linear.dart';
+import 'package:calc_app/domain/entities/units_weight.dart';
 import 'package:calc_app/ui/bloc/orders_bloc/order_bloc.dart';
 import 'package:calc_app/ui/bloc/orders_bloc/order_event.dart';
 import 'package:calc_app/ui/bloc/orders_bloc/order_state.dart';
@@ -29,7 +31,12 @@ class AddNewOrderScreen extends StatelessWidget {
                   //regulations because. If submit without description,
                   //repository saved '' description.
                   BlocProvider.of<OrderBloc>(context).add(OrderCreateEvent(
-                      name: _fl.name, description: _fl.description));
+                    name: _fl.name,
+                    description: _fl.description,
+                    //TODO need update field
+                    unitsLinear: UnitsLinear.centimeter,
+                    unitsWeight: UnitsWeight.kilogram,
+                  ));
                   scaffoldMessage(context, _fl.name);
                   Navigator.of(context).pop();
                 },
@@ -44,7 +51,12 @@ class AddNewOrderScreen extends StatelessWidget {
                 onChanged: (value) => _fl.description = value,
                 onFieldSubmitted: (_) {
                   BlocProvider.of<OrderBloc>(context).add(OrderCreateEvent(
-                      name: _fl.name, description: _fl.description));
+                    name: _fl.name,
+                    description: _fl.description,
+                    //TODO need update field
+                    unitsLinear: UnitsLinear.centimeter,
+                    unitsWeight: UnitsWeight.kilogram,
+                  ));
                   scaffoldMessage(context, _fl.name);
                   Navigator.of(context).pop();
                 },
@@ -52,11 +64,33 @@ class AddNewOrderScreen extends StatelessWidget {
                   hintText: 'Write name order',
                 ),
               ),
+              ToggleButtons(
+                children: const [
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 12),
+                    child: Text('MALE', style: TextStyle(fontSize: 18)),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 12),
+                    child: Text('FEMALE', style: TextStyle(fontSize: 18)),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 12),
+                    child: Text('OTHER', style: TextStyle(fontSize: 18)),
+                  ),
+                ],
+                isSelected: [true, false, false],
+              ),
               IconButton(
                 icon: const Icon(Icons.add_box),
                 onPressed: () {
                   BlocProvider.of<OrderBloc>(context).add(OrderCreateEvent(
-                      name: _fl.name, description: _fl.description));
+                    name: _fl.name,
+                    description: _fl.description,
+                    //TODO need update field
+                    unitsLinear: UnitsLinear.centimeter,
+                    unitsWeight: UnitsWeight.kilogram,
+                  ));
                   scaffoldMessage(context, _fl.name);
                 },
               ),
