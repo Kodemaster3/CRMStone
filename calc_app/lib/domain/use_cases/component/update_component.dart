@@ -1,9 +1,14 @@
 import 'package:calc_app/domain/entities/component.dart';
 import 'package:calc_app/domain/entities/date.dart';
+import 'package:calc_app/domain/entities/size.dart';
 import 'package:calc_app/domain/entities/units_linear.dart';
 import 'package:calc_app/domain/entities/units_weight.dart';
 import 'package:calc_app/domain/repository/deliver_local/order_repository.dart';
-import 'package:calc_app/domain/use_cases/order/create_order.dart';
+
+
+final Size temptSize =
+Size(width: 0, length: 0, height: 0, unitsLinear: UnitsLinear.millimeter);
+
 
 class UpdateComponent {
   final OrderRepository orderRepository;

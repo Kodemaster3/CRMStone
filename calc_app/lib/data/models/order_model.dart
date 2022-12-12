@@ -3,8 +3,6 @@ import 'package:calc_app/data/models/size_model.dart';
 import 'package:calc_app/domain/entities/date.dart';
 import 'package:calc_app/domain/entities/order.dart';
 import 'package:calc_app/domain/entities/size.dart';
-import 'package:calc_app/domain/entities/units_linear.dart';
-import 'package:calc_app/domain/entities/units_weight.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'order_model.freezed.dart';
@@ -20,8 +18,6 @@ class OrderModel with _$OrderModel implements OrderEntity {
     required String id,
     required String name,
     required String description,
-    required UnitsLinear unitsLinear,
-    required UnitsWeight unitsWeight,
     required SizeModel sizeModel,
     required List<String> component,
     required DateModel dateModel,

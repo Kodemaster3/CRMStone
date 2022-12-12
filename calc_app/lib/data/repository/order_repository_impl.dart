@@ -113,8 +113,6 @@ class OrderRepositoryImpl implements OrderRepository {
             name: name,
             description: description,
             dateModel: updatedTime,
-            unitsLinear: unitsLinear,
-            unitsWeight: unitsWeight,
           );
 
           dataOrders.remove(element);

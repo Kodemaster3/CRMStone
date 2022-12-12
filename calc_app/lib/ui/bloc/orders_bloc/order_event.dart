@@ -10,14 +10,22 @@ class OrderLoadingEvent extends OrderEvent {}
 class OrderCreateEvent extends OrderEvent {
   final String name;
   final String description;
+  final double width;
+  final double length;
+  final double height;
   final UnitsLinear unitsLinear;
   final UnitsWeight unitsWeight;
+
 
   const OrderCreateEvent({
     required this.name,
     required this.description,
+    required this.width,
+    required this.length,
+    required this.height,
     required this.unitsLinear,
     required this.unitsWeight,
+
   });
 }
 

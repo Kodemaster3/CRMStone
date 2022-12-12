@@ -9,7 +9,7 @@ import '../ui/screens/catalog_orders_screen.dart';
 
 final routes = {
   '/': (ctx) => const CatalogOrdersScreen(),
-  AddNewOrderScreen.routeName: (ctx) => AddNewOrderScreen(),
+  AddNewOrderScreen.routeName: (ctx) => const AddNewOrderScreen(),
   ViewOrderScreenWithListComponent.routeName: (ctx) =>
       const ViewOrderScreenWithListComponent(),
   EditOrderScreen.routeName: (ctx) => EditOrderScreen(),
