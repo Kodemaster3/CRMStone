@@ -2,20 +2,20 @@
 // import 'package:calc_app/domain/entities/component.dart';
 // import 'package:calc_app/ui/widgets/view_nomenclature_widget.dart';
 // import 'package:flutter/material.dart';
-
+//
 // import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
+//
 // // import 'package:calc_app/db_local/db.dart';
 // import 'package:calc_app/domain/entities/order.dart';
-
+//
 // class NomenclatureDeliverScreen extends StatelessWidget {
 //   static const routeName = '/Nomenclature-Deliver';
 //   NomenclatureDeliverScreen({Key? key}) : super(key: key);
-
+//
 //   late final String nameDeliver;
 //   late final List<OrderEntity> delivers;
 //   late final ComponentEntity nomenclature;
-
+//
 //   final _fieldNameNomenclature = TextEditingController();
 //   final _fieldMaterial = TextEditingController();
 //   final _fieldWidth = TextEditingController();
@@ -24,13 +24,13 @@
 //   final _fieldWeightPerCubMeter = TextEditingController();
 //   final _fieldQuantity = TextEditingController();
 //   final _fieldPricePerCubMeter = TextEditingController();
-
+//
 //   @override
 //   Widget build(BuildContext context) {
 //     final textLocalization = AppLocalizations.of(context);
 //     nameDeliver = (ModalRoute.of(context)!.settings.arguments as Map)['name'];
 //     delivers = (ModalRoute.of(context)!.settings.arguments as Map)['list'];
-
+//
 //     return Scaffold(
 //       appBar: AppBar(
 //         title: Text(nameDeliver),
@@ -77,7 +77,7 @@
 //       ),
 //     );
 //   }
-
+//
 //   OrderEntity getDeliverFromList() {
 //     for (var e in delivers) {
 //       if (e.nameDeliver == nameDeliver) {
@@ -89,21 +89,21 @@
 //       component: [], /*editTime: DateTime.now()*/
 //     );
 //   }
-
+//
 //   Widget fieldNameNomenclature(String text) {
 //     return TextFormField(
 //       controller: _fieldNameNomenclature,
 //       decoration: InputDecoration(labelText: text),
 //     );
 //   }
-
+//
 //   Widget fieldNameMaterial(String text) {
 //     return TextFormField(
 //       controller: _fieldMaterial,
 //       decoration: InputDecoration(labelText: text),
 //     );
 //   }
-
+//
 //   Widget fieldWidth(String text) {
 //     return TextFormField(
 //       controller: _fieldWidth,
@@ -111,7 +111,7 @@
 //       decoration: InputDecoration(labelText: text),
 //     );
 //   }
-
+//
 //   Widget fieldLength(String text) {
 //     return TextFormField(
 //       controller: _fieldLength,
@@ -119,7 +119,7 @@
 //       decoration: InputDecoration(labelText: text),
 //     );
 //   }
-
+//
 //   Widget fieldHeight(String text) {
 //     return TextFormField(
 //       controller: _fieldHeight,
@@ -127,7 +127,7 @@
 //       decoration: InputDecoration(labelText: text),
 //     );
 //   }
-
+//
 //   Widget fieldWeightPerCubMeter(String text) {
 //     return TextFormField(
 //       controller: _fieldWeightPerCubMeter,
@@ -135,7 +135,7 @@
 //       decoration: InputDecoration(labelText: text),
 //     );
 //   }
-
+//
 //   Widget fieldQuantity(String text) {
 //     return TextFormField(
 //       controller: _fieldQuantity,
@@ -143,7 +143,7 @@
 //       decoration: InputDecoration(labelText: text),
 //     );
 //   }
-
+//
 //   Widget fieldPricePerCubMeter(String text) {
 //     return TextFormField(
 //       controller: _fieldPricePerCubMeter,
@@ -151,7 +151,7 @@
 //       decoration: InputDecoration(labelText: text),
 //     );
 //   }
-
+//
 //   void saveField() {
 //     nomenclature = ComponentEntity(
 //         name: _fieldNameNomenclature.text,
@@ -162,7 +162,7 @@
 //         weightPerCubMeter: double.parse(_fieldPricePerCubMeter.text),
 //         width: double.parse(_fieldWidth.text),
 //         pricePerCubMeter: double.parse(_fieldPricePerCubMeter.text));
-
+//
 //     for (var i = 0; i < delivers.length; i++) {
 //       if (delivers[i].id == nameDeliver) {
 //         delivers[i].component.add(nomenclature);
@@ -172,7 +172,7 @@
 //     }
 //     Db().pushAllDeliversInDb(delivers);
 //   }
-
+//
 //   Widget sizeBox() {
 //     return const SizedBox(
 //       width: 5,

@@ -9,7 +9,7 @@ import 'package:calc_app/domain/entities/units_linear.dart';
 import 'package:calc_app/domain/entities/units_weight.dart';
 import 'package:calc_app/domain/repository/deliver_local/order_repository.dart';
 
-const topPosition = 0;
+const topPositionInList = 0;
 
 class OrderRepositoryImpl implements OrderRepository {
   final OrderLocalDataSource localDataSource;
@@ -82,7 +82,7 @@ class OrderRepositoryImpl implements OrderRepository {
         throw Exception('id is not unique');
       }
       dataOrders.insert(
-          topPosition, orderMapper.orderEntityToDataModel(orderEntity));
+          topPositionInList, orderMapper.orderEntityToDataModel(orderEntity));
 
       await localDataSource.ordersToCache(dataOrders);
       return true;
@@ -98,6 +98,9 @@ class OrderRepositoryImpl implements OrderRepository {
     required String id,
     required String name,
     required String description,
+    required double width,
+    required double length,
+    required double height,
     required DateTime edit,
     required UnitsLinear unitsLinear,
     required UnitsWeight unitsWeight,
@@ -108,15 +111,22 @@ class OrderRepositoryImpl implements OrderRepository {
 
       for (var element in dataOrders) {
         if (element.id == id) {
+          final sizeModel = element.sizeModel.copyWith(
+              width: width,
+              height: height,
+              length: length,
+              unitsLinear: unitsLinear);
           final updatedTime = element.dateModel.copyWith(edit: edit);
           final updateOrder = element.copyWith(
             name: name,
             description: description,
             dateModel: updatedTime,
+            sizeModel: sizeModel,
+            // unitsWeight: unitsWeight,
           );
 
           dataOrders.remove(element);
-          dataOrders.insert(topPosition, updateOrder);
+          dataOrders.insert(topPositionInList, updateOrder);
           await localDataSource.ordersToCache(dataOrders);
           return true;
         }
@@ -153,7 +163,7 @@ class OrderRepositoryImpl implements OrderRepository {
           final updateOrder = element.copyWith(
               component: updateListIdComponents, dateModel: updateData);
           dataOrders.remove(element);
-          dataOrders.insert(topPosition, updateOrder);
+          dataOrders.insert(topPositionInList, updateOrder);
           break;
         }
       }
@@ -194,7 +204,7 @@ class OrderRepositoryImpl implements OrderRepository {
               final updatedOrder = element.copyWith(
                   dateModel: updateDateOrder, component: updateComponentsList);
               dataOrder.remove(element);
-              dataOrder.insert(topPosition, updatedOrder);
+              dataOrder.insert(topPositionInList, updatedOrder);
 
               await localDataSource.removeComponentFromCache(idComponent);
               await localDataSource.ordersToCache(dataOrder);

@@ -131,6 +131,9 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
           id: event.id,
           name: event.name,
           description: event.description,
+          width: event.width,
+          length: event.length,
+          height: event.height,
           unitsLinear: event.unitsLinear,
           unitsWeight: event.unitsWeight,
         );

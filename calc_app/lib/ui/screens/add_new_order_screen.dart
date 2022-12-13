@@ -14,10 +14,10 @@ class AddNewOrderScreen extends StatefulWidget {
   const AddNewOrderScreen({Key? key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _AddNewOrderScreen();
+  State<StatefulWidget> createState() => _AddNewOrderScreenState();
 }
 
-class _AddNewOrderScreen extends State<AddNewOrderScreen> {
+class _AddNewOrderScreenState extends State<AddNewOrderScreen> {
   late TextEditingController _nameController;
   late TextEditingController _descriptionController;
   late TextEditingController _sizeWidthController;

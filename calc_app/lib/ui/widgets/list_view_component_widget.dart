@@ -17,90 +17,130 @@ class ListViewComponentWidget extends StatelessWidget {
       builder: (context, state) {
         if (state is OrderViewWithComponent) {
           return Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Expanded(
-                child: ReturnHome(),
-              ),
+              /// That part call option to edit order and present describe
 
-              /// That part call option to edit order
-
-              Expanded(
-                child: GestureDetector(
-                  child: Column(
-                    children: [
-                      Text(
-                        'description: ${state.order.description}',
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Card(
+                      color: Colors.white70,
+                      child: GestureDetector(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text('Project size:'),
+                              Text(
+                                'Length is ${state.order.size.length}',
+                              ),
+                              Text(
+                                'Width  is ${state.order.size.width}',
+                              ),
+                              Text(
+                                'description: ${state.order.description}',
+                              ),
+                            ],
+                          ),
+                        ),
+                        onTap: () {
+                          BlocProvider.of<OrderBloc>(context)
+                              .add(OrderViewByIdEvent(id: state.order.id));
+                          Navigator.of(context)
+                              .pushNamed(EditOrderScreen.routeName);
+                        },
                       ),
-                    ],
-                  ),
-                  onTap: () {
-                    BlocProvider.of<OrderBloc>(context)
-                        .add(OrderViewByIdEvent(id: state.order.id));
-                    Navigator.of(context).pushNamed(EditOrderScreen.routeName);
-                  },
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: ReturnHome(),
+                    ),
+                  ],
                 ),
               ),
 
               /// That part give as the list our components in body
 
               Expanded(
-                flex: 10,
-                child: Column(
-                  children: [
-                    Expanded(
-                      flex: 4,
-                      child: ListView.builder(
-                        scrollDirection: Axis.vertical,
-                        shrinkWrap: true,
-                        itemCount: state.order.component.length,
-                        itemBuilder: ((context, index) {
-                          return GestureDetector(
-                            child: Column(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ListView.builder(
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    itemCount: state.order.component.length,
+                    itemBuilder: ((context, index) {
+                      return Card(
+                        color: Colors.white70,
+                        child: GestureDetector(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Row(
+                                Column(
                                   children: [
-                                    Text(
-                                      'id: ${state.components[index].id}',
+                                    Row(
+                                      children: [
+                                        Text(
+                                          'id: ${state.components[index].id}',
+                                        ),
+                                        Text(
+                                          'Name: ${state.components[index].name}',
+                                        ),
+                                      ],
                                     ),
-                                    Text(
-                                      'Name: ${state.components[index].name}',
-                                    ),
-                                    Text(
-                                      'Quantity: ${state.components[index].quantity}',
-                                    ),
-                                    Text(
-                                      'Material: ${state.components[index].material}',
-                                    ),
-                                    IconButton(
-                                      icon: const Icon(Icons.delete),
-                                      onPressed: () {
-                                        BlocProvider.of<OrderBloc>(context).add(
-                                          ComponentOrderDeletedEvent(
-                                              idComponent: state
-                                                  .components[index].id),
-                                        );
-                                        scaffoldMessage(context, state.components[index].name);
-                                      },
+                                    Row(
+                                      children: [
+                                        Text(
+                                          'Quantity: ${state.components[index].quantity}',
+                                        ),
+                                        Text(
+                                          'Material: ${state.components[index].material}',
+                                        ),
+                                        Text(
+                                          'Description: ${state.components[index].description}',
+                                        ),
+                                      ],
                                     ),
                                   ],
                                 ),
+                                IconButton(
+                                  icon: const Icon(Icons.delete),
+                                  onPressed: () {
+                                    BlocProvider.of<OrderBloc>(context).add(
+                                      ComponentOrderDeletedEvent(
+                                          idComponent:
+                                              state.components[index].id),
+                                    );
+                                    scaffoldMessage(
+                                        context, state.components[index].name);
+                                  },
+                                ),
                               ],
                             ),
-                            onTap: () {
-                              //TODO: implement edit field component
-                              BlocProvider.of<OrderBloc>(context).add(
-                                ComponentOrderUpdatingEvent(
-                                    idComponent:
-                                        state.components[index].id),
-                              );
-                              Navigator.of(context)
-                                  .pushNamed(ComponentFieldScreen.routeName);
-                            },
-                          );
-                        }),
-                      ),
-                    ),
-                  ],
+                          ),
+                          onTap: () {
+                            //TODO: implement edit field component
+                            BlocProvider.of<OrderBloc>(context).add(
+                              ComponentOrderUpdatingEvent(
+                                  idComponent: state.components[index].id),
+                            );
+                            Navigator.of(context)
+                                .pushNamed(ComponentFieldScreen.routeName);
+                          },
+                        ),
+                      );
+                    }),
+                  ),
                 ),
               )
             ],
@@ -112,7 +152,7 @@ class ListViewComponentWidget extends StatelessWidget {
   }
 
   void scaffoldMessage(BuildContext context, String text) {
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text("Deleted component $text success")));
+    ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Deleted component $text success")));
   }
 }

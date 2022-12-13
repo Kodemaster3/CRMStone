@@ -41,6 +41,9 @@ class OrderUpdateEvent extends OrderEvent {
   final String id;
   final String name;
   final String description;
+  final double width;
+  final double length;
+  final double height;
   final UnitsLinear unitsLinear;
   final UnitsWeight unitsWeight;
 
@@ -48,6 +51,9 @@ class OrderUpdateEvent extends OrderEvent {
     required this.id,
     required this.name,
     required this.description,
+    required this.width,
+    required this.length,
+    required this.height,
     required this.unitsLinear,
     required this.unitsWeight,
   });

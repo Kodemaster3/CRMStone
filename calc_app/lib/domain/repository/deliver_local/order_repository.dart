@@ -22,9 +22,12 @@ abstract class OrderRepository {
     required String id,
     required String name,
     required String description,
-    required DateTime edit,
+    required double width,
+    required double length,
+    required double height,
     required UnitsLinear unitsLinear,
     required UnitsWeight unitsWeight,
+    required DateTime edit,
   });
 
   Future<bool> createComponent({
