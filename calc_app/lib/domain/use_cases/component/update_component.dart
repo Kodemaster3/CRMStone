@@ -6,10 +6,6 @@ import 'package:calc_app/domain/entities/units_weight.dart';
 import 'package:calc_app/domain/repository/deliver_local/order_repository.dart';
 
 
-final Size temptSize =
-Size(width: 0, length: 0, height: 0, unitsLinear: UnitsLinear.millimeter);
-
-
 class UpdateComponent {
   final OrderRepository orderRepository;
 
@@ -21,15 +17,22 @@ class UpdateComponent {
     required String name,
     required String description,
     required String material,
+    required double width,
+    required double length,
+    required double height,
     required UnitsLinear unitsLinear,
     required UnitsWeight unitsWeight,
-    //TODO: implement size fields!!!
     required int quantity,
     required double weightPerCubMeter,
     required double pricePerCubMeter,
-
   }) async {
     final date = DateEntity(create: DateTime.now(), edit: DateTime.now());
+    final size = Size(
+      width: width,
+      length: length,
+      height: height,
+      unitsLinear: unitsLinear,
+    );
     final updateComponent = ComponentEntity(
       id: idComponent,
       name: name,
@@ -37,12 +40,11 @@ class UpdateComponent {
       material: material,
       unitsLinear: unitsLinear,
       unitsWeight: unitsWeight,
-      size: temptSize,
+      size: size,
       quantity: quantity,
       weightPerCubMeter: weightPerCubMeter,
       pricePerCubMeter: pricePerCubMeter,
       dateEntity: date,
-
     );
     return await orderRepository.updateComponentByIdInOrder(
         componentEntity: updateComponent);

@@ -18,6 +18,8 @@ class EditOrderScreen extends StatefulWidget {
 }
 
 class _EditOrderScreenState extends State<EditOrderScreen> {
+  bool _flagInit = true;
+
   late TextEditingController _nameController;
   late TextEditingController _descriptionController;
   late TextEditingController _sizeWidthController;
@@ -68,7 +70,10 @@ class _EditOrderScreenState extends State<EditOrderScreen> {
     return BlocBuilder<OrderBloc, OrderState>(
       builder: (context, state) {
         if (state is OrderLoaded) {
-          setValueFromState(state);
+          if(_flagInit) {
+            print('rebuild order');
+            setValueFromState(state);
+          }
           return Scaffold(
             appBar: AppBar(
               actions: [
@@ -340,5 +345,6 @@ class _EditOrderScreenState extends State<EditOrderScreen> {
     // TODO make correct that
     // _unitLinear = UnitsLinear.meter;
     _unitWeight = UnitsWeight.kilogram;
+    _flagInit = !_flagInit;
   }
 }

@@ -16,7 +16,6 @@ class OrderCreateEvent extends OrderEvent {
   final UnitsLinear unitsLinear;
   final UnitsWeight unitsWeight;
 
-
   const OrderCreateEvent({
     required this.name,
     required this.description,
@@ -25,7 +24,6 @@ class OrderCreateEvent extends OrderEvent {
     required this.height,
     required this.unitsLinear,
     required this.unitsWeight,
-
   });
 }
 
@@ -71,6 +69,9 @@ class ComponentOrderCreateEvent extends OrderEvent {
   final String name;
   final String description;
   final String material;
+  final double width;
+  final double length;
+  final double height;
   final UnitsLinear unitsLinear;
   final UnitsWeight unitsWeight;
   final int quantity;
@@ -81,6 +82,9 @@ class ComponentOrderCreateEvent extends OrderEvent {
     required this.name,
     required this.description,
     required this.material,
+    required this.width,
+    required this.length,
+    required this.height,
     required this.unitsLinear,
     required this.unitsWeight,
     required this.quantity,
@@ -110,11 +114,13 @@ class ComponentOrderUpdatedEvent extends OrderEvent {
   final String name;
   final String description;
   final String material;
+  final double width;
+  final double length;
+  final double height;
   final UnitsLinear unitsLinear;
   final UnitsWeight unitsWeight;
   final int quantity;
   final double weightPerCubMeter;
-
   final double pricePerCubMeter;
 
   const ComponentOrderUpdatedEvent({
@@ -122,6 +128,9 @@ class ComponentOrderUpdatedEvent extends OrderEvent {
     required this.name,
     required this.description,
     required this.material,
+    required this.width,
+    required this.length,
+    required this.height,
     required this.unitsLinear,
     required this.unitsWeight,
     required this.quantity,

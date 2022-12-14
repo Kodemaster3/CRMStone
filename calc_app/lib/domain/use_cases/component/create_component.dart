@@ -8,9 +8,6 @@ import 'package:calc_app/domain/repository/deliver_local/order_repository.dart';
 
 import '../../entities/units_linear.dart';
 
-final Size temptSize =
-    Size(width: 0, length: 0, height: 0, unitsLinear: UnitsLinear.millimeter);
-
 class CreateComponent {
   final OrderRepository orderRepository;
 
@@ -20,14 +17,22 @@ class CreateComponent {
     required String name,
     required String description,
     required String material,
+    required double width,
+    required double length,
+    required double height,
     required UnitsLinear unitsLinear,
     required UnitsWeight unitsWeight,
-    //TODO: implement size fields!!!
     required int quantity,
     required double weightPerCubMeter,
     required double pricePerCubMeter,
     required String idOrder,
   }) async {
+    final size = Size(
+      width: width,
+      length: length,
+      height: height,
+      unitsLinear: unitsLinear,
+    );
     final component = ComponentEntity(
       name: name,
       description: description,
@@ -35,7 +40,7 @@ class CreateComponent {
       material: material,
       unitsLinear: unitsLinear,
       unitsWeight: unitsWeight,
-      size: temptSize,
+      size: size,
       quantity: quantity,
       weightPerCubMeter: weightPerCubMeter,
       pricePerCubMeter: pricePerCubMeter,
@@ -43,7 +48,6 @@ class CreateComponent {
         create: DateTime.now(),
         edit: DateTime.now(),
       ),
-
     );
 
     return await orderRepository.createComponent(
