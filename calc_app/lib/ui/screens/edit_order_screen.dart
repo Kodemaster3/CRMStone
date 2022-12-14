@@ -71,7 +71,6 @@ class _EditOrderScreenState extends State<EditOrderScreen> {
       builder: (context, state) {
         if (state is OrderLoaded) {
           if(_flagInit) {
-            print('rebuild order');
             setValueFromState(state);
           }
           return Scaffold(
@@ -239,7 +238,9 @@ class _EditOrderScreenState extends State<EditOrderScreen> {
                         inactiveBgColor: Colors.black12,
                         fontSize: 12.0,
                         //TODO implement correct view state and callback
-                        initialLabelIndex: _unitWeight.index,
+                        initialLabelIndex:
+                        // _unitWeight.index,
+                        _updateValueUnitWeight(state.order.unitsWeight.index),
                         totalSwitches: UnitsWeight.values.length,
                         labels: UnitsWeight.values
                             .map((e) => e.name.toUpperCase())
@@ -330,6 +331,11 @@ class _EditOrderScreenState extends State<EditOrderScreen> {
     return index;
   }
 
+  int _updateValueUnitWeight(int index) {
+    _unitWeight = UnitsWeight.values[index];
+    return index;
+  }
+
   void scaffoldMessage(BuildContext context, String text) {
     ScaffoldMessenger.of(context)
         .showSnackBar(SnackBar(content: Text("Updated order $text success")));
@@ -343,8 +349,7 @@ class _EditOrderScreenState extends State<EditOrderScreen> {
     _sizeHeightController.text = state.order.size.height.toString();
     _unitLinear = state.order.size.unitsLinear;
     // TODO make correct that
-    // _unitLinear = UnitsLinear.meter;
-    _unitWeight = UnitsWeight.kilogram;
+    _unitWeight = state.order.unitsWeight;
     _flagInit = !_flagInit;
   }
 }

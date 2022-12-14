@@ -28,6 +28,7 @@ class _UpdateComponentFieldWidgetState
   late TextEditingController _sizeHeightController;
   late TextEditingController _materialController;
   late TextEditingController _quantityController;
+  late TextEditingController _weightController;
   late TextEditingController _weightPerCubMeterController;
   late TextEditingController _pricePerCubMeterController;
   late UnitsLinear _unitLinear;
@@ -44,6 +45,7 @@ class _UpdateComponentFieldWidgetState
     _sizeHeightController = TextEditingController();
     _materialController = TextEditingController();
     _quantityController = TextEditingController();
+    _weightController = TextEditingController();
     _weightPerCubMeterController = TextEditingController();
     _pricePerCubMeterController = TextEditingController();
     super.initState();
@@ -58,6 +60,7 @@ class _UpdateComponentFieldWidgetState
     _sizeHeightController.dispose();
     _materialController.dispose();
     _quantityController.dispose();
+    _weightController.dispose();
     _weightPerCubMeterController.dispose();
     _pricePerCubMeterController.dispose();
     super.dispose();
@@ -76,6 +79,7 @@ class _UpdateComponentFieldWidgetState
           unitsLinear: _unitLinear,
           unitsWeight: _unitWeight,
           quantity: int.tryParse(_quantityController.text) ?? 0,
+          weight: double.tryParse(_weightController.text) ?? 0.0,
           weightPerCubMeter:
               double.tryParse(_weightPerCubMeterController.text) ?? 0.0,
           pricePerCubMeter: double.tryParse(
@@ -92,7 +96,6 @@ class _UpdateComponentFieldWidgetState
       builder: (context, state) {
         if (state is ComponentEditingField) {
           if (_flagUpdate) {
-          print('rebuild component');
           setValueFromState(state);
         }
           return Form(
@@ -351,6 +354,31 @@ class _UpdateComponentFieldWidgetState
 
                   Padding(
                     padding: const EdgeInsets.all(8.0),
+                    child: TextFormField(
+                      initialValue: _weightController.text,
+                      validator: _validatorNumeric,
+                      keyboardType: TextInputType.number,
+                      inputFormatters: <TextInputFormatter>[
+                        FilteringTextInputFormatter.allow(
+                            RegExp('[0-9.]'))
+                      ],
+                      onChanged: (value) => setState(() {
+                        _weightController.text = value;
+                      }),
+                      decoration: const InputDecoration(
+                        hintText: 'Weight component',
+                        helperText: 'Weight component',
+                        icon: Icon(
+                          Icons.monitor_weight_outlined,
+                          size: 15.0,
+                        ),
+                      ),
+                    ),
+                  ),
+
+
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
                     child: TextButton(
                       child: const Text(
                         'Update Component',
@@ -364,7 +392,6 @@ class _UpdateComponentFieldWidgetState
                         if (_formKey.currentState!.validate()) {
                           _updateField(state.componentEntity.id);
                           //TODO dose that event work? need check!!!!
-                          print(state.idOrder);
                           // BlocProvider.of<OrderBloc>(context).add(
                           //     OrderViewWithComponentEvent(id: state.idOrder));
                           Navigator.of(context).pop();
@@ -383,8 +410,7 @@ class _UpdateComponentFieldWidgetState
   }
 
   void setValueFromState(ComponentEditingField state) {
-    print(state.componentEntity.name);
-    print(_nameController.text);
+
     _nameController.text = state.componentEntity.name;
     _descriptionController.text = state.componentEntity.description;
     _materialController.text = state.componentEntity.material;
@@ -392,7 +418,8 @@ class _UpdateComponentFieldWidgetState
     _sizeLengthController.text = state.componentEntity.size.length.toString();
     _sizeHeightController.text = state.componentEntity.size.height.toString();
     _quantityController.text = state.componentEntity.quantity.toString();
-    _unitWeight = state.componentEntity.unitsWeight;
+    _weightController.text = state.componentEntity.weight.weight.toString();
+    _unitWeight = state.componentEntity.weight.unitsWeight;
     _unitLinear = state.componentEntity.size.unitsLinear;
     _weightPerCubMeterController.text =
         state.componentEntity.weightPerCubMeter.toString();

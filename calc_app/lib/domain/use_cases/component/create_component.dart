@@ -4,6 +4,7 @@ import 'package:calc_app/domain/entities/component.dart';
 import 'package:calc_app/domain/entities/date.dart';
 import 'package:calc_app/domain/entities/size.dart';
 import 'package:calc_app/domain/entities/units_weight.dart';
+import 'package:calc_app/domain/entities/weight.dart';
 import 'package:calc_app/domain/repository/deliver_local/order_repository.dart';
 
 import '../../entities/units_linear.dart';
@@ -20,6 +21,7 @@ class CreateComponent {
     required double width,
     required double length,
     required double height,
+    required double weight,
     required UnitsLinear unitsLinear,
     required UnitsWeight unitsWeight,
     required int quantity,
@@ -33,13 +35,13 @@ class CreateComponent {
       height: height,
       unitsLinear: unitsLinear,
     );
+    final weightEntity = Weight(weight: weight, unitsWeight: unitsWeight,);
     final component = ComponentEntity(
       name: name,
       description: description,
       id: newId(),
       material: material,
-      unitsLinear: unitsLinear,
-      unitsWeight: unitsWeight,
+      weight: weightEntity,
       size: size,
       quantity: quantity,
       weightPerCubMeter: weightPerCubMeter,

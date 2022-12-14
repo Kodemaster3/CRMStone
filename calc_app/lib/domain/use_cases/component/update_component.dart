@@ -3,6 +3,7 @@ import 'package:calc_app/domain/entities/date.dart';
 import 'package:calc_app/domain/entities/size.dart';
 import 'package:calc_app/domain/entities/units_linear.dart';
 import 'package:calc_app/domain/entities/units_weight.dart';
+import 'package:calc_app/domain/entities/weight.dart';
 import 'package:calc_app/domain/repository/deliver_local/order_repository.dart';
 
 
@@ -20,6 +21,7 @@ class UpdateComponent {
     required double width,
     required double length,
     required double height,
+    required double weight,
     required UnitsLinear unitsLinear,
     required UnitsWeight unitsWeight,
     required int quantity,
@@ -33,13 +35,13 @@ class UpdateComponent {
       height: height,
       unitsLinear: unitsLinear,
     );
+    final weightEntity = Weight(weight: weight, unitsWeight: unitsWeight,);
     final updateComponent = ComponentEntity(
       id: idComponent,
       name: name,
       description: description,
       material: material,
-      unitsLinear: unitsLinear,
-      unitsWeight: unitsWeight,
+      weight: weightEntity,
       size: size,
       quantity: quantity,
       weightPerCubMeter: weightPerCubMeter,

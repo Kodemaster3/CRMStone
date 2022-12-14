@@ -1,12 +1,15 @@
 import 'dart:developer' as dev;
+
 import 'package:calc_app/data/models/component_model.dart';
 import 'package:calc_app/data/models/order_model.dart';
 import 'package:calc_app/data/models/date_model.dart';
 import 'package:calc_app/data/models/size_model.dart';
+import 'package:calc_app/data/models/weight_model.dart';
 import 'package:calc_app/domain/entities/component.dart';
 import 'package:calc_app/domain/entities/date.dart';
 import 'package:calc_app/domain/entities/order.dart';
 import 'package:calc_app/domain/entities/size.dart';
+import 'package:calc_app/domain/entities/weight.dart';
 
 class OrderMapper {
   OrderModel orderEntityToDataModel(OrderEntity orderEntity) {
@@ -18,8 +21,8 @@ class OrderMapper {
       description: orderEntity.description,
       component: orderEntity.component,
       dateModel: _dateEntityToModel(orderEntity.dateEntity),
-      // dateModel: date,
       sizeModel: sizeEntityToModel(orderEntity.size),
+      unitsWeight: orderEntity.unitsWeight,
     );
   }
 
@@ -31,6 +34,7 @@ class OrderMapper {
       component: orderModel.component,
       dateEntity: orderModel.dateEntity,
       size: orderModel.size,
+      unitsWeight: orderModel.unitsWeight,
     );
   }
 
@@ -40,8 +44,7 @@ class OrderMapper {
       id: componentEntity.id,
       description: componentEntity.description,
       material: componentEntity.material,
-      unitsLinear: componentEntity.unitsLinear,
-      unitsWeight: componentEntity.unitsWeight,
+      weightModel: _weightEntityToModel(componentEntity.weight),
       quantity: componentEntity.quantity,
       weightPerCubMeter: componentEntity.weightPerCubMeter,
       pricePerCubMeter: componentEntity.pricePerCubMeter,
@@ -56,8 +59,7 @@ class OrderMapper {
       id: componentModel.id,
       description: componentModel.description,
       material: componentModel.material,
-      unitsLinear: componentModel.unitsLinear,
-      unitsWeight: componentModel.unitsWeight,
+      weight: componentModel.weight,
       quantity: componentModel.quantity,
       weightPerCubMeter: componentModel.weightPerCubMeter,
       pricePerCubMeter: componentModel.pricePerCubMeter,
@@ -72,6 +74,10 @@ class OrderMapper {
 
   DateModel _dateEntityToModel(DateEntity dateEntity) {
     return DateModel(create: dateEntity.create, edit: dateEntity.edit);
+  }
+
+  WeightModel _weightEntityToModel(Weight weightEntity) {
+    return WeightModel(weight: weightEntity.weight, unitsWeight: weightEntity.unitsWeight,);
   }
 
   SizeModel sizeEntityToModel(Size size) {

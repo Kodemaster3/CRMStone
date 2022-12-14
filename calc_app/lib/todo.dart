@@ -15,10 +15,11 @@ in entity:  add dateTime/                     +
             add description in component/     +
             add unit_linear/                  +
             add unit_weight in size           +
-            add weight in component           need implement
-            remove from component all units   -
-            add unitWeight in order           -
+            add weight in component           +
+            remove from component all units   +
+            add unitWeight in order           +
 
+in ui     :   optimised layer
 
 
 run generator: flutter pub run build_runner build

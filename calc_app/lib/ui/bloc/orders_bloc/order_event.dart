@@ -72,6 +72,7 @@ class ComponentOrderCreateEvent extends OrderEvent {
   final double width;
   final double length;
   final double height;
+  final double weight;
   final UnitsLinear unitsLinear;
   final UnitsWeight unitsWeight;
   final int quantity;
@@ -85,6 +86,7 @@ class ComponentOrderCreateEvent extends OrderEvent {
     required this.width,
     required this.length,
     required this.height,
+    required this.weight,
     required this.unitsLinear,
     required this.unitsWeight,
     required this.quantity,
@@ -117,6 +119,7 @@ class ComponentOrderUpdatedEvent extends OrderEvent {
   final double width;
   final double length;
   final double height;
+  final double weight;
   final UnitsLinear unitsLinear;
   final UnitsWeight unitsWeight;
   final int quantity;
@@ -131,6 +134,7 @@ class ComponentOrderUpdatedEvent extends OrderEvent {
     required this.width,
     required this.length,
     required this.height,
+    required this.weight,
     required this.unitsLinear,
     required this.unitsWeight,
     required this.quantity,

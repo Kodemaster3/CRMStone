@@ -1,4 +1,5 @@
 import 'dart:developer' as dev;
+
 import 'dart:math';
 import 'package:calc_app/domain/entities/date.dart';
 import 'package:calc_app/domain/entities/order.dart';
@@ -36,6 +37,7 @@ class CreateOrder {
       size: size,
       component: componentsId,
       dateEntity: date,
+      unitsWeight: unitsWeight,
     );
     // dev.log(orderEntity.dateEntity.toString());
     await orderRepository.createOrder(orderEntity: orderEntity);

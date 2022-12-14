@@ -122,7 +122,7 @@ class OrderRepositoryImpl implements OrderRepository {
             description: description,
             dateModel: updatedTime,
             sizeModel: sizeModel,
-            // unitsWeight: unitsWeight,
+            unitsWeight: unitsWeight,
           );
 
           dataOrders.remove(element);
@@ -229,15 +229,17 @@ class OrderRepositoryImpl implements OrderRepository {
           .getLastComponentFromCacheById(componentEntity.id);
       final updateDate = oldComponent.dateModel
           .copyWith(edit: componentEntity.dateEntity.edit);
+      final weight = oldComponent.weightModel.copyWith(
+        weight: componentEntity.weight.weight,
+        unitsWeight: componentEntity.weight.unitsWeight,
+      );
 
       final updateComponent = oldComponent.copyWith(
-
         name: componentEntity.name,
         material: componentEntity.material,
         description: componentEntity.description,
         sizeModel: orderMapper.sizeEntityToModel(componentEntity.size),
-        unitsWeight: componentEntity.unitsWeight,
-        unitsLinear: componentEntity.unitsLinear,
+        weightModel: weight,
         quantity: componentEntity.quantity,
         weightPerCubMeter: componentEntity.weightPerCubMeter,
         pricePerCubMeter: componentEntity.pricePerCubMeter,

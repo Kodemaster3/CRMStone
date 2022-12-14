@@ -91,6 +91,7 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
           width: event.width,
           length: event.length,
           height: event.height,
+          weight: event.weight,
           unitsLinear: event.unitsLinear,
           unitsWeight: event.unitsWeight,
           quantity: event.quantity,
@@ -179,6 +180,7 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
             width: event.width,
             length: event.length,
             height: event.height,
+            weight: event.weight,
             unitsLinear: event.unitsLinear,
             unitsWeight: event.unitsWeight,
             quantity: event.quantity,
@@ -188,7 +190,6 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
         final order = await getOrderById(id: _orderCashId);
         // final List<ComponentEntity> components =
         //     await getComponentsById(listIdComponents: order.component);
-        print(order.id);
         if (response) {
           emit(OrderViewWithComponent(
             order: order,

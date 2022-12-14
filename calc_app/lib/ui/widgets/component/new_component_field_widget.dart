@@ -22,6 +22,7 @@ class _NewComponentFieldWidget extends State<NewComponentFieldWidget> {
   late TextEditingController _sizeHeightController;
   late TextEditingController _materialController;
   late TextEditingController _quantityController;
+  late TextEditingController _weightController;
   late TextEditingController _weightPerCubMeterController;
   late TextEditingController _pricePerCubMeterController;
   late UnitsLinear _unitLinear;
@@ -38,6 +39,7 @@ class _NewComponentFieldWidget extends State<NewComponentFieldWidget> {
     _sizeHeightController = TextEditingController();
     _materialController = TextEditingController();
     _quantityController = TextEditingController();
+    _weightController = TextEditingController();
     _weightPerCubMeterController = TextEditingController();
     _pricePerCubMeterController = TextEditingController();
     _unitLinear = UnitsLinear.meter;
@@ -54,6 +56,7 @@ class _NewComponentFieldWidget extends State<NewComponentFieldWidget> {
     _sizeHeightController.dispose();
     _materialController.dispose();
     _quantityController.dispose();
+    _weightController.dispose();
     _weightPerCubMeterController.dispose();
     _pricePerCubMeterController.dispose();
     super.dispose();
@@ -64,10 +67,11 @@ class _NewComponentFieldWidget extends State<NewComponentFieldWidget> {
       name: _nameController.text,
       description: _descriptionController.text,
       material: _materialController.text,
-      quantity: int.tryParse(_quantityController.text) ?? 0,
       width: double.tryParse(_sizeWidthController.text) ?? 0.0,
       length: double.tryParse(_sizeLengthController.text) ?? 0.0,
       height: double.tryParse(_sizeHeightController.text) ?? 0.0,
+      quantity: int.tryParse(_quantityController.text) ?? 0,
+      weight: double.tryParse(_weightController.text) ?? 0.0,
       unitsLinear: _unitLinear,
       unitsWeight: _unitWeight,
       weightPerCubMeter: double.tryParse(_weightPerCubMeterController.text) ?? 0.0,
@@ -328,6 +332,30 @@ class _NewComponentFieldWidget extends State<NewComponentFieldWidget> {
                     ),
                   ),
                 ],
+              ),
+            ),
+
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextFormField(
+                initialValue: (0.0).toString(),
+                validator: _validatorNumeric,
+                keyboardType: TextInputType.number,
+                inputFormatters: <TextInputFormatter>[
+                  FilteringTextInputFormatter.allow(
+                      RegExp('[0-9.]'))
+                ],
+                onChanged: (value) => setState(() {
+                  _weightController.text = value;
+                }),
+                decoration: const InputDecoration(
+                  hintText: 'Weight component',
+                  helperText: 'Weight component',
+                  icon: Icon(
+                    Icons.monitor_weight_outlined,
+                    size: 15.0,
+                  ),
+                ),
               ),
             ),
 

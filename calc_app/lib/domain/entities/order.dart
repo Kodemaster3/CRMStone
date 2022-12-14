@@ -1,5 +1,6 @@
 import 'package:calc_app/domain/entities/date.dart';
 import 'package:calc_app/domain/entities/size.dart';
+import 'package:calc_app/domain/entities/units_weight.dart';
 
 
 class OrderEntity {
@@ -9,6 +10,8 @@ class OrderEntity {
   final Size size;
   final List<String> component;
   final DateEntity dateEntity;
+  final UnitsWeight unitsWeight;
+
 
   const OrderEntity({
     required this.id,
@@ -17,5 +20,6 @@ class OrderEntity {
     required this.size,
     required this.component,
     required this.dateEntity,
+    required this.unitsWeight,
   });
 }
