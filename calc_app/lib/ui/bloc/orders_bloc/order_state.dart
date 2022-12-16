@@ -5,7 +5,7 @@ abstract class OrderState {
   const OrderState();
 }
 
-class OrderInitial extends OrderState {}
+class OrderInitialState extends OrderState {}
 
 class OrderLoading extends OrderState {}
 

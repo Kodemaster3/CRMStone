@@ -1,4 +1,4 @@
-/*
+
 
 implement:
 1. model entities from domain in data layer               -is done!
@@ -19,9 +19,20 @@ in entity:  add dateTime/                     +
             remove from component all units   +
             add unitWeight in order           +
 
-in ui     :   optimised layer
+in ui:      optimised layer
+
+
+in data & case:
+            implement material with isolation of orders             -in progress
+            move all mapper logic in use case??
+            separate blocs case order, component, material
+
+
+
+            implement bloc material/usecase
+
+
 
 
 run generator: flutter pub run build_runner build
 
-*/

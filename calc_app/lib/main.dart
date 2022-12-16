@@ -1,8 +1,9 @@
-import 'package:calc_app/locator_service.dart';
 import 'locator_service.dart' as di;
+import 'package:calc_app/locator_service.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:calc_app/ui/bloc/material_bloc/material_bloc.dart';
 import 'package:calc_app/ui/bloc/orders_bloc/order_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'constant/routes.dart';
 import 'constant/ui_helper.dart';
@@ -23,6 +24,7 @@ class App extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<OrderBloc>(create: (context) => sl<OrderBloc>()),
+        BlocProvider<MaterialBloc>(create: (context) => sl<MaterialBloc>()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

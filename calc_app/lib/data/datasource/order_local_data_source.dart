@@ -4,6 +4,8 @@ import 'package:calc_app/data/models/component_model.dart';
 import 'package:calc_app/data/models/order_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+const CACHED_ORDER_LIST = 'CACHED_ORDER_LIST';
+
 abstract class OrderLocalDataSource {
   Future<List<OrderModel>> getLastOrderFromCache();
 
@@ -20,7 +22,6 @@ abstract class OrderLocalDataSource {
   Future<ComponentModel> getLastComponentFromCacheById(String idComponentKey);
 }
 
-const CACHED_ORDER_LIST = 'CACHED_ORDER_LIST';
 
 class OrderLocalDataSourceImpl extends OrderLocalDataSource {
   final SharedPreferences sharedPreferences;

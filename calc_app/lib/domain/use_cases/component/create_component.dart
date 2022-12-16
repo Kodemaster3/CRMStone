@@ -5,7 +5,7 @@ import 'package:calc_app/domain/entities/date.dart';
 import 'package:calc_app/domain/entities/size.dart';
 import 'package:calc_app/domain/entities/units_weight.dart';
 import 'package:calc_app/domain/entities/weight.dart';
-import 'package:calc_app/domain/repository/deliver_local/order_repository.dart';
+import 'package:calc_app/domain/repository/order_local/order_repository.dart';
 
 import '../../entities/units_linear.dart';
 

@@ -37,7 +37,7 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
     required this.updateComponent,
     required this.getComponentById,
     required this.getComponentsById,
-  }) : super(OrderInitial()) {
+  }) : super(OrderInitialState()) {
     String _orderCashId = '';
 
     ///Emit all orders

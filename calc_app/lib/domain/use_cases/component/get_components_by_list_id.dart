@@ -1,5 +1,5 @@
 import 'package:calc_app/domain/entities/component.dart';
-import 'package:calc_app/domain/repository/deliver_local/order_repository.dart';
+import 'package:calc_app/domain/repository/order_local/order_repository.dart';
 
 class GetComponentsByListId {
   final OrderRepository orderRepository;

@@ -1,5 +1,5 @@
 import 'package:calc_app/domain/entities/order.dart';
-import 'package:calc_app/domain/repository/deliver_local/order_repository.dart';
+import 'package:calc_app/domain/repository/order_local/order_repository.dart';
 
 class GetAllOrders {
   final OrderRepository orderRepository;

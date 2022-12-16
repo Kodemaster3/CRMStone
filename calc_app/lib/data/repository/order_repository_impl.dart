@@ -7,7 +7,7 @@ import 'package:calc_app/domain/entities/component.dart';
 import 'package:calc_app/domain/entities/order.dart';
 import 'package:calc_app/domain/entities/units_linear.dart';
 import 'package:calc_app/domain/entities/units_weight.dart';
-import 'package:calc_app/domain/repository/deliver_local/order_repository.dart';
+import 'package:calc_app/domain/repository/order_local/order_repository.dart';
 
 const topPositionInList = 0;
 
