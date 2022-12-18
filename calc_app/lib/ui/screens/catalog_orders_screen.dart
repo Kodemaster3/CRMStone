@@ -2,6 +2,7 @@ import 'package:calc_app/ui/bloc/material_bloc/material_bloc.dart';
 import 'package:calc_app/ui/bloc/material_bloc/material_event.dart';
 import 'package:calc_app/ui/bloc/orders_bloc/order_bloc.dart';
 import 'package:calc_app/ui/bloc/orders_bloc/order_event.dart';
+import 'package:calc_app/ui/screens/add_new_material_screen.dart';
 import 'package:calc_app/ui/screens/add_new_order_screen.dart';
 import 'package:calc_app/ui/widgets/list_view_order_widget.dart';
 import 'package:flutter/material.dart';
@@ -26,8 +27,9 @@ class CatalogOrdersScreen extends StatelessWidget {
           ///add material
           IconButton(
             onPressed: () {
-              BlocProvider.of<MaterialBloc>(context).add(MaterialCreateEvent(
-                  name: 'name', weightPerCubMeter: 1.1, pricePerCubMeter: 2.2));
+              BlocProvider.of<MaterialBloc>(context).add(MaterialCreatingEvent());
+              Navigator.of(context)
+                  .pushNamed(AddNewMaterialScreen.routeName);
             },
             icon: const Icon(Icons.medical_information_outlined),
           ),

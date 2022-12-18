@@ -6,7 +6,8 @@ implement:
 3. repository must work by use case                       -is done!
 4. add splash screen
 5. create any like design for ui                          -in progress
-6. add login screen after splash fireBase 
+6. add login screen after splash fireBase
+7. add case translate => implement them
 
 
 
@@ -23,13 +24,18 @@ in ui:      optimised layer
 
 
 in data & case:
-            implement material with isolation of orders             -in progress
-            move all mapper logic in use case??
+            implement material with isolation of orders             -in progress well
+            implement choose all layer material in component!!!
             separate blocs case order, component, material
 
 
+          !!  when material use in component, and material is deleted, need implement logic, this component when it reed,
+            must give proposition to chose material from list
+          !!  when create component and list material is empty, user see toast to create minimum one material
 
-            implement bloc material/usecase
+            implement ui material
+
+
 
 
 

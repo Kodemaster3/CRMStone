@@ -26,8 +26,22 @@ class MaterialBloc extends Bloc<MaterialEvent, MaterialState> {
       emit(MaterialLoadedState(materialList: materialList));
     });
 
-    /// Create new material
-    on<MaterialCreateEvent>((event, emit) async {
+    ///Creating new material
+    on<MaterialCreatingEvent>((event, emit) {
+      const emptyFieldId = '';
+      const emptyFieldName = '';
+      const emptyFieldWeightPerCubMeter = 0.0;
+      const emptyFieldPricePerCubMeter = 0.0;
+      emit(const MaterialStartFieldsState(
+        emptyFieldId: emptyFieldId,
+        emptyFieldName: emptyFieldName,
+        emptyFieldWeightPerCubMeter: emptyFieldWeightPerCubMeter,
+        emptyFieldPricePerCubMeter: emptyFieldPricePerCubMeter,
+      ));
+    });
+
+    /// Created new material
+    on<MaterialCreatedEvent>((event, emit) async {
       final response = await createMaterialUseCase.call(
           name: event.name,
           weightPerCubMeter: event.weightPerCubMeter,
@@ -44,6 +58,18 @@ class MaterialBloc extends Bloc<MaterialEvent, MaterialState> {
       final material =
           await getMaterialByIdUseCase(idMaterial: event.idMaterial);
       emit(MaterialPresentationByIdState(materialEntity: material));
+    });
+
+    /// Updating material
+    on<MaterialUpdatingEvent>((event, emit) async {
+      emit(MaterialLoadingState());
+      final response =
+          await getMaterialByIdUseCase(idMaterial: event.idMaterial);
+      emit(MaterialUpdatingFieldsState(
+          idMaterial: response.id,
+          oldFieldName: response.name,
+          oldFieldWeightPerCubMeter: response.weightPerCubMeter,
+          oldFieldPricePerCubMeter: response.pricePerCubMeter));
     });
 
     /// Update material
@@ -63,7 +89,8 @@ class MaterialBloc extends Bloc<MaterialEvent, MaterialState> {
     ///Remove material from all place
     on<MaterialDeleteEvent>((event, emit) async {
       emit(MaterialLoadingState());
-      final response = await deleteMaterialUseCase(idMaterial: event.idMaterial);
+      final response =
+          await deleteMaterialUseCase(idMaterial: event.idMaterial);
       if (response) {
         emit(const MaterialMessageByState(
             message: 'Material is removed success'));

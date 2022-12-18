@@ -15,6 +15,34 @@ class MaterialLoadedState extends MaterialState {
   });
 }
 
+class MaterialStartFieldsState extends MaterialState {
+  final String emptyFieldId;
+  final String emptyFieldName;
+  final double emptyFieldWeightPerCubMeter;
+  final double emptyFieldPricePerCubMeter;
+
+  const MaterialStartFieldsState({
+    required this.emptyFieldId,
+    required this.emptyFieldName,
+    required this.emptyFieldWeightPerCubMeter,
+    required this.emptyFieldPricePerCubMeter,
+  });
+}
+
+class MaterialUpdatingFieldsState extends MaterialState {
+  final String idMaterial;
+  final String oldFieldName;
+  final double oldFieldWeightPerCubMeter;
+  final double oldFieldPricePerCubMeter;
+
+  const MaterialUpdatingFieldsState({
+    required this.idMaterial,
+    required this.oldFieldName,
+    required this.oldFieldWeightPerCubMeter,
+    required this.oldFieldPricePerCubMeter,
+  });
+}
+
 class MaterialPresentationByIdState extends MaterialState {
   final MaterialEntity materialEntity;
   const MaterialPresentationByIdState({

@@ -1,3 +1,4 @@
+import 'package:calc_app/ui/screens/add_new_material_screen.dart';
 import 'package:calc_app/ui/screens/component_field_screen.dart';
 import 'package:calc_app/ui/screens/add_new_order_screen.dart';
 import 'package:calc_app/ui/screens/edit_order_screen.dart';
@@ -14,5 +15,6 @@ final routes = {
       const ViewOrderScreenWithListComponent(),
   EditOrderScreen.routeName: (ctx) => EditOrderScreen(),
   ComponentFieldScreen.routeName: (ctx) => const ComponentFieldScreen(),
+  AddNewMaterialScreen.routeName: (ctx) => const AddNewMaterialScreen(),
   // NomenclatureDeliverScreen.routeName: (ctx) => NomenclatureDeliverScreen(),
 };

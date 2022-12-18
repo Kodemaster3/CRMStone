@@ -6,6 +6,8 @@ abstract class MaterialEvent {
 
 class MaterialLoadingEvent extends MaterialEvent {}
 
+class MaterialCreatingEvent extends MaterialEvent {}
+
 class MaterialViewByIdEvent extends MaterialEvent {
   final String idMaterial;
 
@@ -14,15 +16,23 @@ class MaterialViewByIdEvent extends MaterialEvent {
   });
 }
 
-class MaterialCreateEvent extends MaterialEvent {
+class MaterialCreatedEvent extends MaterialEvent {
   final String name;
   final double weightPerCubMeter;
   final double pricePerCubMeter;
 
-  const MaterialCreateEvent({
+  const MaterialCreatedEvent({
     required this.name,
     required this.weightPerCubMeter,
     required this.pricePerCubMeter,
+  });
+}
+
+class MaterialUpdatingEvent extends MaterialEvent{
+  final String idMaterial;
+
+  const MaterialUpdatingEvent({
+    required this.idMaterial,
   });
 }
 

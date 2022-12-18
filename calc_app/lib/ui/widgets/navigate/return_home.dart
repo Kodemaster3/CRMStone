@@ -10,9 +10,11 @@ class ReturnHome extends StatelessWidget {
   Widget build(BuildContext context) {
     return IconButton(
       onPressed: () {
-        BlocProvider.of<OrderBloc>(context).add(OrderLoadingEvent());
+
         // Navigator.of(context).pop();
         Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false);
+
+        BlocProvider.of<OrderBloc>(context).add(OrderLoadingEvent());
       },
       icon: const Icon(Icons.home),
     );
