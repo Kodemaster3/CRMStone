@@ -1,15 +1,7 @@
 import 'dart:developer' as dev;
 
-import 'package:calc_app/domain/use_cases/component/create_component.dart';
-import 'package:calc_app/domain/use_cases/order/create_order.dart';
-import 'package:calc_app/domain/use_cases/component/delete_component.dart';
-import 'package:calc_app/domain/use_cases/order/delete_order.dart';
-import 'package:calc_app/domain/use_cases/component/get_component_by_id.dart';
-import 'package:calc_app/domain/use_cases/component/get_components_by_list_id.dart';
-import 'package:calc_app/domain/use_cases/order/get_order_by_id.dart';
-import 'package:calc_app/domain/use_cases/component/update_component.dart';
-import 'package:calc_app/domain/use_cases/order/update_order.dart';
-import 'package:calc_app/domain/use_cases/order/get_all_orders.dart';
+import 'package:calc_app/domain/use_cases/component/component_use_case.dart';
+import 'package:calc_app/domain/use_cases/order/order_use_case.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:calc_app/ui/bloc/orders_bloc/order_event.dart';
 import 'package:calc_app/ui/bloc/orders_bloc/order_state.dart';

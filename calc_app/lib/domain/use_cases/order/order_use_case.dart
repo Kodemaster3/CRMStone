@@ -39,7 +39,7 @@ class CreateOrder {
       dateEntity: date,
       unitsWeight: unitsWeight,
     );
-    // dev.log(orderEntity.dateEntity.toString());
+    dev.log('Create order name: ${orderEntity.name}', name: 'UseCase');
     await orderRepository.createOrder(orderEntity: orderEntity);
   }
 
@@ -50,5 +50,65 @@ class CreateOrder {
       id = '0$id';
     }
     return '$now$id';
+  }
+}
+
+class DeleteOrder {
+  final OrderRepository orderRepository;
+
+  DeleteOrder(this.orderRepository);
+
+  Future<bool> call({required String id}) async {
+    return await orderRepository.deleteOrderById(id: id);
+  }
+}
+
+class GetAllOrders {
+  final OrderRepository orderRepository;
+
+  GetAllOrders(this.orderRepository);
+
+  Future<List<OrderEntity>> call() async {
+    return await orderRepository.getAllOrders();
+  }
+}
+
+class GetOrderById {
+  final OrderRepository orderRepository;
+
+  GetOrderById(this.orderRepository);
+
+  Future<OrderEntity> call({required String id}) async {
+    return await orderRepository.getOrderById(id: id);
+  }
+}
+
+class UpdateOrder {
+  final OrderRepository orderRepository;
+
+  UpdateOrder(this.orderRepository);
+
+  Future<bool> call({
+    required String id,
+    required String name,
+    required String description,
+    required double width,
+    required double length,
+    required double height,
+    required UnitsLinear unitsLinear,
+    required UnitsWeight unitsWeight,
+  }) async {
+    final timeEdit = DateTime.now();
+    return await orderRepository.updateBodyOrderById(
+      id: id,
+      name: name,
+      description: description,
+      width: width,
+      length: length,
+      height: height,
+      edit: timeEdit,
+      unitsLinear: unitsLinear,
+      unitsWeight: unitsWeight,
+    );
   }
 }

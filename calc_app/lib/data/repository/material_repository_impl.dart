@@ -29,10 +29,14 @@ class MaterialRepositoryImpl implements MaterialRepository {
       dataList.insert(
           topPositionInList, materialMapper.getModelFromEntity(materialEntity));
       localDataSource.materialToCache(dataList);
-      dev.log('createMaterial: ${materialEntity.name}, lengthDB: ${dataList.length}');
+      dev.log(
+          'Created material name: ${materialEntity.name},'
+          ' id: ${materialEntity.id},'
+          ' lengthMaterialDB: ${dataList.length}',
+          name: 'DB(repository)');
       return true;
     } on Exception {
-      dev.log('Exc in material repository, method createMaterial()');
+      dev.log('Exc in material repository, method createMaterial()', name: 'repos');
       return false;
     }
   }
@@ -50,7 +54,7 @@ class MaterialRepositoryImpl implements MaterialRepository {
       }
       return true;
     } on Exception {
-      dev.log('Exc in material repository, method deleteMaterialById()');
+      dev.log('Exc in material repository, method deleteMaterialById()', name: 'repos');
       return false;
     }
   }
@@ -61,7 +65,7 @@ class MaterialRepositoryImpl implements MaterialRepository {
       final dataList = await localDataSource.getLastMaterialListFromCache();
       return dataList;
     } on Exception {
-      dev.log('Exc in material repository, method getAllMaterials()');
+      dev.log('Exc in material repository, method getAllMaterials()', name: 'repos');
     }
     throw Exception('Exception in repository lvl data');
   }
@@ -76,7 +80,7 @@ class MaterialRepositoryImpl implements MaterialRepository {
         }
       }
     } on Exception {
-      dev.log('Exc in material repository, method getAllMaterials()');
+      dev.log('Exc in material repository, method getAllMaterials()', name: 'repos');
     }
     throw Exception('Exception in repository lvl data');
   }
@@ -100,7 +104,7 @@ class MaterialRepositoryImpl implements MaterialRepository {
       }
       return false;
     } on Exception {
-      dev.log('Exc in material repository, method getAllMaterials()');
+      dev.log('Exc in material repository, method getAllMaterials()', name: 'repos');
       return false;
     }
   }

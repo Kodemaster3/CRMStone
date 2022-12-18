@@ -22,25 +22,34 @@ class AddNewMaterialScreen extends StatelessWidget {
           /// When fields fill => submit add MaterialCreatedEvent
           if (state is state_bloc.MaterialStartFieldsState) {
             return MaterialFieldsWidget(
-                id: state.emptyFieldId,
-                fieldName: state.emptyFieldName,
-                fieldPricePerCubMeter: state.emptyFieldPricePerCubMeter,
-                fieldWeightPerCubMeter: state.emptyFieldWeightPerCubMeter);
+              id: state.emptyFieldId,
+              fieldName: state.emptyFieldName,
+              fieldPricePerCubMeter: state.emptyFieldPricePerCubMeter,
+              fieldWeightPerCubMeter: state.emptyFieldWeightPerCubMeter,
+            );
           }
 
           /// When fields fill => submit add MaterialUpdateEvent
           if (state is state_bloc.MaterialUpdatingFieldsState) {
             return MaterialFieldsWidget(
-                id: state.idMaterial,
-                fieldName: state.oldFieldName,
-                fieldPricePerCubMeter: state.oldFieldPricePerCubMeter,
-                fieldWeightPerCubMeter: state.oldFieldWeightPerCubMeter);
+              id: state.idMaterial,
+              fieldName: state.oldFieldName,
+              fieldPricePerCubMeter: state.oldFieldPricePerCubMeter,
+              fieldWeightPerCubMeter: state.oldFieldWeightPerCubMeter,
+            );
           }
-          return Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, mainAxisSize: MainAxisSize.max,
-            children: const [
-              CircularProgressIndicator(),
-              ReturnHome(),
-            ],
+
+          ///TODO check ui by usable
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              children: const [
+                CircularProgressIndicator(),
+                ReturnHome(),
+              ],
+            ),
           );
         },
       ),

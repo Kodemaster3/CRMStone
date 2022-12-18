@@ -15,11 +15,16 @@ class CreateMaterialUseCase {
     required double weightPerCubMeter,
     required double pricePerCubMeter,
   }) async {
+    // final containersEntity = await materialRepository.getAllMaterial();
+    final containersId =
+        (await materialRepository.getAllMaterial()).map((e) => e.id);
+    final tempNewId = newId();
     final materialEntity = MaterialEntity(
-        id: newId(),
-        name: name,
-        weightPerCubMeter: weightPerCubMeter,
-        pricePerCubMeter: pricePerCubMeter);
+      id: containersId.contains(tempNewId) ? newId() : tempNewId,
+      name: name,
+      weightPerCubMeter: weightPerCubMeter,
+      pricePerCubMeter: pricePerCubMeter,
+    );
     return await materialRepository.createMaterial(materialEntity);
   }
 
@@ -29,7 +34,6 @@ class CreateMaterialUseCase {
     while (id.length < 10) {
       id = '0$id';
     }
-
     return '$now$id';
   }
 }

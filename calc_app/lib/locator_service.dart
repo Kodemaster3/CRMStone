@@ -1,26 +1,18 @@
+import 'package:get_it/get_it.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:calc_app/data/datasource/material_local_data_source.dart';
 import 'package:calc_app/data/datasource/order_local_data_source.dart';
 import 'package:calc_app/data/repository/material_mapper.dart';
 import 'package:calc_app/data/repository/material_repository_impl.dart';
+import 'package:calc_app/data/repository/order_mapper.dart';
 import 'package:calc_app/data/repository/order_repository_impl.dart';
 import 'package:calc_app/domain/repository/material_local/material_repository.dart';
 import 'package:calc_app/domain/repository/order_local/order_repository.dart';
-import 'package:calc_app/domain/use_cases/component/create_component.dart';
 import 'package:calc_app/domain/use_cases/material/material_use_case.dart';
-import 'package:calc_app/domain/use_cases/order/create_order.dart';
-import 'package:calc_app/domain/use_cases/order/delete_order.dart';
-import 'package:calc_app/domain/use_cases/component/get_component_by_id.dart';
-import 'package:calc_app/domain/use_cases/component/get_components_by_list_id.dart';
-import 'package:calc_app/domain/use_cases/order/get_order_by_id.dart';
-import 'package:calc_app/domain/use_cases/order/get_all_orders.dart';
-import 'package:calc_app/domain/use_cases/component/update_component.dart';
-import 'package:calc_app/domain/use_cases/order/update_order.dart';
-import 'package:calc_app/domain/use_cases/component/delete_component.dart';
+import 'package:calc_app/domain/use_cases/order/order_use_case.dart';
+import 'package:calc_app/domain/use_cases/component/component_use_case.dart';
 import 'package:calc_app/ui/bloc/material_bloc/material_bloc.dart';
-import 'package:get_it/get_it.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-import 'ui/bloc/orders_bloc/order_bloc.dart';
+import 'package:calc_app/ui/bloc/orders_bloc/order_bloc.dart';
 
 final sl = GetIt.instance;
 
@@ -74,7 +66,7 @@ Future<void> init() async {
   sl.registerLazySingleton<OrderRepository>(
     () => OrderRepositoryImpl(
       localDataSource: sl(),
-      //TODO need add OrderMapper
+      orderMapper: OrderMapper(),
     ),
   );
   sl.registerLazySingleton<OrderLocalDataSource>(

@@ -14,7 +14,7 @@ class ComponentFieldScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    dev.log('in add new component screen');
+    dev.log('In add new component screen', name: 'ui');
     return BlocBuilder<OrderBloc, OrderState>(
       builder: (context, state) {
         /// state ComponentEditingField if old to fill field

@@ -13,9 +13,10 @@ const topPositionInList = 0;
 
 class OrderRepositoryImpl implements OrderRepository {
   final OrderLocalDataSource localDataSource;
-  final orderMapper = OrderMapper();
+  final OrderMapper orderMapper;
 
-  OrderRepositoryImpl({required this.localDataSource});
+  const OrderRepositoryImpl(
+      {required this.localDataSource, required this.orderMapper});
 
   @override
   Future<List<OrderEntity>> getAllOrders() async {
@@ -24,7 +25,7 @@ class OrderRepositoryImpl implements OrderRepository {
       // dev.log(dataOrders.last.dateEntity.edit.toString());
       return dataOrders;
     } on Exception {
-      dev.log('Exc in order repository, method getAllOrders()');
+      dev.log('Exc in order repository, method getAllOrders()', name: 'repos');
     }
     throw Exception('Exception in repository lvl data');
   }
@@ -83,12 +84,18 @@ class OrderRepositoryImpl implements OrderRepository {
       }
       dataOrders.insert(
           topPositionInList, orderMapper.orderEntityToDataModel(orderEntity));
-
       await localDataSource.ordersToCache(dataOrders);
+      dev.log(
+          'Created order name: ${orderEntity.name},'
+          ' id: ${orderEntity.id},'
+          ' lengthOrderDB: ${dataOrders.length}',
+          name: 'DB(repository)');
       return true;
     } on Exception {
-      dev.log('Exc in repository method createNewOrder()'
-          ' when name is ${orderEntity.name}');
+      dev.log(
+          'Exc in repository method createNewOrder()'
+          ' when name is ${orderEntity.name}',
+          name: 'repos');
       return false;
     }
   }
@@ -133,7 +140,8 @@ class OrderRepositoryImpl implements OrderRepository {
       }
       return false;
     } on Exception {
-      dev.log('Exc in order repository, method updateOrderById()');
+      dev.log('Exc in order repository, method updateOrderById()',
+          name: 'repos');
       return false;
     }
   }
@@ -173,10 +181,17 @@ class OrderRepositoryImpl implements OrderRepository {
       await localDataSource.componentToCache(
           componentEntity.id, newComponentData);
       await localDataSource.ordersToCache(dataOrders);
+      dev.log(
+          'Created component name: ${componentEntity.name},'
+          ' id: ${componentEntity.id},'
+          ' lengthOrder: ${dataOrders.length}',
+          name: 'DB(repository)');
       return true;
     } on Exception {
-      dev.log('Exc in order,repository method createComponent()'
-          ' when id is $idOrder, in added component');
+      dev.log(
+          'Exc in order,repository method createComponent()'
+          ' when id is $idOrder, in added component',
+          name: 'repos');
       return false;
     }
   }
@@ -215,7 +230,7 @@ class OrderRepositoryImpl implements OrderRepository {
       }
       return false;
     } on Exception {
-      dev.log('Exc in order rep, in method deleteComponent');
+      dev.log('Exc in order rep, in method deleteComponent', name: 'repos');
       return false;
     }
   }
@@ -250,7 +265,8 @@ class OrderRepositoryImpl implements OrderRepository {
           componentEntity.id, updateComponent);
       return true;
     } on Exception {
-      dev.log('Exc in order rep, in method updateComponentByIdInOrder');
+      dev.log('Exc in order rep, in method updateComponentByIdInOrder',
+          name: 'repos');
       return false;
     }
   }
@@ -264,7 +280,7 @@ class OrderRepositoryImpl implements OrderRepository {
           await localDataSource.getLastComponentFromCacheById(idComponent);
       return component;
     } on Exception {
-      dev.log('Exc in order rep, in method getComponentById');
+      dev.log('Exc in order rep, in method getComponentById', name: 'repos');
     }
     throw Exception('Exception in repository lvl data');
   }
@@ -278,7 +294,7 @@ class OrderRepositoryImpl implements OrderRepository {
           await localDataSource.getLastListComponentFromCacheById(idComponents);
       return components;
     } on Exception {
-      dev.log('Exc in order rep, in method getComponentsById');
+      dev.log('Exc in order rep, in method getComponentsById', name: 'repos');
     }
     throw Exception('Exception in repository lvl data');
   }

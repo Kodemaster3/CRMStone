@@ -15,7 +15,7 @@ class ListViewOrderWidget extends StatelessWidget {
     return BlocBuilder<OrderBloc, OrderState>(
       builder: (context, state) {
         if (state is OrdersLoaded) {
-          dev.log('state in ListViewWidget is work');
+          dev.log('state in ListViewWidget is work', name: 'ui');
           return ListView.builder(
             itemCount: state.orders.length,
             itemBuilder: ((context, index) {
