@@ -40,5 +40,6 @@ in data & case:
 
 
 
-run generator: flutter pub run build_runner build
+run generator:
+flutter pub run build_runner build
 

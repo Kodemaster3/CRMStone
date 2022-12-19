@@ -5,9 +5,9 @@ import 'package:calc_app/domain/entities/date.dart';
 import 'package:calc_app/domain/entities/size.dart';
 import 'package:calc_app/domain/entities/units_weight.dart';
 import 'package:calc_app/domain/entities/weight.dart';
+import 'package:calc_app/domain/entities/units_linear.dart';
 import 'package:calc_app/domain/repository/order_local/order_repository.dart';
 
-import '../../entities/units_linear.dart';
 
 class CreateComponent {
   final OrderRepository orderRepository;
@@ -17,7 +17,7 @@ class CreateComponent {
   Future<bool> call({
     required String name,
     required String description,
-    required String material,
+    required String materialId,
     required double width,
     required double length,
     required double height,
@@ -25,8 +25,8 @@ class CreateComponent {
     required UnitsLinear unitsLinear,
     required UnitsWeight unitsWeight,
     required int quantity,
-    required double weightPerCubMeter,
-    required double pricePerCubMeter,
+    // required double weightPerCubMeter,
+    // required double pricePerCubMeter,
     required String idOrder,
   }) async {
     final size = Size(
@@ -40,12 +40,10 @@ class CreateComponent {
       name: name,
       description: description,
       id: newId(),
-      material: material,
+      materialId: materialId,
       weight: weightEntity,
       size: size,
       quantity: quantity,
-      weightPerCubMeter: weightPerCubMeter,
-      pricePerCubMeter: pricePerCubMeter,
       dateEntity: DateEntity(
         create: DateTime.now(),
         edit: DateTime.now(),
@@ -116,7 +114,7 @@ class UpdateComponent {
     required String idComponent,
     required String name,
     required String description,
-    required String material,
+    required String materialId,
     required double width,
     required double length,
     required double height,
@@ -124,8 +122,8 @@ class UpdateComponent {
     required UnitsLinear unitsLinear,
     required UnitsWeight unitsWeight,
     required int quantity,
-    required double weightPerCubMeter,
-    required double pricePerCubMeter,
+    // required double weightPerCubMeter,
+    // required double pricePerCubMeter,
   }) async {
     final date = DateEntity(create: DateTime.now(), edit: DateTime.now());
     final size = Size(
@@ -139,12 +137,10 @@ class UpdateComponent {
       id: idComponent,
       name: name,
       description: description,
-      material: material,
+      materialId: materialId,
       weight: weightEntity,
       size: size,
       quantity: quantity,
-      weightPerCubMeter: weightPerCubMeter,
-      pricePerCubMeter: pricePerCubMeter,
       dateEntity: date,
     );
     return await orderRepository.updateComponentByIdInOrder(

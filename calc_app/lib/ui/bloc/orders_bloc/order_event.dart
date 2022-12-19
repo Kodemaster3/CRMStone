@@ -65,10 +65,20 @@ class OrderViewWithComponentEvent extends OrderEvent {
   });
 }
 
+/// run state with empty field's state => ComponentCreatingFieldsState()
+class ComponentOrderCreatingEvent extends OrderEvent {
+  final String idOrder;
+
+  const ComponentOrderCreatingEvent({
+    required this.idOrder,
+  });
+}
+
 class ComponentOrderCreateEvent extends OrderEvent {
+  final String idOrder;
   final String name;
   final String description;
-  final String material;
+  final String materialId;
   final double width;
   final double length;
   final double height;
@@ -76,13 +86,13 @@ class ComponentOrderCreateEvent extends OrderEvent {
   final UnitsLinear unitsLinear;
   final UnitsWeight unitsWeight;
   final int quantity;
-  final double weightPerCubMeter;
-  final double pricePerCubMeter;
+
 
   const ComponentOrderCreateEvent({
+    required this.idOrder,
     required this.name,
     required this.description,
-    required this.material,
+    required this.materialId,
     required this.width,
     required this.length,
     required this.height,
@@ -90,8 +100,6 @@ class ComponentOrderCreateEvent extends OrderEvent {
     required this.unitsLinear,
     required this.unitsWeight,
     required this.quantity,
-    required this.weightPerCubMeter,
-    required this.pricePerCubMeter,
   });
 }
 
@@ -111,7 +119,19 @@ class ComponentOrderDeletedEvent extends OrderEvent {
   });
 }
 
+
+class ComponentOrderUpdatingEvent extends OrderEvent {
+  final String idOrder;
+  final String idComponent;
+
+  const ComponentOrderUpdatingEvent({
+    required this.idOrder,
+    required this.idComponent,
+  });
+}
+
 class ComponentOrderUpdatedEvent extends OrderEvent {
+  final String idOrder;
   final String idComponent;
   final String name;
   final String description;
@@ -123,10 +143,9 @@ class ComponentOrderUpdatedEvent extends OrderEvent {
   final UnitsLinear unitsLinear;
   final UnitsWeight unitsWeight;
   final int quantity;
-  final double weightPerCubMeter;
-  final double pricePerCubMeter;
 
   const ComponentOrderUpdatedEvent({
+    required this.idOrder,
     required this.idComponent,
     required this.name,
     required this.description,
@@ -138,17 +157,6 @@ class ComponentOrderUpdatedEvent extends OrderEvent {
     required this.unitsLinear,
     required this.unitsWeight,
     required this.quantity,
-    required this.weightPerCubMeter,
-    required this.pricePerCubMeter,
   });
 }
 
-class ComponentOrderUpdatingEvent extends OrderEvent {
-  // final String idOrder;
-  final String idComponent;
-
-  const ComponentOrderUpdatingEvent({
-    // required this.idOrder,
-    required this.idComponent,
-  });
-}

@@ -104,7 +104,7 @@ class ListViewComponentWidget extends StatelessWidget {
                                           'Quantity: ${state.components[index].quantity}',
                                         ),
                                         Text(
-                                          'Material: ${state.components[index].material}',
+                                          'Material: ${state.components[index].materialId}',
                                         ),
                                         Text(
                                           'Description: ${state.components[index].description}',
@@ -132,7 +132,9 @@ class ListViewComponentWidget extends StatelessWidget {
                             //TODO: implement edit field component
                             BlocProvider.of<OrderBloc>(context).add(
                               ComponentOrderUpdatingEvent(
-                                  idComponent: state.components[index].id),
+                                idComponent: state.components[index].id,
+                                idOrder: state.order.id,
+                              ),
                             );
                             Navigator.of(context)
                                 .pushNamed(ComponentFieldScreen.routeName);

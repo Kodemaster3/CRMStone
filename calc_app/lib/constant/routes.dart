@@ -13,7 +13,7 @@ final routes = {
   AddNewOrderScreen.routeName: (ctx) => const AddNewOrderScreen(),
   ViewOrderScreenWithListComponent.routeName: (ctx) =>
       const ViewOrderScreenWithListComponent(),
-  EditOrderScreen.routeName: (ctx) => EditOrderScreen(),
+  EditOrderScreen.routeName: (ctx) => const EditOrderScreen(),
   ComponentFieldScreen.routeName: (ctx) => const ComponentFieldScreen(),
   AddNewMaterialScreen.routeName: (ctx) => const AddNewMaterialScreen(),
   // NomenclatureDeliverScreen.routeName: (ctx) => NomenclatureDeliverScreen(),

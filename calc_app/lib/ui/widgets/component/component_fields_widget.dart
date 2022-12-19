@@ -7,24 +7,49 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
-class NewComponentFieldWidget extends StatefulWidget {
-  const NewComponentFieldWidget({Key? key}) : super(key: key);
+class ComponentFieldsWidget extends StatefulWidget {
+  final String idOrder;
+  final String idComponent;
+  final String name;
+  final String description;
+  final String materialId;
+  final double width;
+  final double length;
+  final double height;
+  final double weight;
+  final int quantity;
+  final UnitsLinear unitLinear;
+  final UnitsWeight unitWeight;
+
+  const ComponentFieldsWidget({
+    Key? key,
+    required this.idOrder,
+    required this.idComponent, //TODO alarm!
+    required this.name,
+    required this.description,
+    required this.materialId, //TODO alarm!
+    required this.width,
+    required this.length,
+    required this.height,
+    required this.unitLinear,
+    required this.unitWeight,
+    required this.quantity,
+    required this.weight,
+  }) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _NewComponentFieldWidget();
+  State<StatefulWidget> createState() => _ComponentFieldsWidget();
 }
 
-class _NewComponentFieldWidget extends State<NewComponentFieldWidget> {
+class _ComponentFieldsWidget extends State<ComponentFieldsWidget> {
   late TextEditingController _nameController;
   late TextEditingController _descriptionController;
+  // late TextEditingController materialId;
   late TextEditingController _sizeWidthController;
   late TextEditingController _sizeLengthController;
   late TextEditingController _sizeHeightController;
-  late TextEditingController _materialController;
   late TextEditingController _quantityController;
   late TextEditingController _weightController;
-  late TextEditingController _weightPerCubMeterController;
-  late TextEditingController _pricePerCubMeterController;
   late UnitsLinear _unitLinear;
   late UnitsWeight _unitWeight;
 
@@ -33,17 +58,21 @@ class _NewComponentFieldWidget extends State<NewComponentFieldWidget> {
   @override
   void initState() {
     _nameController = TextEditingController();
+    _nameController.text = widget.name;
     _descriptionController = TextEditingController();
+    _descriptionController.text = widget.description;
     _sizeWidthController = TextEditingController();
+    _sizeWidthController.text = widget.width.toString();
     _sizeLengthController = TextEditingController();
+    _sizeLengthController.text = widget.length.toString();
     _sizeHeightController = TextEditingController();
-    _materialController = TextEditingController();
+    _sizeHeightController.text = widget.height.toString();
     _quantityController = TextEditingController();
+    _quantityController.text = widget.quantity.toString();
     _weightController = TextEditingController();
-    _weightPerCubMeterController = TextEditingController();
-    _pricePerCubMeterController = TextEditingController();
-    _unitLinear = UnitsLinear.meter;
-    _unitWeight = UnitsWeight.kilogram;
+    _weightController.text = widget.weight.toString();
+    _unitLinear = widget.unitLinear;
+    _unitWeight = widget.unitWeight;
     super.initState();
   }
 
@@ -54,30 +83,46 @@ class _NewComponentFieldWidget extends State<NewComponentFieldWidget> {
     _sizeWidthController.dispose();
     _sizeLengthController.dispose();
     _sizeHeightController.dispose();
-    _materialController.dispose();
     _quantityController.dispose();
     _weightController.dispose();
-    _weightPerCubMeterController.dispose();
-    _pricePerCubMeterController.dispose();
     super.dispose();
   }
 
   void _sendField() {
-    BlocProvider.of<OrderBloc>(context).add(ComponentOrderCreateEvent(
-      name: _nameController.text,
-      description: _descriptionController.text,
-      material: _materialController.text,
-      width: double.tryParse(_sizeWidthController.text) ?? 0.0,
-      length: double.tryParse(_sizeLengthController.text) ?? 0.0,
-      height: double.tryParse(_sizeHeightController.text) ?? 0.0,
-      quantity: int.tryParse(_quantityController.text) ?? 0,
-      weight: double.tryParse(_weightController.text) ?? 0.0,
-      unitsLinear: _unitLinear,
-      unitsWeight: _unitWeight,
-      weightPerCubMeter: double.tryParse(_weightPerCubMeterController.text) ?? 0.0,
-      pricePerCubMeter: double.tryParse(_pricePerCubMeterController.text) ?? 0.0,
-    ));
-    scaffoldMessage(context, _nameController.text);
+    if (widget.idComponent == '') {
+      BlocProvider.of<OrderBloc>(context).add(ComponentOrderCreateEvent(
+        idOrder: widget.idOrder,
+        name: _nameController.text,
+        description: _descriptionController.text,
+        materialId: widget.materialId, //TODO need Implement
+        width: double.tryParse(_sizeWidthController.text) ?? 0.0,
+        length: double.tryParse(_sizeLengthController.text) ?? 0.0,
+        height: double.tryParse(_sizeHeightController.text) ?? 0.0,
+        weight: double.tryParse(_weightController.text) ?? 0.0,
+        unitsLinear: _unitLinear,
+        unitsWeight: _unitWeight,
+        quantity: int.tryParse(_quantityController.text) ?? 0,
+      ));
+      scaffoldMessage(context, 'Create component ${_nameController.text} success');
+
+    } else {
+      BlocProvider.of<OrderBloc>(context).add(ComponentOrderUpdatedEvent(
+        idOrder: widget.idOrder,
+        idComponent: widget.idComponent,
+        name: _nameController.text,
+        description: _descriptionController.text,
+        material: widget.materialId, //TODO need Implement
+        width: double.tryParse(_sizeWidthController.text) ?? 0.0,
+        length: double.tryParse(_sizeLengthController.text) ?? 0.0,
+        height: double.tryParse(_sizeHeightController.text) ?? 0.0,
+        weight: double.tryParse(_weightController.text) ?? 0.0,
+        unitsLinear: _unitLinear,
+        unitsWeight: _unitWeight,
+        quantity: int.tryParse(_quantityController.text) ?? 0,
+      ));
+      scaffoldMessage(context, 'Update component ${_nameController.text} success');
+    }
+
   }
 
   @override
@@ -89,12 +134,12 @@ class _NewComponentFieldWidget extends State<NewComponentFieldWidget> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-
             ///Field name in component
 
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextFormField(
+                initialValue: _nameController.text,
                 validator: _validatorStrings,
                 onChanged: (value) => setState(() {
                   _nameController.text = value;
@@ -112,6 +157,7 @@ class _NewComponentFieldWidget extends State<NewComponentFieldWidget> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextFormField(
+                initialValue: _descriptionController.text,
                 validator: _validatorStrings,
                 maxLines: 2,
                 onChanged: (value) => setState(() {
@@ -127,20 +173,22 @@ class _NewComponentFieldWidget extends State<NewComponentFieldWidget> {
 
             ///Field material in component
 
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextFormField(
-                validator: _validatorStrings,
-                onChanged: (value) => setState(() {
-                  _materialController.text = value;
-                }),
-                decoration: const InputDecoration(
-                  hintText: 'Write material',
-                  helperText: 'Material',
-                  icon: Icon(Icons.medical_information_outlined),
-                ),
-              ),
-            ),
+            //TODO: need implement!!!
+            // Padding(
+            //   padding: const EdgeInsets.all(8.0),
+            //   child: TextFormField(
+            //     initialValue: _materialController.text,
+            //     validator: _validatorStrings,
+            //     onChanged: (value) => setState(() {
+            //       _materialController.text = value;
+            //     }),
+            //     decoration: const InputDecoration(
+            //       hintText: 'Write material',
+            //       helperText: 'Material',
+            //       icon: Icon(Icons.medical_information_outlined),
+            //     ),
+            //   ),
+            // ),
 
             ///Fields size in component
 
@@ -153,12 +201,11 @@ class _NewComponentFieldWidget extends State<NewComponentFieldWidget> {
                 children: [
                   Expanded(
                     child: TextFormField(
-                      initialValue: (0.0).toString(),
+                      initialValue: _sizeHeightController.text,
                       validator: _validatorNumeric,
                       keyboardType: TextInputType.number,
                       inputFormatters: <TextInputFormatter>[
-                        FilteringTextInputFormatter.allow(
-                            RegExp('[0-9.]'))
+                        FilteringTextInputFormatter.allow(RegExp('[0-9.]'))
                       ],
                       onChanged: (value) => setState(() {
                         _sizeHeightController.text = value;
@@ -175,12 +222,11 @@ class _NewComponentFieldWidget extends State<NewComponentFieldWidget> {
                   ),
                   Expanded(
                     child: TextFormField(
-                      initialValue: (0.0).toString(),
+                      initialValue: _sizeLengthController.text,
                       validator: _validatorNumeric,
                       keyboardType: TextInputType.number,
                       inputFormatters: <TextInputFormatter>[
-                        FilteringTextInputFormatter.allow(
-                            RegExp('[0-9.]'))
+                        FilteringTextInputFormatter.allow(RegExp('[0-9.]'))
                       ],
                       onChanged: (value) => setState(() {
                         _sizeLengthController.text = value;
@@ -197,12 +243,11 @@ class _NewComponentFieldWidget extends State<NewComponentFieldWidget> {
                   ),
                   Expanded(
                     child: TextFormField(
-                      initialValue: (0.0).toString(),
+                      initialValue: _sizeWidthController.text,
                       validator: _validatorNumeric,
                       keyboardType: TextInputType.number,
                       inputFormatters: <TextInputFormatter>[
-                        FilteringTextInputFormatter.allow(
-                            RegExp('[0-9.]'))
+                        FilteringTextInputFormatter.allow(RegExp('[0-9.]'))
                       ],
                       onChanged: (value) => setState(() {
                         _sizeWidthController.text = value;
@@ -220,7 +265,6 @@ class _NewComponentFieldWidget extends State<NewComponentFieldWidget> {
                 ],
               ),
             ),
-
 
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -267,12 +311,11 @@ class _NewComponentFieldWidget extends State<NewComponentFieldWidget> {
                 children: [
                   Expanded(
                     child: TextFormField(
-                      initialValue: (0.0).toString(),
+                      initialValue: _quantityController.text,
                       validator: _validatorNumeric,
                       keyboardType: TextInputType.number,
                       inputFormatters: <TextInputFormatter>[
-                        FilteringTextInputFormatter.allow(
-                            RegExp('[0-9.]'))
+                        FilteringTextInputFormatter.allow(RegExp('[0-9.]'))
                       ],
                       onChanged: (value) => setState(() {
                         _quantityController.text = value;
@@ -287,50 +330,50 @@ class _NewComponentFieldWidget extends State<NewComponentFieldWidget> {
                       ),
                     ),
                   ),
-                  Expanded(
-                    child: TextFormField(
-                      initialValue: (0.0).toString(),
-                      validator: _validatorNumeric,
-                      keyboardType: TextInputType.number,
-                      inputFormatters: <TextInputFormatter>[
-                        FilteringTextInputFormatter.allow(
-                            RegExp('[0-9.]'))
-                      ],
-                      onChanged: (value) => setState(() {
-                        _weightPerCubMeterController.text = value;
-                      }),
-                      decoration: const InputDecoration(
-                        hintText: 'WeightPerCubMeter',
-                        helperText: 'WeightPerCubMeter',
-                        icon: Icon(
-                          Icons.monitor_weight_outlined,
-                          size: 15.0,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: TextFormField(
-                      initialValue: (0.0).toString(),
-                      validator: _validatorNumeric,
-                      keyboardType: TextInputType.number,
-                      inputFormatters: <TextInputFormatter>[
-                        FilteringTextInputFormatter.allow(
-                            RegExp('[0-9.]'))
-                      ],
-                      onChanged: (value) => setState(() {
-                        _pricePerCubMeterController.text = value;
-                      }),
-                      decoration: const InputDecoration(
-                        hintText: 'PricePerCubMeter',
-                        helperText: 'PricePerCubMeter',
-                        icon: Icon(
-                          Icons.price_change_outlined,
-                          size: 15.0,
-                        ),
-                      ),
-                    ),
-                  ),
+                  // Expanded(
+                  //   child: TextFormField(
+                  //     initialValue: _weightPerCubMeterController.text,
+                  //     validator: _validatorNumeric,
+                  //     keyboardType: TextInputType.number,
+                  //     inputFormatters: <TextInputFormatter>[
+                  //       FilteringTextInputFormatter.allow(
+                  //           RegExp('[0-9.]'))
+                  //     ],
+                  //     onChanged: (value) => setState(() {
+                  //       _weightPerCubMeterController.text = value;
+                  //     }),
+                  //     decoration: const InputDecoration(
+                  //       hintText: 'WeightPerCubMeter',
+                  //       helperText: 'WeightPerCubMeter',
+                  //       icon: Icon(
+                  //         Icons.monitor_weight_outlined,
+                  //         size: 15.0,
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
+                  // Expanded(
+                  //   child: TextFormField(
+                  //     initialValue: _pricePerCubMeterController.text,
+                  //     validator: _validatorNumeric,
+                  //     keyboardType: TextInputType.number,
+                  //     inputFormatters: <TextInputFormatter>[
+                  //       FilteringTextInputFormatter.allow(
+                  //           RegExp('[0-9.]'))
+                  //     ],
+                  //     onChanged: (value) => setState(() {
+                  //       _pricePerCubMeterController.text = value;
+                  //     }),
+                  //     decoration: const InputDecoration(
+                  //       hintText: 'PricePerCubMeter',
+                  //       helperText: 'PricePerCubMeter',
+                  //       icon: Icon(
+                  //         Icons.price_change_outlined,
+                  //         size: 15.0,
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
             ),
@@ -338,12 +381,11 @@ class _NewComponentFieldWidget extends State<NewComponentFieldWidget> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextFormField(
-                initialValue: (0.0).toString(),
+                initialValue: _weightController.text,
                 validator: _validatorNumeric,
                 keyboardType: TextInputType.number,
                 inputFormatters: <TextInputFormatter>[
-                  FilteringTextInputFormatter.allow(
-                      RegExp('[0-9.]'))
+                  FilteringTextInputFormatter.allow(RegExp('[0-9.]'))
                 ],
                 onChanged: (value) => setState(() {
                   _weightController.text = value;
@@ -362,9 +404,8 @@ class _NewComponentFieldWidget extends State<NewComponentFieldWidget> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextButton(
-                child: const Text(
-                  'Add Comp',
-                  style: TextStyle(
+                child: Text(widget.idComponent == '' ? 'Add component' : 'Update Component',
+                  style: const TextStyle(
                     color: Colors.brown,
                     backgroundColor: Colors.black12,
                     fontSize: 16.0,
@@ -373,6 +414,9 @@ class _NewComponentFieldWidget extends State<NewComponentFieldWidget> {
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
                     _sendField();
+                    //TODO dose that event work? need check!!!!
+                    Navigator.of(context).pushNamed('/ViewOrderScreenWithListComponent');
+                    BlocProvider.of<OrderBloc>(context).add(OrderViewWithComponentEvent(id: widget.idOrder));
                   }
                 },
               ),
@@ -381,80 +425,6 @@ class _NewComponentFieldWidget extends State<NewComponentFieldWidget> {
         ),
       ),
     );
-
-    //   Column(
-    //   children: [
-    //     TextFormField(
-    //       onChanged: (value) => _fl.name = value,
-    //       onFieldSubmitted: (_) {},
-    //       decoration: const InputDecoration(hintText: 'Name'),
-    //     ),
-    //     //TODO: Plan use it when data implement description
-    //     TextFormField(
-    //       controller: TextEditingController(text: _fl.description),
-    //       maxLines: 3,
-    //       onChanged: (value) => _fl.description = value,
-    //       onFieldSubmitted: (_) {},
-    //       decoration: const InputDecoration(hintText: 'Description'),
-    //     ),
-    //     TextFormField(
-    //       onChanged: (value) => _fl.material = value,
-    //       onFieldSubmitted: (_) {},
-    //       decoration: const InputDecoration(hintText: 'Material'),
-    //     ),
-    //     // TextFormField(
-    //     //   keyboardType: TextInputType.number,
-    //     //   onChanged: (value) => _fl.height = double.tryParse(value) ?? 0.0,
-    //     //   onFieldSubmitted: (_) {},
-    //     //   decoration: const InputDecoration(hintText: 'Height'),
-    //     // ),
-    //     // TextFormField(
-    //     //   keyboardType: TextInputType.number,
-    //     //   onChanged: (value) => _fl.length = double.tryParse(value) ?? 0.0,
-    //     //   onFieldSubmitted: (_) {},
-    //     //   decoration: const InputDecoration(hintText: 'Length'),
-    //     // ),
-    //     TextFormField(
-    //       keyboardType: TextInputType.number,
-    //       onChanged: (value) => _fl.quantity = int.tryParse(value) ?? 0,
-    //       onFieldSubmitted: (_) {},
-    //       decoration: const InputDecoration(hintText: 'Quantity'),
-    //     ),
-    //     TextFormField(
-    //       keyboardType: TextInputType.number,
-    //       onChanged: (value) =>
-    //           _fl.weightPerCubMeter = double.tryParse(value) ?? 0.0,
-    //       onFieldSubmitted: (_) {},
-    //       decoration:
-    //           const InputDecoration(hintText: 'Weight Per Cub to Meter'),
-    //     ),
-    //     // TextFormField(
-    //     //   keyboardType: TextInputType.number,
-    //     //   onChanged: (value) => _fl.width = double.tryParse(value) ?? 0.0,
-    //     //   onFieldSubmitted: (_) {},
-    //     //   decoration: const InputDecoration(hintText: 'Width'),
-    //     // ),
-    //     TextFormField(
-    //       keyboardType: TextInputType.number,
-    //       onChanged: (value) =>
-    //           _fl.pricePerCubMeter = double.tryParse(value) ?? 0.0,
-    //       onFieldSubmitted: (_) {},
-    //       decoration: const InputDecoration(hintText: 'Price Per Cub Meter'),
-    //     ),
-    //     TextButton(
-    //       child: const Text('Add Comp'),
-    //       onPressed: () {
-    //         _sendField();
-    //         Navigator.of(context).pop();
-    //       },
-    //     ),
-    //   ],
-    // );
-  }
-
-  void scaffoldMessage(BuildContext context, String text) {
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text("added component $text success")));
   }
 
   String? _validatorStrings(value) {
@@ -466,10 +436,16 @@ class _NewComponentFieldWidget extends State<NewComponentFieldWidget> {
     }
     return null;
   }
+
   String? _validatorNumeric(String? value) {
     if (value == null || value.isEmpty) {
       return 'Field can\'t be empty';
     }
     return null;
+  }
+
+  void scaffoldMessage(BuildContext context, String text) {
+    ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(text)));
   }
 }

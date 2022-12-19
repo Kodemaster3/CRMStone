@@ -1,3 +1,5 @@
+import 'package:calc_app/ui/bloc/orders_bloc/order_event.dart';
+import 'package:calc_app/ui/bloc/orders_bloc/order_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:calc_app/ui/bloc/orders_bloc/order_bloc.dart';
@@ -29,6 +31,7 @@ class ViewOrderScreenWithListComponent extends StatelessWidget {
                     //navigate
                     Navigator.of(context)
                         .pushNamed(ComponentFieldScreen.routeName);
+                    BlocProvider.of<OrderBloc>(context).add(ComponentOrderCreatingEvent(idOrder: state.order.id));
                   },
                 ),
               ],
@@ -58,6 +61,7 @@ class ViewOrderScreenWithListComponent extends StatelessWidget {
                       //navigate
                       Navigator.of(context)
                           .pushNamed(ComponentFieldScreen.routeName);
+                      BlocProvider.of<OrderBloc>(context).add(ComponentOrderCreatingEvent(idOrder: state.order.id));
                     },
                   ),
                 ],

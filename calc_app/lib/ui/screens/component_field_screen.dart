@@ -1,7 +1,6 @@
 import 'dart:developer' as dev;
 
-import 'package:calc_app/ui/widgets/component/new_component_field_widget.dart';
-import 'package:calc_app/ui/widgets/component/update_component_field_widget.dart';
+import 'package:calc_app/ui/widgets/component/component_fields_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:calc_app/ui/bloc/orders_bloc/order_bloc.dart';
@@ -14,19 +13,49 @@ class ComponentFieldScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    dev.log('In add new component screen', name: 'ui');
+    dev.log('In ComponentFieldScreen', name: 'ui');
     return BlocBuilder<OrderBloc, OrderState>(
       builder: (context, state) {
-        /// state ComponentEditingField if old to fill field
-        if (state is ComponentEditingField) {
+        /// state OrderViewWithEmptyListComponent new
+        if (state is ComponentCreatingFieldsState) {
           return Scaffold(
-            body: UpdateComponentFieldWidget(),
+            body: ComponentFieldsWidget(
+              idOrder: state.idOrder,
+              idComponent: state.idComponent,
+              name: state.name,
+              description: state.description,
+              materialId: state.materialId,
+              width: state.width,
+              length: state.length,
+              height: state.height,
+              weight: state.weight,
+              quantity: state.quantity,
+              unitLinear: state.unitsLinear,
+              unitWeight: state.unitsWeight,
+            ),
           );
         }
-        /// state OrderViewWithEmptyListComponent new
-        return Scaffold(
-          body: NewComponentFieldWidget(),
-        );
+
+        /// state ComponentEditingField if old to fill field
+        if (state is ComponentUpdatingFieldState) {
+          return Scaffold(
+            body: ComponentFieldsWidget(
+              idOrder: state.idOrder,
+              idComponent: state.idComponent,
+              name: state.name,
+              description: state.description,
+              materialId: state.materialId,
+              width: state.width,
+              length: state.length,
+              height: state.height,
+              weight: state.weight,
+              quantity: state.quantity,
+              unitLinear: state.unitsLinear,
+              unitWeight: state.unitsWeight,
+            ),
+          );
+        }
+        return const CircularProgressIndicator();
       },
     );
   }

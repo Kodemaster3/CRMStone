@@ -251,13 +251,11 @@ class OrderRepositoryImpl implements OrderRepository {
 
       final updateComponent = oldComponent.copyWith(
         name: componentEntity.name,
-        material: componentEntity.material,
+        materialId: componentEntity.materialId,
         description: componentEntity.description,
         sizeModel: orderMapper.sizeEntityToModel(componentEntity.size),
         weightModel: weight,
         quantity: componentEntity.quantity,
-        weightPerCubMeter: componentEntity.weightPerCubMeter,
-        pricePerCubMeter: componentEntity.pricePerCubMeter,
         dateModel: updateDate,
       );
 
