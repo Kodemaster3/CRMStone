@@ -57,3 +57,13 @@ class MaterialMessageByState extends MaterialState {
     required this.message,
   });
 }
+
+class MaterialSetIdState extends MaterialState{
+  final MaterialEntity materialEntity;
+  final List<MaterialEntity> materialList;
+
+  const MaterialSetIdState({
+    required this.materialEntity,
+    required this.materialList,
+  });
+}

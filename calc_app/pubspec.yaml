@@ -49,6 +49,8 @@ dependencies:
 
   toggle_switch: ^2.0.1
 
+  dropdown_search: ^5.0.5
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

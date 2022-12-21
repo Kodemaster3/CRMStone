@@ -5,8 +5,6 @@ import 'package:calc_app/data/models/order_model.dart';
 import 'package:calc_app/data/repository/order_mapper.dart';
 import 'package:calc_app/domain/entities/component.dart';
 import 'package:calc_app/domain/entities/order.dart';
-import 'package:calc_app/domain/entities/units_linear.dart';
-import 'package:calc_app/domain/entities/units_weight.dart';
 import 'package:calc_app/domain/repository/order_local/order_repository.dart';
 
 const topPositionInList = 0;
@@ -21,8 +19,8 @@ class OrderRepositoryImpl implements OrderRepository {
   @override
   Future<List<OrderEntity>> getAllOrders() async {
     try {
+      dev.log('getAllOrders', name: 'DB(repository)');
       final dataOrders = await localDataSource.getLastOrderFromCache();
-      // dev.log(dataOrders.last.dateEntity.edit.toString());
       return dataOrders;
     } on Exception {
       dev.log('Exc in order repository, method getAllOrders()', name: 'repos');
@@ -35,6 +33,7 @@ class OrderRepositoryImpl implements OrderRepository {
     required String id,
   }) async {
     try {
+      dev.log('getOrderById', name: 'DB(repository)');
       List<OrderModel> dataOrders =
           await localDataSource.getLastOrderFromCache();
       for (var element in dataOrders) {
@@ -54,6 +53,7 @@ class OrderRepositoryImpl implements OrderRepository {
     required String id,
   }) async {
     try {
+      dev.log('deleteOrderById', name: 'DB(repository)');
       final List<OrderModel> dataOrders =
           await localDataSource.getLastOrderFromCache();
       for (var element in dataOrders) {
@@ -76,6 +76,7 @@ class OrderRepositoryImpl implements OrderRepository {
     required OrderEntity orderEntity,
   }) async {
     try {
+      dev.log('createOrder', name: 'DB(repository)');
       final List<OrderModel> dataOrders =
           await localDataSource.getLastOrderFromCache();
       final List<String> oldId = dataOrders.map((e) => e.id).toList();
@@ -102,38 +103,19 @@ class OrderRepositoryImpl implements OrderRepository {
 
   @override
   Future<bool> updateBodyOrderById({
-    required String id,
-    required String name,
-    required String description,
-    required double width,
-    required double length,
-    required double height,
-    required DateTime edit,
-    required UnitsLinear unitsLinear,
-    required UnitsWeight unitsWeight,
+    required OrderEntity updateOrder,
   }) async {
     try {
+      dev.log('updateBodyOrderById', name: 'DB(repository)');
       final List<OrderModel> dataOrders =
           await localDataSource.getLastOrderFromCache();
 
       for (var element in dataOrders) {
-        if (element.id == id) {
-          final sizeModel = element.sizeModel.copyWith(
-              width: width,
-              height: height,
-              length: length,
-              unitsLinear: unitsLinear);
-          final updatedTime = element.dateModel.copyWith(edit: edit);
-          final updateOrder = element.copyWith(
-            name: name,
-            description: description,
-            dateModel: updatedTime,
-            sizeModel: sizeModel,
-            unitsWeight: unitsWeight,
-          );
-
+        if (element.id == updateOrder.id) {
           dataOrders.remove(element);
-          dataOrders.insert(topPositionInList, updateOrder);
+          dataOrders.insert(topPositionInList,
+              orderMapper.orderEntityToDataModel(updateOrder));
+          // updateOrderModel);
           await localDataSource.ordersToCache(dataOrders);
           return true;
         }
@@ -156,16 +138,17 @@ class OrderRepositoryImpl implements OrderRepository {
     required DateTime edit,
   }) async {
     try {
+      dev.log('createComponent', name: 'DB(repository)');
       final List<OrderModel> dataOrders =
           await localDataSource.getLastOrderFromCache();
 
-      checkIdForUniqueness(dataOrders, componentEntity.id);
+      checkIdForUniqueness(dataOrders, componentEntity.idComponent);
 
       for (var element in dataOrders) {
         if (element.id == idOrder) {
           final List<String> updateListIdComponents = [];
           updateListIdComponents.addAll(element.component);
-          updateListIdComponents.add(componentEntity.id);
+          updateListIdComponents.add(componentEntity.idComponent);
 
           final updateData = element.dateModel.copyWith(edit: edit);
           final updateOrder = element.copyWith(
@@ -179,11 +162,11 @@ class OrderRepositoryImpl implements OrderRepository {
           orderMapper.componentEntityToDataModel(componentEntity);
 
       await localDataSource.componentToCache(
-          componentEntity.id, newComponentData);
+          componentEntity.idComponent, newComponentData);
       await localDataSource.ordersToCache(dataOrders);
       dev.log(
           'Created component name: ${componentEntity.name},'
-          ' id: ${componentEntity.id},'
+          ' id: ${componentEntity.idComponent},'
           ' lengthOrder: ${dataOrders.length}',
           name: 'DB(repository)');
       return true;
@@ -202,6 +185,7 @@ class OrderRepositoryImpl implements OrderRepository {
     required String idComponent,
   }) async {
     try {
+      dev.log('deleteComponent', name: 'DB(repository)');
       final List<OrderModel> dataOrder =
           await localDataSource.getLastOrderFromCache();
 
@@ -240,8 +224,9 @@ class OrderRepositoryImpl implements OrderRepository {
     required ComponentEntity componentEntity,
   }) async {
     try {
+      dev.log('updateComponentByIdInOrder', name: 'DB(repository)');
       final oldComponent = await localDataSource
-          .getLastComponentFromCacheById(componentEntity.id);
+          .getLastComponentFromCacheById(componentEntity.idComponent);
       final updateDate = oldComponent.dateModel
           .copyWith(edit: componentEntity.dateEntity.edit);
       final weight = oldComponent.weightModel.copyWith(
@@ -260,7 +245,7 @@ class OrderRepositoryImpl implements OrderRepository {
       );
 
       await localDataSource.componentToCache(
-          componentEntity.id, updateComponent);
+          componentEntity.idComponent, updateComponent);
       return true;
     } on Exception {
       dev.log('Exc in order rep, in method updateComponentByIdInOrder',
@@ -274,6 +259,7 @@ class OrderRepositoryImpl implements OrderRepository {
     required String idComponent,
   }) async {
     try {
+      dev.log('getComponentById', name: 'DB(repository)');
       final component =
           await localDataSource.getLastComponentFromCacheById(idComponent);
       return component;
@@ -288,6 +274,7 @@ class OrderRepositoryImpl implements OrderRepository {
     required List<String> idComponents,
   }) async {
     try {
+      dev.log('getComponentsById', name: 'DB(repository)');
       final components =
           await localDataSource.getLastListComponentFromCacheById(idComponents);
       return components;

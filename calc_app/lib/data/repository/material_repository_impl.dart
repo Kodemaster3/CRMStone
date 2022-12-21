@@ -20,6 +20,7 @@ class MaterialRepositoryImpl implements MaterialRepository {
   @override
   Future<bool> createMaterial(MaterialEntity materialEntity) async {
     try {
+      dev.log('createMaterial', name: 'DB(repository)');
       final List<MaterialModel> dataList =
           await localDataSource.getLastMaterialListFromCache();
       final List<String> oldId = dataList.map((e) => e.id).toList();
@@ -44,6 +45,7 @@ class MaterialRepositoryImpl implements MaterialRepository {
   @override
   Future<bool> deleteMaterialById({required String idMaterial}) async {
     try {
+      dev.log('deleteMaterialById', name: 'DB(repository)');
       final dataList = await localDataSource.getLastMaterialListFromCache();
       for (var element in dataList) {
         if (element.id == idMaterial) {
@@ -62,6 +64,7 @@ class MaterialRepositoryImpl implements MaterialRepository {
   @override
   Future<List<MaterialEntity>> getAllMaterial() async {
     try {
+      dev.log('getAllMaterial', name: 'DB(repository)');
       final dataList = await localDataSource.getLastMaterialListFromCache();
       return dataList;
     } on Exception {
@@ -73,6 +76,7 @@ class MaterialRepositoryImpl implements MaterialRepository {
   @override
   Future<MaterialEntity> getMaterialById({required String idMaterial}) async {
     try {
+      dev.log('getMaterialById', name: 'DB(repository)');
       final dataList = await localDataSource.getLastMaterialListFromCache();
       for (var element in dataList) {
         if (element.id == idMaterial) {
@@ -88,6 +92,7 @@ class MaterialRepositoryImpl implements MaterialRepository {
   @override
   Future<bool> updateMaterialById(MaterialEntity materialEntity) async {
     try {
+      dev.log('updateMaterialById', name: 'DB(repository)');
       final dataList = await localDataSource.getLastMaterialListFromCache();
       for (var element in dataList) {
         if (element.id == materialEntity.id) {

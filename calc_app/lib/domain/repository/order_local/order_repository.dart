@@ -1,7 +1,5 @@
 import 'package:calc_app/domain/entities/component.dart';
 import 'package:calc_app/domain/entities/order.dart';
-import 'package:calc_app/domain/entities/units_linear.dart';
-import 'package:calc_app/domain/entities/units_weight.dart';
 
 abstract class OrderRepository {
   Future<List<OrderEntity>> getAllOrders();
@@ -19,15 +17,7 @@ abstract class OrderRepository {
   });
 
   Future<bool> updateBodyOrderById({
-    required String id,
-    required String name,
-    required String description,
-    required double width,
-    required double length,
-    required double height,
-    required UnitsLinear unitsLinear,
-    required UnitsWeight unitsWeight,
-    required DateTime edit,
+    required OrderEntity updateOrder,
   });
 
   Future<bool> createComponent({

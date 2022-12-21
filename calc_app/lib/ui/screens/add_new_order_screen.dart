@@ -1,3 +1,5 @@
+import 'dart:developer' as dev;
+
 import 'package:calc_app/ui/bloc/orders_bloc/order_bloc.dart';
 import 'package:calc_app/ui/bloc/orders_bloc/order_event.dart';
 import 'package:calc_app/ui/bloc/orders_bloc/order_state.dart';
@@ -51,6 +53,7 @@ class _AddNewOrderScreenState extends State<AddNewOrderScreen> {
   }
 
   void _sendField() {
+    setState(() {});
     BlocProvider.of<OrderBloc>(context).add(OrderCreateEvent(
       name: _nameController.text,
       description: _descriptionController.text,
@@ -60,6 +63,7 @@ class _AddNewOrderScreenState extends State<AddNewOrderScreen> {
       unitsLinear: _unitLinear,
       unitsWeight: _unitWeight,
     ));
+
     scaffoldMessage(context, _nameController.text);
   }
 
@@ -71,6 +75,7 @@ class _AddNewOrderScreenState extends State<AddNewOrderScreen> {
       ),
       body: BlocBuilder<OrderBloc, OrderState>(
         builder: (context, state) {
+          dev.log('method build in AddNewOrderScreen => BlocBuilder => $state', name: 'ui read state');
           return Form(
             key: _formKey,
             child: SingleChildScrollView(
@@ -83,9 +88,9 @@ class _AddNewOrderScreenState extends State<AddNewOrderScreen> {
                     padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
                       validator: _validatorStrings,
-                      onChanged: (value) => setState(() {
-                        _nameController.text = value;
-                      }),
+                      onChanged: (value) =>
+                        _nameController.text = value,
+
                       decoration: const InputDecoration(
                         hintText: 'Write name order',
                         helperText: 'Name',
@@ -100,9 +105,9 @@ class _AddNewOrderScreenState extends State<AddNewOrderScreen> {
                     child: TextFormField(
                       validator: _validatorStrings,
                       maxLines: 3,
-                      onChanged: (value) => setState(() {
-                        _descriptionController.text = value;
-                      }),
+                      onChanged: (value) =>
+                        _descriptionController.text = value,
+
                       decoration: const InputDecoration(
                         hintText: 'Write description order',
                         helperText: 'Description',
@@ -128,9 +133,9 @@ class _AddNewOrderScreenState extends State<AddNewOrderScreen> {
                               FilteringTextInputFormatter.allow(
                                   RegExp('[0-9.]'))
                             ],
-                            onChanged: (value) => setState(() {
-                              _sizeHeightController.text = value;
-                            }),
+                            onChanged: (value) =>
+                              _sizeHeightController.text = value,
+
                             decoration: const InputDecoration(
                               hintText: 'Height order',
                               helperText: 'Height',
@@ -150,9 +155,9 @@ class _AddNewOrderScreenState extends State<AddNewOrderScreen> {
                               FilteringTextInputFormatter.allow(
                                   RegExp('[0-9.]'))
                             ],
-                            onChanged: (value) => setState(() {
-                              _sizeLengthController.text = value;
-                            }),
+                            onChanged: (value) =>
+                              _sizeLengthController.text = value,
+
                             decoration: const InputDecoration(
                               hintText: 'Length order',
                               helperText: 'Length',
@@ -172,9 +177,9 @@ class _AddNewOrderScreenState extends State<AddNewOrderScreen> {
                               FilteringTextInputFormatter.allow(
                                   RegExp('[0-9.]'))
                             ],
-                            onChanged: (value) => setState(() {
-                              _sizeWidthController.text = value;
-                            }),
+                            onChanged: (value) =>
+                              _sizeWidthController.text = value
+                            ,
                             decoration: const InputDecoration(
                               hintText: 'Width order',
                               helperText: 'Width',

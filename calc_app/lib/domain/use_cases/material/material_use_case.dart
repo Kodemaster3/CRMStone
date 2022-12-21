@@ -36,6 +36,18 @@ class CreateMaterialUseCase {
     }
     return '$now$id';
   }
+
+  MaterialEntity callDefaultFields() {
+    const emptyFieldId = '';
+    const emptyFieldName = '';
+    const emptyFieldWeightPerCubMeter = 0.0;
+    const emptyFieldPricePerCubMeter = 0.0;
+    return const MaterialEntity(
+        id: emptyFieldId,
+        name: emptyFieldName,
+        weightPerCubMeter: emptyFieldWeightPerCubMeter,
+        pricePerCubMeter: emptyFieldPricePerCubMeter);
+  }
 }
 
 class UpdateMaterialUseCase {

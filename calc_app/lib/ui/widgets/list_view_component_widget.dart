@@ -1,12 +1,12 @@
-import 'package:calc_app/ui/bloc/orders_bloc/order_event.dart';
-import 'package:calc_app/ui/screens/component_field_screen.dart';
-import 'package:calc_app/ui/screens/edit_order_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:calc_app/ui/bloc/orders_bloc/order_bloc.dart';
-import 'package:calc_app/ui/bloc/orders_bloc/order_state.dart';
 import 'package:calc_app/ui/widgets/navigate/return_home.dart';
-// import 'package:calc_app/ui/bloc/orders_bloc/order_event.dart';
+import 'package:calc_app/ui/screens/component_field_screen.dart';
+import 'package:calc_app/ui/screens/edit_order_screen.dart';
+import 'package:calc_app/ui/bloc/orders_bloc/order_bloc.dart';
+import 'package:calc_app/ui/bloc/orders_bloc/order_event.dart';
+import 'package:calc_app/ui/bloc/orders_bloc/order_state.dart';
+
 
 class ListViewComponentWidget extends StatelessWidget {
   const ListViewComponentWidget({Key? key}) : super(key: key);
@@ -38,7 +38,7 @@ class ListViewComponentWidget extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('Project size:'),
+                              const Text('Project size:'),
                               Text(
                                 'Length is ${state.order.size.length}',
                               ),
@@ -91,7 +91,7 @@ class ListViewComponentWidget extends StatelessWidget {
                                     Row(
                                       children: [
                                         Text(
-                                          'id: ${state.components[index].id}',
+                                          'id: ${state.components[index].idComponent}',
                                         ),
                                         Text(
                                           'Name: ${state.components[index].name}',
@@ -118,8 +118,8 @@ class ListViewComponentWidget extends StatelessWidget {
                                   onPressed: () {
                                     BlocProvider.of<OrderBloc>(context).add(
                                       ComponentOrderDeletedEvent(
-                                          idComponent:
-                                              state.components[index].id),
+                                          idComponent: state
+                                              .components[index].idComponent),
                                     );
                                     scaffoldMessage(
                                         context, state.components[index].name);
@@ -129,10 +129,10 @@ class ListViewComponentWidget extends StatelessWidget {
                             ),
                           ),
                           onTap: () {
-                            //TODO: implement edit field component
                             BlocProvider.of<OrderBloc>(context).add(
                               ComponentOrderUpdatingEvent(
-                                idComponent: state.components[index].id,
+                                idComponent:
+                                    state.components[index].idComponent,
                                 idOrder: state.order.id,
                               ),
                             );

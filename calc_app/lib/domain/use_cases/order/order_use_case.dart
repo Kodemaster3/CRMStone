@@ -99,16 +99,21 @@ class UpdateOrder {
     required UnitsWeight unitsWeight,
   }) async {
     final timeEdit = DateTime.now();
-    return await orderRepository.updateBodyOrderById(
-      id: id,
-      name: name,
-      description: description,
-      width: width,
-      length: length,
-      height: height,
-      edit: timeEdit,
-      unitsLinear: unitsLinear,
-      unitsWeight: unitsWeight,
-    );
+    final oldOrder = await orderRepository.getOrderById(id: id);
+    final updateOrder = OrderEntity(
+        id: id,
+        name: name,
+        description: description,
+        size: Size(
+            width: width,
+            length: length,
+            height: height,
+            unitsLinear: unitsLinear),
+        component: oldOrder.component,
+        dateEntity:
+            DateEntity(create: oldOrder.dateEntity.create, edit: timeEdit),
+        unitsWeight: unitsWeight);
+
+    return await orderRepository.updateBodyOrderById(updateOrder: updateOrder);
   }
 }

@@ -41,7 +41,7 @@ class OrderMapper {
   ComponentModel componentEntityToDataModel(ComponentEntity componentEntity) {
     return ComponentModel(
       name: componentEntity.name,
-      id: componentEntity.id,
+      idComponent: componentEntity.idComponent,
       description: componentEntity.description,
       materialId: componentEntity.materialId,
       weightModel: _weightEntityToModel(componentEntity.weight),
@@ -54,7 +54,7 @@ class OrderMapper {
   ComponentEntity componentDataModelToEntity(ComponentModel componentModel) {
     return ComponentEntity(
       name: componentModel.name,
-      id: componentModel.id,
+      idComponent: componentModel.idComponent,
       description: componentModel.description,
       materialId: componentModel.materialId,
       weight: componentModel.weight,

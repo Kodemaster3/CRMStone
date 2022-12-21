@@ -17,7 +17,7 @@ class ComponentModel with _$ComponentModel implements ComponentEntity {
 
   const factory ComponentModel({
     required String name,
-    required String id,
+    required String idComponent,
     required String description,
     required String materialId,
     required int quantity,

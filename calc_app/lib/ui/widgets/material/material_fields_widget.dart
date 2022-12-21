@@ -1,11 +1,7 @@
 import 'package:calc_app/ui/bloc/material_bloc/material_bloc.dart';
 import 'package:calc_app/ui/bloc/material_bloc/material_event.dart';
-import 'package:calc_app/ui/bloc/orders_bloc/order_bloc.dart';
-import 'package:calc_app/ui/bloc/orders_bloc/order_event.dart';
 import 'package:calc_app/ui/widgets/navigate/return_home.dart';
 import 'package:flutter/material.dart';
-import 'package:calc_app/ui/bloc/material_bloc/material_state.dart'
-    as state_bloc;
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MaterialFieldsWidget extends StatefulWidget {
@@ -49,11 +45,11 @@ class _MaterialFieldsWidgetState extends State<MaterialFieldsWidget> {
     _nameController.dispose();
     _weightPerCubMeter.dispose();
     _pricePerCubMeter.dispose();
-
     super.dispose();
   }
 
   void _sendField() {
+    setState(() {});
     if (widget.id == '') {
       BlocProvider.of<MaterialBloc>(context).add(MaterialCreatedEvent(
         name: _nameController.text,
@@ -88,9 +84,7 @@ class _MaterialFieldsWidgetState extends State<MaterialFieldsWidget> {
               child: TextFormField(
                 initialValue: _nameController.text,
                 validator: _validatorStrings,
-                onChanged: (value) => setState(() {
-                  _nameController.text = value;
-                }),
+                onChanged: (value) => _nameController.text = value,
                 decoration: const InputDecoration(
                   hintText: 'Write name material',
                   helperText: 'Name material',
@@ -105,9 +99,7 @@ class _MaterialFieldsWidgetState extends State<MaterialFieldsWidget> {
               child: TextFormField(
                 initialValue: _weightPerCubMeter.text,
                 validator: _validatorNumeric,
-                onChanged: (value) => setState(() {
-                  _weightPerCubMeter.text = value;
-                }),
+                onChanged: (value) => _weightPerCubMeter.text = value,
                 decoration: const InputDecoration(
                   hintText: 'Write weight per cubic meter',
                   helperText: 'Weight',
@@ -122,9 +114,7 @@ class _MaterialFieldsWidgetState extends State<MaterialFieldsWidget> {
               child: TextFormField(
                 initialValue: _pricePerCubMeter.text,
                 validator: _validatorNumeric,
-                onChanged: (value) => setState(() {
-                  _pricePerCubMeter.text = value;
-                }),
+                onChanged: (value) => _pricePerCubMeter.text = value,
                 decoration: const InputDecoration(
                   hintText: 'Write price per cubic meter',
                   helperText: 'Price',
@@ -171,15 +161,15 @@ class _MaterialFieldsWidgetState extends State<MaterialFieldsWidget> {
     return null;
   }
 
-  void scaffoldMessage(BuildContext context, String text) {
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text("added material $text success")));
-  }
-
   String? _validatorNumeric(String? value) {
     if (value == null || value.isEmpty) {
       return 'Field can\'t be empty';
     }
     return null;
+  }
+
+  void scaffoldMessage(BuildContext context, String text) {
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text("added material $text success")));
   }
 }

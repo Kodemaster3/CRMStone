@@ -1,6 +1,4 @@
-
 abstract class MaterialEvent {
-
   const MaterialEvent();
 }
 
@@ -28,7 +26,7 @@ class MaterialCreatedEvent extends MaterialEvent {
   });
 }
 
-class MaterialUpdatingEvent extends MaterialEvent{
+class MaterialUpdatingEvent extends MaterialEvent {
   final String idMaterial;
 
   const MaterialUpdatingEvent({
@@ -36,7 +34,7 @@ class MaterialUpdatingEvent extends MaterialEvent{
   });
 }
 
-class MaterialUpdateEvent extends MaterialEvent{
+class MaterialUpdateEvent extends MaterialEvent {
   final String idMaterial;
   final String name;
   final double weightPerCubMeter;
@@ -50,7 +48,7 @@ class MaterialUpdateEvent extends MaterialEvent{
   });
 }
 
-class MaterialDeleteEvent extends MaterialEvent{
+class MaterialDeleteEvent extends MaterialEvent {
   final String idMaterial;
 
   const MaterialDeleteEvent({
@@ -58,3 +56,10 @@ class MaterialDeleteEvent extends MaterialEvent{
   });
 }
 
+class MaterialSetIdEvent extends MaterialEvent {
+  final String materialId;
+
+  const MaterialSetIdEvent({
+    required this.materialId,
+  });
+}

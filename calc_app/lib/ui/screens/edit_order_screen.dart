@@ -51,6 +51,7 @@ class _EditOrderScreenState extends State<EditOrderScreen> {
   }
 
   void _sendUpdate(BuildContext context, String id) {
+    setState(() {});
     BlocProvider.of<OrderBloc>(context).add(
       OrderUpdateEvent(
         id: id,
@@ -70,7 +71,7 @@ class _EditOrderScreenState extends State<EditOrderScreen> {
     return BlocBuilder<OrderBloc, OrderState>(
       builder: (context, state) {
         if (state is OrderLoaded) {
-          if(_flagInit) {
+          if (_flagInit) {
             setValueFromState(state);
           }
           return Scaffold(
@@ -96,16 +97,13 @@ class _EditOrderScreenState extends State<EditOrderScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-
                     ///Field name in order
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: TextFormField(
                         initialValue: _nameController.text,
                         validator: _validatorStrings,
-                        onChanged: (value) => setState(() {
-                          _nameController.text = value;
-                        }),
+                        onChanged: (value) => _nameController.text = value,
                         decoration: const InputDecoration(
                           hintText: 'Write name order',
                           helperText: 'Name',
@@ -121,9 +119,8 @@ class _EditOrderScreenState extends State<EditOrderScreen> {
                         initialValue: _descriptionController.text,
                         validator: _validatorStrings,
                         maxLines: 3,
-                        onChanged: (value) => setState(() {
-                          _descriptionController.text = value;
-                        }),
+                        onChanged: (value) =>
+                            _descriptionController.text = value,
                         decoration: const InputDecoration(
                           hintText: 'Write description order',
                           helperText: 'Description',
@@ -150,9 +147,8 @@ class _EditOrderScreenState extends State<EditOrderScreen> {
                                 FilteringTextInputFormatter.allow(
                                     RegExp('[0-9.]'))
                               ],
-                              onChanged: (value) => setState(() {
-                                _sizeHeightController.text = value;
-                              }),
+                              onChanged: (value) =>
+                                  _sizeHeightController.text = value,
                               decoration: const InputDecoration(
                                 hintText: 'Height order',
                                 helperText: 'Height',
@@ -172,9 +168,8 @@ class _EditOrderScreenState extends State<EditOrderScreen> {
                                 FilteringTextInputFormatter.allow(
                                     RegExp('[0-9.]'))
                               ],
-                              onChanged: (value) => setState(() {
-                                _sizeLengthController.text = value;
-                              }),
+                              onChanged: (value) =>
+                                  _sizeLengthController.text = value,
                               decoration: const InputDecoration(
                                 hintText: 'Length order',
                                 helperText: 'Length',
@@ -194,9 +189,8 @@ class _EditOrderScreenState extends State<EditOrderScreen> {
                                 FilteringTextInputFormatter.allow(
                                     RegExp('[0-9.]'))
                               ],
-                              onChanged: (value) => setState(() {
-                                _sizeWidthController.text = value;
-                              }),
+                              onChanged: (value) =>
+                                  _sizeWidthController.text = value,
                               decoration: const InputDecoration(
                                 hintText: 'Width order',
                                 helperText: 'Width',
@@ -219,8 +213,7 @@ class _EditOrderScreenState extends State<EditOrderScreen> {
                         animate: true,
                         inactiveBgColor: Colors.black12,
                         fontSize: 12.0,
-                        initialLabelIndex:
-                        _updateValueUnitsLinear(
+                        initialLabelIndex: _updateValueUnitsLinear(
                             state.order.size.unitsLinear.index),
                         totalSwitches: UnitsLinear.values.length,
                         labels: UnitsLinear.values
@@ -239,8 +232,9 @@ class _EditOrderScreenState extends State<EditOrderScreen> {
                         fontSize: 12.0,
                         //TODO implement correct view state and callback
                         initialLabelIndex:
-                        // _unitWeight.index,
-                        _updateValueUnitWeight(state.order.unitsWeight.index),
+                            // _unitWeight.index,
+                            _updateValueUnitWeight(
+                                state.order.unitsWeight.index),
                         totalSwitches: UnitsWeight.values.length,
                         labels: UnitsWeight.values
                             .map((e) => e.name.toUpperCase())
@@ -274,33 +268,6 @@ class _EditOrderScreenState extends State<EditOrderScreen> {
                 ),
               ),
             ),
-
-            // Column(
-            //   children: [
-            //     ///name
-            //     TextFormField(
-            //       controller: TextEditingController(text: _fl.name),
-            //       onChanged: (value) => _fl.name = value,
-            //       onFieldSubmitted: (value) => _fl.name = value,
-            //     ),
-            //     ///descreption
-            //     TextFormField(
-            //         controller: TextEditingController(text: _fl.description),
-            //         onChanged: (value) => _fl.description = value,
-            //         onFieldSubmitted: (value) => _fl.description = value),
-            //     ///submit
-            //     TextButton(
-            //       child: const Text('Submit'),
-            //       onPressed: () {
-            //         //submit(update) order
-            //         _sendUpdate(context, state.order.id);
-            //         scaffoldMessage(context, state.order.name);
-            //         Navigator.of(context)
-            //             .pushNamedAndRemoveUntil('/', (route) => false);
-            //       },
-            //     )
-            //   ],
-            // ),
           );
         }
 

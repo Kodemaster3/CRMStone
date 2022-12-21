@@ -8,7 +8,6 @@ import 'package:calc_app/domain/entities/weight.dart';
 import 'package:calc_app/domain/entities/units_linear.dart';
 import 'package:calc_app/domain/repository/order_local/order_repository.dart';
 
-
 class CreateComponent {
   final OrderRepository orderRepository;
 
@@ -35,11 +34,14 @@ class CreateComponent {
       height: height,
       unitsLinear: unitsLinear,
     );
-    final weightEntity = Weight(weight: weight, unitsWeight: unitsWeight,);
+    final weightEntity = Weight(
+      weight: weight,
+      unitsWeight: unitsWeight,
+    );
     final component = ComponentEntity(
       name: name,
       description: description,
-      id: newId(),
+      idComponent: newId(),
       materialId: materialId,
       weight: weightEntity,
       size: size,
@@ -66,19 +68,38 @@ class CreateComponent {
 
     return '$now$id';
   }
-}
 
+  ComponentEntity callDefaultFields() {
+
+    final component = ComponentEntity(
+        idComponent: '',
+        name: '',
+        description: '',
+        materialId: '',
+        quantity: 0,
+        dateEntity: DateEntity(create: DateTime.now(), edit: DateTime.now()),
+        size: Size(
+            width: 0.0,
+            length: 0.0,
+            height: 0.0,
+            unitsLinear: UnitsLinear.meter),
+        weight: Weight(weight: 0.0, unitsWeight: UnitsWeight.kilogram));
+
+    return component;
+  }
+}
 
 class DeleteComponent {
   final OrderRepository orderRepository;
 
   DeleteComponent(this.orderRepository);
 
-  Future<bool> call({required String idOrder, required String idComponent}) async {
-    return await orderRepository.deleteComponent(idOrder: idOrder, idComponent: idComponent);
+  Future<bool> call(
+      {required String idOrder, required String idComponent}) async {
+    return await orderRepository.deleteComponent(
+        idOrder: idOrder, idComponent: idComponent);
   }
 }
-
 
 class GetComponentById {
   final OrderRepository orderRepository;
@@ -89,7 +110,6 @@ class GetComponentById {
     return await orderRepository.getComponentById(idComponent: idComponent);
   }
 }
-
 
 class GetComponentsByListId {
   final OrderRepository orderRepository;
@@ -102,7 +122,6 @@ class GetComponentsByListId {
         idComponents: listIdComponents);
   }
 }
-
 
 class UpdateComponent {
   final OrderRepository orderRepository;
@@ -132,9 +151,12 @@ class UpdateComponent {
       height: height,
       unitsLinear: unitsLinear,
     );
-    final weightEntity = Weight(weight: weight, unitsWeight: unitsWeight,);
+    final weightEntity = Weight(
+      weight: weight,
+      unitsWeight: unitsWeight,
+    );
     final updateComponent = ComponentEntity(
-      id: idComponent,
+      idComponent: idComponent,
       name: name,
       description: description,
       materialId: materialId,
@@ -147,5 +169,3 @@ class UpdateComponent {
         componentEntity: updateComponent);
   }
 }
-
-

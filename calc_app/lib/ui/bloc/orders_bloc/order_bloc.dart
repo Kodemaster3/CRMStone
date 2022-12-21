@@ -1,7 +1,5 @@
 import 'dart:developer' as dev;
 
-import 'package:calc_app/domain/entities/units_linear.dart';
-import 'package:calc_app/domain/entities/units_weight.dart';
 import 'package:calc_app/domain/use_cases/component/component_use_case.dart';
 import 'package:calc_app/domain/use_cases/order/order_use_case.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -38,17 +36,17 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
 
     ///Emit all orders
     on<OrderLoadingEvent>((event, emit) async {
-      dev.log('Active state is: OrderLoading in OrderLoadingEvent', name: blocOrder);
+      dev.log('Active state must => OrderLoading in OrderLoadingEvent', name: blocOrder);
       emit(OrderLoading());
 
       final orders = await getAllOrders();
-      dev.log('Active state is: OrdersLoaded in OrderLoadingEvent', name: blocOrder);
+      dev.log('Active state must => OrdersLoaded in OrderLoadingEvent', name: blocOrder);
       emit(OrdersLoaded(orders: orders));
     });
 
     ///Create new order
     on<OrderCreateEvent>((event, emit) async {
-      dev.log('Active state is: OrderLoading in OrderCreateEvent', name: blocOrder);
+      dev.log('Active state must => OrderLoading in OrderCreateEvent', name: blocOrder);
       emit(OrderLoading());
       await createOrder.call(
         name: event.name,
@@ -60,7 +58,7 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
         unitsWeight: event.unitsWeight,
       );
       final orders = await getAllOrders();
-      dev.log('Active state is: OrdersLoaded in OrderCreateEvent', name: blocOrder);
+      dev.log('Active state must => OrdersLoaded in OrderCreateEvent', name: blocOrder);
       emit(OrdersLoaded(orders: orders));
       //TODO implement throw exception by each id number
     });
@@ -68,14 +66,13 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
     ///Emit all orders and given choice variable when component list empty
     on<OrderViewWithComponentEvent>(
       (event, emit) async {
-        dev.log('Active state is: OrderLoading in OrderViewWithComponentEvent', name: blocOrder);
+        dev.log('Active state must => OrderLoading in OrderViewWithComponentEvent', name: blocOrder);
         emit(OrderLoading());
-        dev.log(event.id);
         final order = await getOrderById(id: event.id);
         _orderCashId = order.id;
         bool flag = order.component.isNotEmpty;
-        flag ? dev.log('Active state is: OrderViewWithComponent in OrderViewWithComponentEvent', name: blocOrder) :
-        dev.log('Active state is: OrderViewWithEmptyListComponent in OrderViewWithComponentEvent', name: blocOrder);
+        flag ? dev.log('Active state must => OrderViewWithComponent in OrderViewWithComponentEvent', name: blocOrder) :
+        dev.log('Active state must => OrderViewWithEmptyListComponent in OrderViewWithComponentEvent', name: blocOrder);
         flag
             ? emit(OrderViewWithComponent(
                 order: order,
@@ -88,40 +85,30 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
     ///Create component in selected order
 
     on<ComponentOrderCreatingEvent>((event, emit) async {
-      dev.log('Active state is: OrderLoading in ComponentOrderCreatingEvent', name: 'BLOC Order');
+      dev.log('Active state must => OrderLoading in ComponentOrderCreatingEvent', name: 'BLOC Order');
       emit(OrderLoading());
-      final idOrder = event.idOrder;
-      const String idComponentEmptyField = '';
-      const String nameEmptyField = '';
-      const String descriptionEmptyField = '';
-      const String materialIdEmptyField = 'empty';
-      const double widthEmptyField = 0.0;
-      const double lengthEmptyField = 0.0;
-      const double heightEmptyField = 0.0;
-      const double weightEmptyField = 0.0;
-      const int quantityEmptyField = 0;
-      const UnitsLinear unitsLinearDefault = UnitsLinear.meter;
-      const UnitsWeight unitsWeightDefault = UnitsWeight.kilogram;
-      dev.log('Active state is: ComponentCreatingFieldsState in ComponentOrderCreatingEvent', name: blocOrder);
+      final emptyField = createComponent.callDefaultFields();
+      
+      dev.log('Active state must => ComponentCreatingFieldsState in ComponentOrderCreatingEvent', name: blocOrder);
       emit(ComponentCreatingFieldsState(
-        idOrder: idOrder,
-        idComponent: idComponentEmptyField,
-        name: nameEmptyField,
-        description: descriptionEmptyField,
-        materialId: materialIdEmptyField,
-        width: widthEmptyField,
-        length: lengthEmptyField,
-        height: heightEmptyField,
-        weight: weightEmptyField,
-        quantity: quantityEmptyField,
-        unitsLinear: unitsLinearDefault,
-        unitsWeight: unitsWeightDefault,
+        idOrder: event.idOrder,
+        idComponent: emptyField.idComponent,
+        name: emptyField.name,
+        description: emptyField.description,
+        materialId: emptyField.materialId,
+        width: emptyField.size.width,
+        length: emptyField.size.length,
+        height: emptyField.size.height,
+        weight: emptyField.weight.weight,
+        quantity: emptyField.quantity,
+        unitsLinear: emptyField.size.unitsLinear,
+        unitsWeight: emptyField.weight.unitsWeight,
       ));
     });
 
     on<ComponentOrderCreateEvent>(
       (event, emit) async {
-        dev.log('Active state is: OrderLoading in ComponentOrderCreateEvent', name: blocOrder);
+        dev.log('Active state must => OrderLoading in ComponentOrderCreateEvent', name: blocOrder);
         emit(OrderLoading());
         final response = await createComponent(
           idOrder: event.idOrder,
@@ -137,9 +124,9 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
           quantity: event.quantity,
         );
 
-        final order = await getOrderById(id: _orderCashId);
+        final order = await getOrderById(id: event.idOrder);
         if (response) {
-          dev.log('Active state is: OrderViewWithComponent in ComponentOrderCreateEvent', name: blocOrder);
+          dev.log('Active state must => OrderViewWithComponent in ComponentOrderCreateEvent', name: blocOrder);
           emit(OrderViewWithComponent(
             order: order,
             components:
@@ -152,17 +139,17 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
 
     on<OrderViewByIdEvent>(
       (event, emit) async {
-        dev.log('Active state is: OrderLoading in OrderViewByIdEvent', name: blocOrder);
+        dev.log('Active state must => OrderLoading in OrderViewByIdEvent', name: blocOrder);
         emit(OrderLoading());
         final order = await getOrderById(id: event.id);
-        dev.log('Active state is: OrderLoaded in OrderViewByIdEvent', name: blocOrder);
+        dev.log('Active state must => OrderLoaded in OrderViewByIdEvent', name: blocOrder);
         emit(OrderLoaded(order: order));
       },
     );
 
     on<OrderDeleteEvent>(
       (event, emit) async {
-        dev.log('Active state is: OrderLoading in OrderDeleteEvent', name: blocOrder);
+        dev.log('Active state must => OrderLoading in OrderDeleteEvent', name: blocOrder);
         emit(OrderLoading());
         final responce = await deleteOrder(id: event.id);
       },
@@ -170,7 +157,7 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
 
     on<OrderUpdateEvent>(
       (event, emit) async {
-        dev.log('Active state is: OrderLoading in OrderUpdateEvent', name: blocOrder);
+        dev.log('Active state must => OrderLoading in OrderUpdateEvent', name: blocOrder);
         emit(OrderLoading());
         final response = await updateOrder(
           id: event.id,
@@ -185,7 +172,7 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
 
         //TODO: implement message on screen
         if (response) {
-          dev.log('Active state is: OrderOperationSuccess in OrderUpdateEvent', name: blocOrder);
+          dev.log('Active state must => OrderOperationSuccess in OrderUpdateEvent', name: blocOrder);
           emit(
             OrderOperationSuccess(message: '${event.name} be changed Success'),
           );
@@ -195,13 +182,13 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
 
     on<ComponentOrderDeletedEvent>(
       (event, emit) async {
-        dev.log('Active state is: OrderLoading in ComponentOrderDeletedEvent', name: blocOrder);
+        dev.log('Active state must => OrderLoading in ComponentOrderDeletedEvent', name: blocOrder);
         emit(OrderLoading());
         final response = await deleteComponent(
             idOrder: _orderCashId, idComponent: event.idComponent);
         final order = await getOrderById(id: _orderCashId);
         if (response) {
-          dev.log('Active state is: OrderViewWithComponent in ComponentOrderDeletedEvent', name: blocOrder);
+          dev.log('Active state must => OrderViewWithComponent in ComponentOrderDeletedEvent', name: blocOrder);
           emit(OrderViewWithComponent(
             order: order,
             components:
@@ -214,15 +201,15 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
 
     on<ComponentOrderUpdatingEvent>(
           (event, emit) async {
-            dev.log('Active state is: OrderLoading in ComponentOrderUpdatingEvent', name: blocOrder);
+            dev.log('Active state must => OrderLoading in ComponentOrderUpdatingEvent', name: blocOrder);
         emit(OrderLoading());
         final component =
         await getComponentById(idComponent: event.idComponent);
 
-            dev.log('Active state is: ComponentUpdatingFieldState in ComponentOrderUpdatingEvent', name: blocOrder);
+            dev.log('Active state must => ComponentUpdatingFieldState in ComponentOrderUpdatingEvent', name: blocOrder);
         emit(ComponentUpdatingFieldState(
           idOrder: event.idOrder,
-          idComponent: component.id,
+          idComponent: component.idComponent,
           name: component.name,
           description: component.description,
           materialId: component.materialId,
@@ -239,7 +226,7 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
 
     on<ComponentOrderUpdatedEvent>(
       (event, emit) async {
-        dev.log('Active state is: OrderLoading in ComponentOrderUpdatedEvent', name: blocOrder);
+        dev.log('Active state must => OrderLoading in ComponentOrderUpdatedEvent', name: blocOrder);
         emit(OrderLoading());
         final response = await updateComponent(
           idComponent: event.idComponent,

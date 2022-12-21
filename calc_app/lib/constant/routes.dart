@@ -16,5 +16,4 @@ final routes = {
   EditOrderScreen.routeName: (ctx) => const EditOrderScreen(),
   ComponentFieldScreen.routeName: (ctx) => const ComponentFieldScreen(),
   AddNewMaterialScreen.routeName: (ctx) => const AddNewMaterialScreen(),
-  // NomenclatureDeliverScreen.routeName: (ctx) => NomenclatureDeliverScreen(),
 };
