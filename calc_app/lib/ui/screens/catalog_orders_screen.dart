@@ -27,7 +27,8 @@ class CatalogOrdersScreen extends StatelessWidget {
           ///add material
           IconButton(
             onPressed: () {
-              BlocProvider.of<MaterialBloc>(context).add(MaterialCreatingEvent());
+              // BlocProvider.of<MaterialBloc>(context).add(MaterialCreatingEvent());
+              context.read<MaterialBloc>().add(MaterialCreatingEvent());
               Navigator.of(context)
                   .pushNamed(AddNewMaterialScreen.routeName);
             },

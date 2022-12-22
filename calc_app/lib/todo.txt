@@ -24,9 +24,9 @@ in ui:      optimised layer
 
 
 in data & case:
-            implement material with isolation of orders             -in progress well
-            implement choose all layer material in component!!!
-            separate blocs case order, component, material
+            implement material with isolation of orders                 +
+            implement choose all layer material in component!!!         +
+            separate blocs case order, component, material              ±
 
 
           !!  when material use in component, and material is deleted, need implement logic, this component when it reed,

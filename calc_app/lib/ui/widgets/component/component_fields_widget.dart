@@ -30,10 +30,10 @@ class ComponentFieldsWidget extends StatefulWidget {
   const ComponentFieldsWidget({
     Key? key,
     required this.idOrder,
-    required this.idComponent, //TODO alarm!
+    required this.idComponent,
     required this.name,
     required this.description,
-    required this.materialId, //TODO alarm!
+    required this.materialId,
     required this.width,
     required this.length,
     required this.height,
