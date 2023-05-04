@@ -29,16 +29,18 @@ class OrderModel with _$OrderModel implements OrderEntity {
       _$OrderModelFromJson(json);
 
   @override
-  DateEntity get dateEntity => DateModel(
-        create: dateModel.create,
-        edit: dateModel.edit,
-      );
+  DateEntity get dateEntity => dateModel.copyWith();
+      // DateModel(
+      //   create: dateModel.create,
+      //   edit: dateModel.edit,
+      // );
 
   @override
-  Size get size => SizeModel(
-        width: sizeModel.width,
-        length: sizeModel.length,
-        height: sizeModel.height,
-        unitsLinear: sizeModel.unitsLinear,
-      );
+  Size get size => sizeModel.copyWith();
+      // SizeModel(
+      //   width: sizeModel.width,
+      //   length: sizeModel.length,
+      //   height: sizeModel.height,
+      //   unitsLinear: sizeModel.unitsLinear,
+      // );
 }

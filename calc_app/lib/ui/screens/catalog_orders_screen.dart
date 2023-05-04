@@ -4,6 +4,7 @@ import 'package:calc_app/ui/bloc/orders_bloc/order_bloc.dart';
 import 'package:calc_app/ui/bloc/orders_bloc/order_event.dart';
 import 'package:calc_app/ui/screens/add_new_material_screen.dart';
 import 'package:calc_app/ui/screens/add_new_order_screen.dart';
+import 'package:calc_app/ui/screens/catalog_material_screen.dart';
 import 'package:calc_app/ui/widgets/list_view_order_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:calc_app/constant/ui_helper.dart';
@@ -24,22 +25,21 @@ class CatalogOrdersScreen extends StatelessWidget {
         // final text = AppLocalizations.of(context);
         // title: Text(text!.appTitle),
         actions: [
-          ///add material
-          IconButton(
-            onPressed: () {
-              // BlocProvider.of<MaterialBloc>(context).add(MaterialCreatingEvent());
-              context.read<MaterialBloc>().add(MaterialCreatingEvent());
-              Navigator.of(context)
-                  .pushNamed(AddNewMaterialScreen.routeName);
-            },
-            icon: const Icon(Icons.medical_information_outlined),
-          ),
-
+          // ///add material
+          // IconButton(
+          //   onPressed: () {
+          //     // BlocProvider.of<MaterialBloc>(context).add(MaterialCreatingEvent());
+          //     context.read<MaterialBloc>().add(MaterialCreatingEvent());
+          //     Navigator.of(context).pushNamed(AddNewMaterialScreen.routeName);
+          //   },
+          //   icon: const Icon(Icons.medical_information_outlined),
+          // ),
           ///Update list presentation orders
           IconButton(
             onPressed: () {
               //delete this or add any logic update
-              BlocProvider.of<OrderBloc>(context).add(OrderLoadingEvent());
+              context.read<OrderBloc>().add(OrderLoadingEvent());
+              // BlocProvider.of<OrderBloc>(context).add(OrderLoadingEvent());
             },
             icon: const Icon(Icons.update),
           ),
@@ -54,6 +54,37 @@ class CatalogOrdersScreen extends StatelessWidget {
         ],
       ),
       body: const ListViewOrderWidget(),
+      drawer: Drawer(
+        child: ListView(
+          children: [
+            const DrawerHeader(
+              child: Center(child: Text('Menu')),
+              decoration: BoxDecoration(color: Colors.lightGreen),
+            ),
+
+            ///Menu material
+            TextButton(
+              child: const Text(
+                'Menu Materials',
+              ),
+              onPressed: () {
+                // context.read<MaterialBloc>().add(MaterialLoadingEvent());
+                Navigator.of(context).pushNamed(CatalogMaterialScreen.routeName);
+              },
+            ),
+
+            // ///add material
+            // IconButton(
+            //   onPressed: () {
+            //     // BlocProvider.of<MaterialBloc>(context).add(MaterialCreatingEvent());
+            //     context.read<MaterialBloc>().add(MaterialCreatingEvent());
+            //     Navigator.of(context).pushNamed(AddNewMaterialScreen.routeName);
+            //   },
+            //   icon: const Icon(Icons.medical_information_outlined),
+            // ),
+          ],
+        ),
+      ),
     );
   }
 }

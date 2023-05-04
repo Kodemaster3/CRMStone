@@ -1,5 +1,8 @@
 import 'package:calc_app/ui/bloc/material_bloc/material_bloc.dart';
 import 'package:calc_app/ui/bloc/material_bloc/material_event.dart';
+import 'package:calc_app/ui/bloc/orders_bloc/order_bloc.dart';
+import 'package:calc_app/ui/bloc/orders_bloc/order_event.dart';
+import 'package:calc_app/ui/screens/catalog_material_screen.dart';
 import 'package:calc_app/ui/widgets/navigate/return_home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -67,6 +70,9 @@ class _MaterialFieldsWidgetState extends State<MaterialFieldsWidget> {
     scaffoldMessage(context, _nameController.text);
 
     Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false);
+    context.read<OrderBloc>().add(OrderLoadingEvent());
+    // context.read<MaterialBloc>().add(MaterialLoadingEvent());
+    // Navigator.of(context).pushNamedAndRemoveUntil(CatalogMaterialScreen.routeName, (route) => false);
   }
 
   @override

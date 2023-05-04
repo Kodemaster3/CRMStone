@@ -60,7 +60,7 @@ class OrderMapper {
       weight: componentModel.weight,
       quantity: componentModel.quantity,
       dateEntity: componentModel.dateModel,
-      size: componentModel.size,
+      size:componentModel.size,
     );
   }
 

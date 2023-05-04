@@ -21,12 +21,15 @@ in entity:  add dateTime/                     +
             add unitWeight in order           +
 
 in ui:      optimised layer
+            implement Login Screen              -
 
 
 in data & case:
             implement material with isolation of orders                 +
             implement choose all layer material in component!!!         +
             separate blocs case order, component, material              ±
+            move mapper to domain/mapper                                -
+            implement bloc login local, for test                        -
 
 
           !!  when material use in component, and material is deleted, need implement logic, this component when it reed,
