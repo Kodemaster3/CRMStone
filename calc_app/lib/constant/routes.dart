@@ -7,6 +7,7 @@ import 'package:calc_app/ui/screens/catalog_material_screen.dart';
 import 'package:calc_app/ui/screens/component_field_screen.dart';
 import 'package:calc_app/ui/screens/add_new_order_screen.dart';
 import 'package:calc_app/ui/screens/edit_order_screen.dart';
+import 'package:calc_app/ui/screens/login_screen.dart';
 import 'package:calc_app/ui/screens/view_order_screen_with_component.dart';
 import 'package:calc_app/ui/bloc/material_bloc/material_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -31,4 +32,9 @@ final routes = {
     BlocProvider.of<MaterialBloc>(ctx).add(MaterialLoadingEvent());
     return const CatalogMaterialScreen();
   },
+  LoginScreen.routeName: (ctx) {
+    // BlocProvider.of<LoginBloc>(ctx).add(LoginEvent());
+    return const LoginScreen();
+
+  }
 };

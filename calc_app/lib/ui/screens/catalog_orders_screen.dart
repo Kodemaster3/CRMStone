@@ -5,6 +5,7 @@ import 'package:calc_app/ui/bloc/orders_bloc/order_event.dart';
 import 'package:calc_app/ui/screens/add_new_material_screen.dart';
 import 'package:calc_app/ui/screens/add_new_order_screen.dart';
 import 'package:calc_app/ui/screens/catalog_material_screen.dart';
+import 'package:calc_app/ui/screens/login_screen.dart';
 import 'package:calc_app/ui/widgets/list_view_order_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:calc_app/constant/ui_helper.dart';
@@ -69,10 +70,18 @@ class CatalogOrdersScreen extends StatelessWidget {
               ),
               onPressed: () {
                 // context.read<MaterialBloc>().add(MaterialLoadingEvent());
-                Navigator.of(context).pushNamed(CatalogMaterialScreen.routeName);
+                Navigator.of(context)
+                    .pushNamed(CatalogMaterialScreen.routeName);
               },
             ),
 
+            ///Login account
+            TextButton(
+              child: const Text('Account'),
+              onPressed: () {
+                Navigator.of(context).pushNamed(LoginScreen.routeName);
+              },
+            ),
             // ///add material
             // IconButton(
             //   onPressed: () {
