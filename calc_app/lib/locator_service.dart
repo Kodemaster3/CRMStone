@@ -1,7 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:calc_app/data/datasource/material_local_data_source.dart';
-import 'package:calc_app/data/datasource/order_local_data_source.dart';
+import 'package:calc_app/data/models/datasource/material_local_data_source.dart';
+import 'package:calc_app/data/models/datasource/order_local_data_source.dart';
 import 'package:calc_app/data/repository/material_mapper.dart';
 import 'package:calc_app/data/repository/material_repository_impl.dart';
 import 'package:calc_app/data/repository/order_mapper.dart';

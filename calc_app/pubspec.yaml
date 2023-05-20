@@ -66,6 +66,11 @@ dev_dependencies:
   build_runner: ^2.3.2
   json_serializable: ^6.5.4
 
+  flutter_native_splash: 2.2.18
+flutter_native_splash:
+  color: "#f5cb42"
+  image: assets/splash.png
+
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 

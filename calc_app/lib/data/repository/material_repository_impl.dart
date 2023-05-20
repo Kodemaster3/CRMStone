@@ -1,6 +1,6 @@
 import 'dart:developer' as dev;
 
-import 'package:calc_app/data/datasource/material_local_data_source.dart';
+import 'package:calc_app/data/models/datasource/material_local_data_source.dart';
 import 'package:calc_app/data/models/material_model.dart';
 import 'package:calc_app/data/repository/material_mapper.dart';
 import 'package:calc_app/domain/entities/material.dart';

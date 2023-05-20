@@ -1,11 +1,11 @@
 
 
 implement:
-1. model entities from domain in data layer               -is done!
-2. add use case by logic with order and sub components    -in done!
-3. repository must work by use case                       -is done!
-4. add splash screen
-5. create any like design for ui                          -in progress
+1. model entities from domain in data layer                     -is done!
+2. add use case by logic with order and sub components          -in done!
+3. repository must work by use case                             -is done!
+4. add splash screen                                            -in progress !!!!!!!!!!
+5. create any like design for ui                                -in progress
 6. add login screen after splash fireBase
 7. add case translate => implement them
 
@@ -21,7 +21,9 @@ in entity:  add dateTime/                     +
             add unitWeight in order           +
 
 in ui:      optimised layer
-            implement Login Screen              -
+            add Login Screen                    +
+            implement Create Account            -
+            implement Remove Account            -
 
 
 in data & case:
@@ -30,19 +32,23 @@ in data & case:
             separate blocs case order, component, material              ±
             move mapper to domain/mapper                                -
             implement bloc login local, for test                        -
-
+            implement bloc login with firebase login, out, create, del  -
 
           !!  when material use in component, and material is deleted, need implement logic, this component when it reed,
             must give proposition to chose material from list
           !!  when create component and list material is empty, user see toast to create minimum one material
 
-            implement ui material
 
 
-
-
+            implement ui material                                       +
+            must be adding Surface Area                                 -
 
 
 run generator:
 flutter pub run build_runner build
+
+flutter_native_splash:
+flutter clean
+flutter pub get
+flutter pub run flutter_native_splash:create
 
