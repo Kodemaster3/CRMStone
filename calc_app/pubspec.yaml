@@ -68,7 +68,7 @@ dev_dependencies:
 
   flutter_native_splash: 2.2.18
 flutter_native_splash:
-  color: "#f5cb42"
+  color: "#f0e9d3"
   image: assets/splash.png
 
 # For information on the generic Dart part of this file, see the
