@@ -50,6 +50,7 @@ dependencies:
   toggle_switch: ^2.0.1
 
   dropdown_search: ^5.0.5
+  firebase_core: ^2.24.2
 
 dev_dependencies:
   flutter_test:
